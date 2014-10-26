@@ -1,0 +1,25 @@
+{
+    "name": "pavlinter/yii2-adm",
+    "description": "Yii2: Adm CMS",
+    "keywords": ["yii2", "admin", "cms","adm"],
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "support": {
+        "issues": "https://github.com/pavlinter/yii2-adm/issues",
+        "source": "https://github.com/pavlinter/yii2-adm"
+    },
+    "authors": [
+        {
+            "name": "Pavels Radajevs",
+            "email": "pavlinter@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "pavlinter\\": ""
+        }
+    }
+}

@@ -22,6 +22,8 @@ class Page extends \yii\db\ActiveRecord
      */
     public function behaviors()
     {
+
+
         return [
             TimestampBehavior::className(),
             'trans' => [ // name it the way you want
