@@ -176,7 +176,11 @@ if (count($pks) === 1) {
     $condition = '[' . implode(', ', $condition) . ']';
 }
 ?>
+<?php if ($generator->enableLanguage && count($pks) === 1) {?>
+        if (($model = <?= $modelClass ?>::find()->with(['translations'])->where(['id' => <?= $condition ?>])->one()) !== null) {
+<?php } else {?>
         if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
+<?php }?>
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

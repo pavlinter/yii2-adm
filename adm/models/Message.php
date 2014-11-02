@@ -9,7 +9,7 @@ use Yii;
  * This is the model class for table "{{%message}}".
  *
  * @property integer $id
- * @property integer $id_language
+ * @property integer $language_id
  * @property string $translation
  *
  * @property SourceMessage $id0
@@ -30,8 +30,8 @@ class Message extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'id_language'], 'required'],
-            [['id', 'id_language'], 'integer'],
+            [['id', 'language_id'], 'required'],
+            [['id', 'language_id'], 'integer'],
             [['translation'], 'string']
         ];
     }
@@ -43,7 +43,7 @@ class Message extends \yii\db\ActiveRecord
     {
         return [
             'id' => Adm::t('model.message', 'ID'),
-            'id_language' => Adm::t('model.message', 'Id Language'),
+            'language_id' => Adm::t('model.message', 'Language Id'),
             'translation' => Adm::t('model.message', 'Translation'),
         ];
     }

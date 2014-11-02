@@ -34,7 +34,17 @@ class Generator extends \yii\gii\Generator
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
 
-
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        if (!isset($this->templates['adm'])) {
+            $this->templates['adm'] = '@vendor/pavlinter/yii2-adm/adm/gii/generators/model/adm';
+        }
+        $this->templates['default'] = Yii::getAlias('@vendor/yiisoft/yii2-gii/generators/model/default');
+        parent::init();
+    }
     /**
      * @inheritdoc
      */

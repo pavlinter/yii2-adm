@@ -9,7 +9,7 @@ echo $form->field($generator, 'baseControllerClass');
 echo $form->field($generator, 'moduleID');
 echo $form->field($generator, 'enableLanguage')->checkbox();
 echo $form->field($generator, 'indexWidgetType')->dropDownList([
-    'AdmGridView' => 'AdmGridView',
+    'admGrid' => 'Adm GridView',
     'grid' => 'GridView',
     'list' => 'ListView',
 ]);

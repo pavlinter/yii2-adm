@@ -22,8 +22,6 @@ class Adm extends \yii\base\Module
 {
     const VERSION = '1.0.0';
 
-    const EVENT_LOOP_LEFT_MENU  = 'loopLeftMenu';
-
     const EVENT_RIGHT_MENU  = 'rightMenu';
 
     public $controllerNamespace = 'pavlinter\adm\controllers';
@@ -40,7 +38,7 @@ class Adm extends \yii\base\Module
      */
     public function __construct($id, $parent = null, $config = [])
     {
-
+        $this->registerTranslations();
         $config = ArrayHelper::merge([
             'aliases' => [
                 '@admRoot' => '@vendor/pavlinter/yii2-adm/adm',
@@ -74,51 +72,51 @@ class Adm extends \yii\base\Module
                     'class' => 'pavlinter\adm\ModelManager'
                 ],
                 'user' => Yii::$app->user,
-//        'errorHandler' => [
-//            'class' => 'yii\web\ErrorHandler',
-//            'errorAction' => 'default/error',
-//        ],
             ],
             'params' => [
                 'user.passwordResetTokenExpire' => 3600,
                 'left-menu' => [
                     'dashboard' => [
-                        'label' => '<i class="fa fa-desktop"></i><span>' . Yii::t("adm/menu", "Dashboard", ['dot' => false]) . '</span>',
+                        'label' => '<i class="fa fa-desktop"></i><span>' . self::t("menu", "Dashboard", ['dot' => false]) . '</span>',
                         'url' => ['/' . $id . '/default/index']
                     ],
                     'elfinder' => [
-                        'label' => '<i class="fa fa-picture-o"></i><span>' . Yii::t("adm/menu", "Media Files", ['dot' => false]) . '</span>',
+                        'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files", ['dot' => false]) . '</span>',
                         'url' => ['/' . $id . '/file/index']
+                    ],
+                    'user' => [
+                        'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Users", ['dot' => false]) . '</span>',
+                        'url' => ['/' . $id . '/user/index']
                     ],
                     'authItem' => [
                         'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . Yii::t("adm/menu", "Rules", ['dot' => false]) . '</span>',
                         'url' => "#",
                         'items' => [
                             [
-                                'label' => '<i class="fa fa-sign-in"></i><span>' . Yii::t("adm/menu", "Auth Assignment", ['dot' => false]) . '</span>',
+                                'label' => '<i class="fa fa-sign-in"></i><span>' . self::t("menu", "Auth Assignment", ['dot' => false]) . '</span>',
                                 'url' => ['/' . $id . '/auth-assignment/index']
                             ],
                             [
-                                'label' => '<i class="fa fa-sitemap"></i><span>' . Yii::t("adm/menu", "Auth Item", ['dot' => false]) . '</span>',
+                                'label' => '<i class="fa fa-sitemap"></i><span>' . self::t("menu", "Auth Item", ['dot' => false]) . '</span>',
                                 'url' => ['/' . $id . '/auth-item/index']
                             ],
                             [
-                                'label' => '<i class="fa fa-link"></i><span>' . Yii::t("adm/menu", "Auth Item Child", ['dot' => false]) . '</span>',
+                                'label' => '<i class="fa fa-link"></i><span>' . self::t("menu", "Auth Item Child", ['dot' => false]) . '</span>',
                                 'url' => ['/' . $id . '/auth-item-child/index']
                             ],
                             [
-                                'label' => '<i class="fa fa-unlock"></i><span>' . Yii::t("adm/menu", "Auth Rule", ['dot' => false]) . '</span>',
+                                'label' => '<i class="fa fa-unlock"></i><span>' . self::t("menu", "Auth Rule", ['dot' => false]) . '</span>',
                                 'url' => ['/' . $id . '/auth-rule/index']
                             ]
 
                         ],
                     ],
                     'language' => [
-                        'label' => '<i class="fa fa-folder"></i><span>' . Yii::t("adm/menu", "Languages", ['dot' => false]) . '</span>',
+                        'label' => '<i class="fa fa-folder"></i><span>' . self::t("menu", "Languages", ['dot' => false]) . '</span>',
                         'url' => ['/' . $id . '/language/index']
                     ],
                     'source-message' => [
-                        'label' => '<i class="fa fa-file-text-o"></i><span>' . Yii::t("adm/menu", "Translations", ['dot' => false]) . '</span>',
+                        'label' => '<i class="fa fa-file-text-o"></i><span>' . self::t("menu", "Translations", ['dot' => false]) . '</span>',
                         'url' => ['/' . $id . '/source-message/index']
                     ],
                 ],
@@ -142,13 +140,7 @@ class Adm extends \yii\base\Module
             'Redactor' => '\pavlinter\adm\widgets\Redactor',
         ],$this->widgets);
 
-
         self::$t = $this->tCategory;
-        //Yii::$app->errorHandler->errorView = '@adm/views/default/error.php';
-        //Yii::$app->errorHandler->exceptionView = '@adm/views/default/error.php';
-        //Yii::$app->errorHandler->callStackItemView = '@adm/views/default/error.php';
-        //Yii::$app->errorHandler->previousExceptionView = '@adm/views/default/error.php';
-
         foreach ($this->getModules() as $name => $module) {
             $module = $this->getModule($name);
             if ($module instanceof BootstrapInterface) {
@@ -168,19 +160,20 @@ class Adm extends \yii\base\Module
     }
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['modules/users/*'] = [
-            'class' => 'yii\i18n\PhpMessageSource',
-            'sourceLanguage' => 'en-US',
-            'basePath' => '@app/modules/users/messages',
-            'fileMap' => [
-                'modules/users/validation' => 'validation.php',
-                'modules/users/form' => 'form.php',
-            ],
-        ];
+        if (!isset(Yii::$app->i18n->translations[$this->tCategory])) {
+            Yii::$app->i18n->translations[$this->tCategory . '*'] = [
+                'class' => 'pavlinter\translation\DbMessageSource',
+                'forceTranslation' => true,
+            ];
+        }
     }
     public static function widget($class, $config = [])
     {
-        $widgets = self::getInstance()->widgets;
+        $adm = self::getInstance();
+        if ($adm === null) {
+            $adm = Yii::$app->getModule('adm');
+        }
+        $widgets = $adm->widgets;
         if (isset($widgets[$class])) {
             $config['class'] = $widgets[$class];
         } else {
@@ -192,7 +185,12 @@ class Adm extends \yii\base\Module
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return Yii::t(self::$t . '/' . $category, $message, $params, $language);
+        if ($category !== '') {
+            $category = self::$t . '/' . $category;
+        } else {
+            $category = self::$t;
+        }
+        return Yii::t($category, $message, $params, $language);
     }
     public static function getAsset($root = false)
     {

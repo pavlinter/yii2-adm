@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
 use yii\db\Schema;
 use yii\gii\CodeFile;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
@@ -35,11 +36,21 @@ class Generator extends \yii\gii\Generator
     public $moduleID;
     public $controllerClass;
     public $baseControllerClass = 'yii\web\Controller';
-    public $indexWidgetType = 'grid';
+    public $indexWidgetType = 'admGrid';
     public $searchModelClass = '';
     public $enableLanguage;
 
-
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        if (!isset($this->templates['adm'])) {
+            $this->templates['adm'] = '@vendor/pavlinter/yii2-adm/adm/gii/generators/crud/adm';
+        }
+        $this->templates['default'] = Yii::getAlias('@vendor/yiisoft/yii2-gii/generators/crud/default');
+        parent::init();
+    }
     /**
      * @inheritdoc
      */
@@ -72,10 +83,10 @@ class Generator extends \yii\gii\Generator
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
             [['controllerClass', 'searchModelClass'], 'validateNewClass'],
-            [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
+            [['indexWidgetType'], 'in', 'range' => ['grid', 'list','admGrid']],
             [['modelClass'], 'validateModelClass'],
             [['moduleID'], 'validateModuleID'],
-            [['enableI18N'], 'boolean'],
+            [['enableI18N','enableLanguage'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
     }
@@ -233,19 +244,101 @@ class Generator extends \yii\gii\Generator
      */
     public function generateActiveField($attribute)
     {
-        $tableSchema = $this->getTableSchema();
+        return $this->getFieldType([
+            'attribute' => $attribute,
+            'model' => $this,
+            'modelStr' => "\$model",
+            'attributeStr' => "'$attribute'"
+        ]);
+    }
+    /**
+     * Generates code for active field
+     * @param string $attribute
+     * @return string
+     */
+    public function generateActiveFieldLang($attribute)
+    {
+        $class = new $this->modelClass();
+        $langClass = $class->getTranslation(Yii::$app->getI18n()->getId());
+        return $this->getFieldType([
+            'attribute' => $attribute,
+            'model' => $langClass,
+            'modelStr' => "\$model->getTranslation(\$id_language)",
+            'attributeStr' => "'['.\$id_language.']$attribute'",
+            'lang' => true
+        ]);
+
+
+    }
+
+    public function getFieldType($params)
+    {
+        $params = ArrayHelper::merge([
+            'lang' => false
+        ], $params);
+        /* @var $attribute string */
+        /* @var $model \yii\db\ActiveRecord */
+        /* @var $modelStr string */
+        /* @var $attributeStr string */
+        /* @var $lang bool */
+        extract($params);
+
+        $field = "\$form->field(" . $modelStr . ", " . $attributeStr . ")";
+
+        $tableSchema = $model->getTableSchema();
         if ($tableSchema === false || !isset($tableSchema->columns[$attribute])) {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $attribute)) {
-                return "\$form->field(\$model, '$attribute')->passwordInput()";
+                return $field."->passwordInput()";
             } else {
-                return "\$form->field(\$model, '$attribute')";
+                return $field;
             }
         }
         $column = $tableSchema->columns[$attribute];
-        if ($column->phpType === 'boolean') {
-            return "\$form->field(\$model, '$attribute')->checkbox()";
+        /*
+            yii\db\ColumnSchema Object
+            (
+                [name] => active
+                [allowNull] =>
+                [type] => smallint
+                [phpType] => integer
+                [dbType] => tinyint(1)
+                [defaultValue] => 0
+                [enumValues] =>
+                [size] => 1
+                [precision] => 1
+                [scale] =>
+                [isPrimaryKey] =>
+                [autoIncrement] =>
+                [unsigned] =>
+                [comment] =>
+            )
+        */
+
+        if ($lang) {
+            $t = "\t\t\t\t\t";
+            $t2 = "\t\t\t\t";
+        } else {
+            $t  = "\t\t";
+            $t2 = "\t";
+        }
+
+
+        if ($column->comment == 'Redactor'){
+            return "\\pavlinter\\adm\\Adm::widget('Redactor',[\n$t'form' => \$form,\n$t'model'      => " . $modelStr . ",\n$t'attribute'  => " . $attributeStr . "\n$t2])";
+        }
+        if ($column->comment == 'FileInput'){
+            return "\\pavlinter\\adm\\Adm::widget('FileInput',[\n$t'form'        => \$form,\n$t'model'       => " . $modelStr . ",\n$t'attribute'   => " . $attributeStr . "\n$t2])";
+        }
+
+        if ($column->comment == 'select2'){
+            return $field."->widget(\\kartik\\widgets\\Select2::classname(), [\n$t'data' => [],\n$t'options' => ['placeholder' => 'Select a item ...'],\n$t'pluginOptions' => [\n\t$t'allowClear' => true,\n$t]\n$t2]);";
+        }
+
+
+        if ($column->phpType === 'boolean' || $column->phpType === 'tinyint(1)') {
+            return $field."->checkbox()";
         } elseif ($column->type === 'text') {
-            return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
+            return $field."->textarea(['rows' => 6])";
         } else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
                 $input = 'passwordInput';
@@ -257,16 +350,17 @@ class Generator extends \yii\gii\Generator
                 foreach ($column->enumValues as $enumValue) {
                     $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
                 }
-                return "\$form->field(\$model, '$attribute')->dropDownList("
-                    . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
+                return $field."->dropDownList("
+                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
-                return "\$form->field(\$model, '$attribute')->$input()";
+                return $field."->$input()";
             } else {
-                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => $column->size])";
+                return $field."->$input(['maxlength' => $column->size])";
             }
         }
     }
-
+    
+    
     /**
      * Generates code for active search field
      * @param string $attribute
@@ -548,5 +642,41 @@ class Generator extends \yii\gii\Generator
 
             return $model->attributes();
         }
+    }
+    /**
+     * Generates a string depending on enableI18N property
+     *
+     * @param string $string the text be generated
+     * @param array $placeholders the placeholders to use by `Yii::t()`
+     * @return string
+     */
+    public function generateString($string = '', $placeholders = [])
+    {
+        $string = addslashes($string);
+        if ($this->enableI18N) {
+            // If there are placeholders, use them
+            if (!empty($placeholders)) {
+                $ph = ', ' . VarDumper::export($placeholders);
+            } else {
+                $ph = '';
+            }
+            if(strpos($this->messageCategory,'adm/') === 0){
+                $this->messageCategory = substr($this->messageCategory, 4, strlen($this->messageCategory));
+            }
+            $str = "Adm::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+        } else {
+            // No I18N, replace placeholders by real words, if any
+            if (!empty($placeholders)) {
+                $phKeys = array_map(function($word) {
+                    return '{' . $word . '}';
+                }, array_keys($placeholders));
+                $phValues = array_values($placeholders);
+                $str = "'" . str_replace($phKeys, $phValues, $string) . "'";
+            } else {
+                // No placeholders, just the given string
+                $str = "'" . $string . "'";
+            }
+        }
+        return $str;
     }
 }

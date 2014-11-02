@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\gii\generators\module;
+namespace pavlinter\adm\gii\generators\module;
 
 use yii\gii\CodeFile;
 use yii\helpers\Html;
@@ -25,8 +25,17 @@ class Generator extends \yii\gii\Generator
 {
     public $moduleClass;
     public $moduleID;
-
-
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        if (!isset($this->templates['adm'])) {
+            $this->templates['adm'] = '@vendor/pavlinter/yii2-adm/adm/gii/generators/module/adm';
+        }
+        $this->templates['default'] = Yii::getAlias('@vendor/yiisoft/yii2-gii/generators/module/default');
+        parent::init();
+    }
     /**
      * @inheritdoc
      */
@@ -94,6 +103,21 @@ class Generator extends \yii\gii\Generator
 <p>The module has been generated successfully.</p>
 <p>To access the module, you need to add this to your application configuration:</p>
 EOD;
+        if ($this->template == 'adm') {
+            $code = <<<EOD
+<?php
+    'modules' => [
+        'adm' => [
+            'class' => 'pavlinter\adm\Adm',
+            'modules' => [
+                '{$this->moduleID}' => [
+                    'class' => '{$this->moduleClass}',
+                ],
+            ],
+        ],
+    ],
+EOD;
+        } else {
         $code = <<<EOD
 <?php
     ......
@@ -104,7 +128,7 @@ EOD;
     ],
     ......
 EOD;
-
+        }
         return $output . '<pre>' . highlight_string($code, true) . '</pre>';
     }
 

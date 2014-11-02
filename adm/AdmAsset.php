@@ -27,6 +27,7 @@ class AdmAsset extends \yii\web\AssetBundle
         'js/charts/easypiechart/jquery.easy-pie-chart.js',
         'js/charts/morris/raphael-min.js',
         'js/charts/morris/morris.min.js',
+        'js/common.js',
 
     ];
     public $depends = [

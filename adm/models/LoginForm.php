@@ -1,9 +1,4 @@
 <?php
-/**
- * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2014
- * @package yii2-adm
- */
-
 namespace pavlinter\adm\models;
 
 use pavlinter\adm\Adm;
@@ -39,13 +34,16 @@ class LoginForm extends Model
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword()
+    public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError('password', Yii::t("adm", "Incorrect username or password.", ['dot' => false]));
+                $this->addError($attribute, 'Incorrect username or password.');
             }
         }
     }
@@ -74,6 +72,7 @@ class LoginForm extends Model
         if ($this->_user === false) {
             $this->_user = Adm::getInstance()->manager->createUserQuery('findByUsername', $this->username);
         }
+
         return $this->_user;
     }
 }

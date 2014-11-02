@@ -13,6 +13,12 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+<?php
+if ($generator->enableI18N) {
+    echo "use pavlinter\\adm\\Adm;";
+}
+?>
+
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -48,6 +54,15 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     foreach ($generator->getTableSchema()->columns as $column) {
         $format = $generator->generateColumnFormat($column);
         echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+    }
+}
+
+$modelClass = new $generator->modelClass();
+$behaviors = $modelClass->behaviors();
+if (isset($behaviors['trans'],$behaviors['trans']['translationAttributes'])) {
+    echo "            //translations\n";
+    foreach ($behaviors['trans']['translationAttributes'] as $translateField) {
+        echo "            '" . $translateField . "',\n";
     }
 }
 ?>

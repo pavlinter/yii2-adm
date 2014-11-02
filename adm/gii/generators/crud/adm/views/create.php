@@ -10,6 +10,11 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
+<?php
+if ($generator->enableI18N) {
+    echo "use pavlinter\\adm\\Adm;";
+}
+?>
 
 
 /* @var $this yii\web\View */

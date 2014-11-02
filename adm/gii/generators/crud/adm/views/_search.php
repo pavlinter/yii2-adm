@@ -11,6 +11,12 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+<?php
+if ($generator->enableI18N) {
+    echo "use pavlinter\\adm\\Adm;";
+}
+?>
+
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->searchModelClass, '\\') ?> */
