@@ -23,7 +23,7 @@ $rules = Adm::getInstance()->manager->createAuthRuleQuery()->select('name')->asA
     <?php
     echo $form->field($model, 'type')->widget(Select2::classname(), [
         'data' => $model::typeList(),
-        'options' => ['placeholder' => 'Select a type ...'],
+        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
         'pluginOptions' => [
 
         ],
@@ -36,7 +36,7 @@ $rules = Adm::getInstance()->manager->createAuthRuleQuery()->select('name')->asA
     <?php
     echo $form->field($model, 'rule_name')->widget(Select2::classname(), [
         'data' => ArrayHelper::map($rules, 'name', 'name'),
-        'options' => ['placeholder' => 'Select a rule name ...'],
+        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
         'pluginOptions' => [
             'allowClear' => true
         ],

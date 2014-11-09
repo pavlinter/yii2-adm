@@ -14,7 +14,6 @@ use Yii;
  *
  * @method \pavlinter\adm\models\User createUser
  * @method \pavlinter\adm\models\User createUserQuery
- * @method \pavlinter\adm\models\UserForm createUserForm
  * @method \pavlinter\adm\models\UserSearch createUserSearch
  *
  * @method \pavlinter\adm\models\LoginForm createLoginForm
@@ -60,10 +59,6 @@ class ModelManager extends Manager
      * @var string|\pavlinter\adm\models\UserSearch
      */
     public $userSearchClass = 'pavlinter\adm\models\UserSearch';
-    /**
-     * @var string|\pavlinter\adm\models\UserForm
-     */
-    public $userFormClass = 'pavlinter\adm\models\UserForm';
     /**
      * @var string|\pavlinter\adm\models\AuthItem
      */

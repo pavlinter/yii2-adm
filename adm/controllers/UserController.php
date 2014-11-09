@@ -6,7 +6,6 @@ use pavlinter\adm\Adm;
 use pavlinter\adm\filters\AccessControl;
 use Yii;
 use pavlinter\adm\models\User;
-use pavlinter\adm\models\UserSearch;
 use yii\base\DynamicModel;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;

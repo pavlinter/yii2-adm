@@ -93,11 +93,11 @@ class Adm extends \yii\base\Module
     public function init()
     {
         parent::init();
-
+        self::$t = $this->tCategory;
         $this->params = ArrayHelper::merge($this->params(), $this->params);
 
         $this->get('user')->loginUrl = [$this->id.'/default/login'];
-        Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
+        //Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
 
         $this->widgets = ArrayHelper::merge([
             'FileManager' => '\pavlinter\adm\widgets\FileManager',
@@ -106,7 +106,7 @@ class Adm extends \yii\base\Module
             'Redactor' => '\pavlinter\adm\widgets\Redactor',
         ],$this->widgets);
 
-        self::$t = $this->tCategory;
+
         foreach ($this->getModules() as $name => $module) {
             $module = $this->getModule($name);
             if ($module instanceof BootstrapInterface) {

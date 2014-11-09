@@ -43,7 +43,7 @@ use pavlinter\adm\Adm;
         <?php
         echo $form->field($model, 'role')->widget(Select2::classname(), [
             'data' => User::roles(),
-            'options' => ['placeholder' => 'Select a item ...'],
+            'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
             'pluginOptions' => [
                 //'allowClear' => true,
             ],
@@ -53,7 +53,7 @@ use pavlinter\adm\Adm;
         <?php
         echo $form->field($model, 'status')->widget(Select2::classname(), [
             'data' => User::status(),
-            'options' => ['placeholder' => 'Select...'],
+            'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
             'pluginOptions' => [
                 //'allowClear' => false,
             ],

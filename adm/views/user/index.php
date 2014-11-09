@@ -9,6 +9,7 @@ use pavlinter\adm\Adm;
 
 $this->title = Adm::t('user', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index" style="height: 1000px;">
 
@@ -21,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php \yii\widgets\Pjax::begin(); ?>
+
     <?= Adm::widget('GridView',[
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -30,13 +33,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'username',
             'email:email',
-            'role',
-            'status',
-            'created_at',
+            [
+                'attribute'=>'status',
+                'vAlign'=>'middle',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return $model->status($model->status);
+                },
+                'filterType' => '\kartik\widgets\Select2',
+                'filter'=> $searchModel->status(),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' =>true ],
+                ],
+                'filterInputOptions' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'format'=>'raw'
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model, $index, $widget) {
+                    return Yii::$app->formatter->asDate($model->created_at);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+    <?php \yii\widgets\Pjax::end(); ?>
 
 </div>
 

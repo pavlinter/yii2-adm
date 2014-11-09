@@ -21,7 +21,7 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
     <?php
     echo $form->field($model, 'parent')->widget(Select2::classname(), [
         'data' => ArrayHelper::map($items, 'name', 'name'),
-        'options' => ['placeholder' => 'Select a item ...'],
+        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
         'pluginOptions' => [
             'allowClear' => true,
         ],
@@ -31,7 +31,7 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
     <?php
     echo $form->field($model, 'child')->widget(Select2::classname(), [
         'data' => ArrayHelper::map($items, 'name', 'name'),
-        'options' => ['placeholder' => 'Select a item ...'],
+        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
         'pluginOptions' => [
             'allowClear' => true,
         ],

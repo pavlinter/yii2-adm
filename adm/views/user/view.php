@@ -31,14 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
             'email:email',
-            'role',
-            'status',
-            'created_at',
-            'updated_at',
+            [
+                'label' => 'role',
+                'value' => $model->roles($model->role),
+            ],
+            [
+                'label' => 'status',
+                'value' => $model->status($model->status),
+            ],
+            [
+                'label' => 'updated_at',
+                'value' => Yii::$app->formatter->asDate($model->updated_at),
+            ],
+            [
+                'label' => 'created_at',
+                'value' => Yii::$app->formatter->asDate($model->created_at),
+            ],
         ],
     ]) ?>
 

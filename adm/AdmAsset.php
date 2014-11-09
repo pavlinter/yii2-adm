@@ -22,7 +22,6 @@ class AdmAsset extends \yii\web\AssetBundle
         'js/app.plugin.js',
         'js/app.data.js',
         'js/slimscroll/jquery.slimscroll.min.js',
-        'js/charts/easypiechart/jquery.easy-pie-chart.js',
         'js/common.js',
 
 

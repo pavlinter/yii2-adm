@@ -7,7 +7,6 @@ use pavlinter\adm\Adm;
 /* @var $model pavlinter\adm\models\User */
 /* @var $passwordModel yii\base\DynamicModel */
 
-
 if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
     $this->title = Adm::t('user', 'My Profile');
 } else {
@@ -18,8 +17,6 @@ if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
     $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = Adm::t('user', 'Update');
 }
-
-
 ?>
 <div class="user-update">
 

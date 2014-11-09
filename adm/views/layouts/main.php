@@ -10,12 +10,9 @@ use yii\widgets\Breadcrumbs;
  */
 
 $adm = Adm::getInstance();
-$this->title = 'Title';
 ?>
 
 <?php $this->beginContent('@admRoot/views/layouts/base.php'); ?>
-
-
 
 <section class="vbox">
     <?= $this->render('_header') ?>
@@ -24,9 +21,6 @@ $this->title = 'Title';
             <?= $this->render('_left-col') ?>
             <section class="">
                 <?php if (isset($this->params['breadcrumbs'])) {?>
-
-
-
 
                     <div class="breadcrumbs-box clearfix">
                         <?php
@@ -50,6 +44,7 @@ $this->title = 'Title';
                 </aside>
             <?php }?>
         </section>
+
     </section>
     <?= $this->render('_footer') ?>
 </section>
