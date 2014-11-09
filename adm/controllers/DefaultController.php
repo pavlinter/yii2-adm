@@ -52,7 +52,8 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['user/update']);
+        //return $this->render('index');
     }
     /**
      * @inheritdoc
@@ -80,4 +81,11 @@ class DefaultController extends Controller
         Adm::getInstance()->user->logout();
         return $this->redirect(['login']);
     }
+
+    public function actionInstall()
+    {
+        Adm::getInstance()->user->logout();
+        return $this->redirect(['login']);
+    }
+
 }

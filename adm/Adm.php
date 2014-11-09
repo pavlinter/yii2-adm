@@ -22,6 +22,16 @@ class Adm extends \yii\base\Module
 {
     const VERSION = '1.0.0';
 
+    const EVENT_INNER_PROFILE_MENU  = 'innerProfileMenu';
+
+    const EVENT_FOOTER  = 'footer';
+
+    const EVENT_TOP_MENU  = 'topMenu';
+
+    const EVENT_BEFORE_LEFT_MENU  = 'beforeLeftMenu';
+
+    const EVENT_AFTER_LEFT_MENU  = 'afterLeftMenu';
+
     const EVENT_RIGHT_MENU  = 'rightMenu';
 
     public $controllerNamespace = 'pavlinter\adm\controllers';
@@ -33,6 +43,7 @@ class Adm extends \yii\base\Module
     public $widgets = [];
 
     static public $t;
+
     /**
      * @inheritdoc
      */
@@ -73,54 +84,6 @@ class Adm extends \yii\base\Module
                 ],
                 'user' => Yii::$app->user,
             ],
-            'params' => [
-                'user.passwordResetTokenExpire' => 3600,
-                'left-menu' => [
-                    'dashboard' => [
-                        'label' => '<i class="fa fa-desktop"></i><span>' . self::t("menu", "Dashboard", ['dot' => false]) . '</span>',
-                        'url' => ['/' . $id . '/default/index']
-                    ],
-                    'elfinder' => [
-                        'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files", ['dot' => false]) . '</span>',
-                        'url' => ['/' . $id . '/file/index']
-                    ],
-                    'user' => [
-                        'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Users", ['dot' => false]) . '</span>',
-                        'url' => ['/' . $id . '/user/index']
-                    ],
-                    'authItem' => [
-                        'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . Yii::t("adm/menu", "Rules", ['dot' => false]) . '</span>',
-                        'url' => "#",
-                        'items' => [
-                            [
-                                'label' => '<i class="fa fa-sign-in"></i><span>' . self::t("menu", "Auth Assignment", ['dot' => false]) . '</span>',
-                                'url' => ['/' . $id . '/auth-assignment/index']
-                            ],
-                            [
-                                'label' => '<i class="fa fa-sitemap"></i><span>' . self::t("menu", "Auth Item", ['dot' => false]) . '</span>',
-                                'url' => ['/' . $id . '/auth-item/index']
-                            ],
-                            [
-                                'label' => '<i class="fa fa-link"></i><span>' . self::t("menu", "Auth Item Child", ['dot' => false]) . '</span>',
-                                'url' => ['/' . $id . '/auth-item-child/index']
-                            ],
-                            [
-                                'label' => '<i class="fa fa-unlock"></i><span>' . self::t("menu", "Auth Rule", ['dot' => false]) . '</span>',
-                                'url' => ['/' . $id . '/auth-rule/index']
-                            ]
-
-                        ],
-                    ],
-                    'language' => [
-                        'label' => '<i class="fa fa-folder"></i><span>' . self::t("menu", "Languages", ['dot' => false]) . '</span>',
-                        'url' => ['/' . $id . '/language/index']
-                    ],
-                    'source-message' => [
-                        'label' => '<i class="fa fa-file-text-o"></i><span>' . self::t("menu", "Translations", ['dot' => false]) . '</span>',
-                        'url' => ['/' . $id . '/source-message/index']
-                    ],
-                ],
-            ],
         ], $config);
         parent::__construct($id, $parent, $config);
     }
@@ -130,6 +93,9 @@ class Adm extends \yii\base\Module
     public function init()
     {
         parent::init();
+
+        $this->params = ArrayHelper::merge($this->params(), $this->params);
+
         $this->get('user')->loginUrl = [$this->id.'/default/login'];
         Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
 
@@ -185,10 +151,10 @@ class Adm extends \yii\base\Module
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        if ($category !== '') {
-            $category = self::$t . '/' . $category;
-        } else {
+        if (empty($category)) {
             $category = self::$t;
+        } else {
+            $category = self::$t . '/' . $category;
         }
         return Yii::t($category, $message, $params, $language);
     }
@@ -201,4 +167,59 @@ class Adm extends \yii\base\Module
             return $assetUrl;
         }
     }
+    public function params()
+    {
+        return [
+            'user.passwordResetTokenExpire' => 3600,
+            'left-menu' => [
+                /*'dashboard' => [
+                    'label' => '<i class="fa fa-desktop"></i><span>' . self::t("menu", "Dashboard", ['dot' => false]) . '</span>',
+                    'url' => ['/' . $this->id . '/default/index']
+                ],*/
+                'elfinder' => [
+                    'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files", ['dot' => false]) . '</span>',
+                    'url' => ['/' . $this->id . '/file/index']
+                ],
+                'user' => [
+                    'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Users", ['dot' => false]) . '</span>',
+                    'url' => ['/' . $this->id . '/user/index'],
+                    'visible' => $this->user->can('AdmRoot'),
+                ],
+                'authItem' => [
+                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . Yii::t("adm/menu", "Rules", ['dot' => false]) . '</span>',
+                    'url' => "#",
+                    'visible' => $this->user->can('AdmRoot'),
+                    'items' => [
+                        [
+                            'label' => '<i class="fa fa-sign-in"></i><span>' . self::t("menu", "Auth Assignment", ['dot' => false]) . '</span>',
+                            'url' => ['/' . $this->id . '/auth-assignment/index']
+                        ],
+                        [
+                            'label' => '<i class="fa fa-sitemap"></i><span>' . self::t("menu", "Auth Item", ['dot' => false]) . '</span>',
+                            'url' => ['/' . $this->id . '/auth-item/index']
+                        ],
+                        [
+                            'label' => '<i class="fa fa-link"></i><span>' . self::t("menu", "Auth Item Child", ['dot' => false]) . '</span>',
+                            'url' => ['/' . $this->id . '/auth-item-child/index']
+                        ],
+                        [
+                            'label' => '<i class="fa fa-unlock"></i><span>' . self::t("menu", "Auth Rule", ['dot' => false]) . '</span>',
+                            'url' => ['/' . $this->id . '/auth-rule/index']
+                        ]
+                    ],
+                ],
+                'language' => [
+                    'label' => '<i class="fa fa-folder"></i><span>' . self::t("menu", "Languages", ['dot' => false]) . '</span>',
+                    'url' => ['/' . $this->id . '/language/index'],
+                    'visible' => $this->user->can('Adm-Language'),
+                ],
+                'source-message' => [
+                    'label' => '<i class="fa fa-file-text-o"></i><span>' . self::t("menu", "Translations", ['dot' => false]) . '</span>',
+                    'url' => ['/' . $this->id . '/source-message/index'],
+                    'visible' => $this->user->can('Adm-SourceMessage'),
+                ],
+            ],
+        ];
+    }
+
 }

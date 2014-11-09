@@ -13,8 +13,11 @@ use Yii;
  * ModelManager is used in order to create models.
  *
  * @method \pavlinter\adm\models\User createUser
- * @method \pavlinter\adm\models\LoginForm createLoginForm
  * @method \pavlinter\adm\models\User createUserQuery
+ * @method \pavlinter\adm\models\UserForm createUserForm
+ * @method \pavlinter\adm\models\UserSearch createUserSearch
+ *
+ * @method \pavlinter\adm\models\LoginForm createLoginForm
  * @method \pavlinter\adm\models\AuthItem createAuthItemQuery
  * @method \pavlinter\adm\models\AuthRule createAuthRuleQuery
  * @method \pavlinter\adm\models\AuthItemChild createAuthItemChildQuery
@@ -53,6 +56,14 @@ class ModelManager extends Manager
      * @var string|\pavlinter\adm\models\User
      */
     public $userClass = 'pavlinter\adm\models\User';
+    /**
+     * @var string|\pavlinter\adm\models\UserSearch
+     */
+    public $userSearchClass = 'pavlinter\adm\models\UserSearch';
+    /**
+     * @var string|\pavlinter\adm\models\UserForm
+     */
+    public $userFormClass = 'pavlinter\adm\models\UserForm';
     /**
      * @var string|\pavlinter\adm\models\AuthItem
      */

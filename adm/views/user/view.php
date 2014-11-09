@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use pavlinter\adm\Adm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model pavlinter\adm\models\User */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Adm::t('user', 'Users'), 'url' => ['index']];

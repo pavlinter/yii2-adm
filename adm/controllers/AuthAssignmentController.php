@@ -15,6 +15,9 @@ use yii\filters\VerbFilter;
  */
 class AuthAssignmentController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [

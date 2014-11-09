@@ -5,6 +5,7 @@ namespace pavlinter\adm\controllers;
 use pavlinter\adm\Adm;
 use pavlinter\adm\filters\AccessControl;
 use Yii;
+use yii\base\DynamicModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,6 +15,9 @@ use yii\filters\VerbFilter;
  */
 class AuthRuleController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -59,13 +63,31 @@ class AuthRuleController extends Controller
     {
         $model = Adm::getInstance()->manager->createAuthRule();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $dynamicModel = new DynamicModel(['ruleNamespace']);
+        $dynamicModel->addRule(['ruleNamespace'],function($attribute, $params) use($dynamicModel){
+            $this->validateClass($dynamicModel, $attribute, ['extends' => \yii\rbac\Rule::className()]);
+        });
+        $post = Yii::$app->request->post();
+
+
+        if ($model->load($post) && $dynamicModel->load($post)) {
+            if ($model->validate() && $dynamicModel->validate()) {
+                if (!empty($dynamicModel->ruleNamespace)) {
+                    $ruleModel = new $dynamicModel->ruleNamespace;
+                    $time = time();
+                    $ruleModel->createdAt = $time;
+                    $ruleModel->updatedAt = $time;
+                    $model->data = serialize($ruleModel);
+                }
+                $model->save(false);
+                return $this->redirect(['index']);
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+            'dynamicModel' => $dynamicModel,
+        ]);
+
     }
 
     /**
@@ -78,13 +100,30 @@ class AuthRuleController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $dynamicModel = new DynamicModel(['ruleNamespace']);
+        $dynamicModel->addRule(['ruleNamespace'],function($attribute, $params) use($dynamicModel){
+            $this->validateClass($dynamicModel, $attribute, ['extends' => \yii\rbac\Rule::className()]);
+        });
+        $post = Yii::$app->request->post();
+
+
+        if ($model->load($post) && $dynamicModel->load($post)) {
+            if ($model->validate() && $dynamicModel->validate()) {
+                if (!empty($dynamicModel->ruleNamespace)) {
+                    $ruleModel = new $dynamicModel->ruleNamespace;
+                    $time = time();
+                    $ruleModel->createdAt = $time;
+                    $ruleModel->updatedAt = $time;
+                    $model->data = serialize($ruleModel);
+                }
+                $model->save(false);
+                return $this->redirect(['index']);
+            }
         }
+        return $this->render('update', [
+            'model' => $model,
+            'dynamicModel' => $dynamicModel,
+        ]);
     }
 
     /**
@@ -117,4 +156,34 @@ class AuthRuleController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * An inline validator that checks if the attribute value refers to an existing class name.
+     * If the `extends` option is specified, it will also check if the class is a child class
+     * of the class represented by the `extends` option.
+     * @param string $attribute the attribute being validated
+     * @param array $params the validation options
+     */
+    public function validateClass($th, $attribute, $params)
+    {
+
+        $class = $th->$attribute;
+
+        try {
+            if (class_exists($class)) {
+                if (isset($params['extends'])) {
+                    if (ltrim($class, '\\') !== ltrim($params['extends'], '\\') && !is_subclass_of($class, $params['extends'])) {
+                        $th->addError($attribute, "'$class' must extend from {$params['extends']} or its child class.");
+                    }
+                }
+
+            } else {
+
+                $th->addError($attribute, "Class '$class' does not exist or has syntax error.");
+            }
+        } catch (\Exception $e) {
+            $th->addError($attribute, "Class '$class' does not exist or has syntax error.");
+        }
+    }
+
+
 }

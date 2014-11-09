@@ -14,28 +14,39 @@ $this->title = 'Title';
 ?>
 
 <?php $this->beginContent('@admRoot/views/layouts/base.php'); ?>
+
+
+
 <section class="vbox">
     <?= $this->render('_header') ?>
     <section>
         <section class="hbox stretch">
             <?= $this->render('_left-col') ?>
-            <section>
-                <div class="breadcrumbs-box clearfix">
-                    <?= Breadcrumbs::widget([
-                        'homeLink' => [
-                            'label' => Yii::t("adm", "Home", ['dot' => false]),  // required
-                            'url' => ['/' . $adm->id],
-                        ],
-                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                    ]) ?>
-                </div>
+            <section class="">
+                <?php if (isset($this->params['breadcrumbs'])) {?>
+
+
+
+
+                    <div class="breadcrumbs-box clearfix">
+                        <?php
+                        echo Breadcrumbs::widget([
+                            'homeLink' => [
+                                'label' => Yii::t("adm", "Home", ['dot' => false]),  // required
+                                'url' => ['/' . $adm->id],
+                            ],
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]);
+                         ?>
+                    </div>
+                <?php }?>
                 <div class="wrapper">
                     <?= $content; ?>
                 </div>
             </section>
-            <?php if ($adm->hasEventHandlers($adm::EVENT_RIGHT_MENU)) {?>
+            <?php if ($adm->hasEventHandlers(Adm::EVENT_RIGHT_MENU)) {?>
                 <aside class="bg-light lter b-l aside-sm">
-                    <div class="wrapper"><?php $adm->trigger($adm::EVENT_RIGHT_MENU); ?></div>
+                    <div class="wrapper"><?php $adm->trigger(Adm::EVENT_RIGHT_MENU); ?></div>
                 </aside>
             <?php }?>
         </section>

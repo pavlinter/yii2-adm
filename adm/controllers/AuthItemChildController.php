@@ -14,6 +14,9 @@ use yii\filters\VerbFilter;
  */
 class AuthItemChildController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [

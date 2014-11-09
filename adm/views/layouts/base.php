@@ -4,7 +4,6 @@ use pavlinter\adm\AdmAsset;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\Html;
 
-
 /**
  * @var \yii\web\View $this
  * @var string $content

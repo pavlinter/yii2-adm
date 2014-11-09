@@ -28,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
     const ROLE_USER = 10;
+    const ROLE_ADM = 5;
 
     /**
      * @inheritdoc
@@ -53,14 +54,70 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+
+            [['username'], 'unique'],
+            [['email'], 'email'],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => array_keys(self::status())],
 
             ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => [self::ROLE_USER]],
+            ['role', 'in', 'range' => array_keys(self::roles())],
         ];
     }
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['adm-insert'] = ['username', 'email', 'status', 'role'];
+        $scenarios['adm-updateOwn'] = ['username', 'email'];
+        $scenarios['adm-update'] = ['username', 'email', 'status', 'role'];
 
+        return $scenarios;
+    }
+    /**
+     * @param null $key
+     * @param null $default
+     * @return array|null
+     */
+    public static function roles($key = null, $default = null)
+    {
+        $roles = [
+            self::ROLE_USER => Adm::t('user', 'User Role'),
+            self::ROLE_ADM  => Adm::t('user', 'Adm Role'),
+        ];
+        if ($key !== null) {
+            if (isset($roles[$key])) {
+                return $roles[$key];
+            }
+            return $default;
+        }
+
+        return $roles;
+    }
+
+    /**
+     * @param null $key
+     * @param null $default
+     * @return array|null
+     */
+    public static function status($key = null, $default = null)
+    {
+        $status = [
+            self::STATUS_ACTIVE     => Adm::t('user', 'Active Status'),
+            self::STATUS_DELETED    => Adm::t('user', 'Deleted Status'),
+        ];
+        if ($key !== null) {
+            if (isset($status[$key])) {
+                return $status[$key];
+            }
+            return $default;
+        }
+
+        return $status;
+    }
     /**
      * @inheritdoc
      */

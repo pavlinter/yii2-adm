@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthRule */
+/* @var $dynamicModel yii\base\DynamicModel */
 
 $this->title = Adm::t('auth', 'Update {modelClass}: ', [
     'modelClass' => 'Auth Rule',
@@ -19,6 +20,7 @@ $this->params['breadcrumbs'][] = Adm::t('auth', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'dynamicModel' => $dynamicModel,
     ]) ?>
 
 </div>

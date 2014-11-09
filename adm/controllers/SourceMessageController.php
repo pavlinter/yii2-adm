@@ -16,6 +16,9 @@ use yii\filters\VerbFilter;
  */
 class SourceMessageController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -24,7 +27,7 @@ class SourceMessageController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['AdmSourceMessage'],
+                        'roles' => ['Adm-SourceMessage'],
                     ],
                 ],
             ],

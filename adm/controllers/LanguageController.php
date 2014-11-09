@@ -16,6 +16,9 @@ use yii\filters\VerbFilter;
  */
 class LanguageController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -24,7 +27,7 @@ class LanguageController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['AdmLanguage'],
+                        'roles' => ['Adm-Language'],
                     ],
                 ],
             ],

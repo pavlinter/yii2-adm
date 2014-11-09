@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthRule */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $dynamicModel yii\base\DynamicModel */
+
 ?>
 
 <div class="auth-rule-form">
@@ -14,6 +16,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+
+    <?= $form->field($dynamicModel, 'ruleNamespace')->textInput() ?>
 
     <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
 

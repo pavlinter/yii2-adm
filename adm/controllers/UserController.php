@@ -2,10 +2,14 @@
 
 namespace pavlinter\adm\controllers;
 
+use pavlinter\adm\Adm;
+use pavlinter\adm\filters\AccessControl;
 use Yii;
 use pavlinter\adm\models\User;
 use pavlinter\adm\models\UserSearch;
+use yii\base\DynamicModel;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -14,9 +18,26 @@ use yii\filters\VerbFilter;
  */
 class UserController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['AdmRoot'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['Adm-User'],
+                        'actions' => ['update'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -32,7 +53,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = Adm::getInstance()->manager->createUserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -60,12 +81,26 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = Adm::getInstance()->manager->createUser();
+        $model->setScenario('adm-insert');
+
+        $passwordModel = DynamicModel::validateData(['password', 'password2'], [
+            [['password'], 'required'],
+            [['password', 'password2'], 'string', 'min' => 6],
+            ['password2', 'compare', 'compareAttribute' => 'password'],
+        ]);
+
+        $post = Yii::$app->request->post();
+        if ($model->load($post) && $passwordModel->load($post)) {
+            if ($model->validate() && $passwordModel->validate()) {
+                $model->setPassword($passwordModel->password);
+                $model->save(false);
+                return $this->redirect(['index']);
+            }
         }
         return $this->render('create', [
             'model' => $model,
+            'passwordModel' => $passwordModel,
         ]);
     }
 
@@ -75,14 +110,46 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id = null)
     {
+        if ($id === null) {
+            $id = Adm::getInstance()->user->getId();
+        }
+        /* @var $model \pavlinter\adm\models\User */
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
+            $model->setScenario('adm-updateOwn');
+        } elseif (Adm::getInstance()->user->can('AdmRoot')) {
+            $model->setScenario('adm-update');
+        } else {
+            throw new ForbiddenHttpException('Access denied');
+        }
+
+        $passwordModel = DynamicModel::validateData(['password', 'password2'], [
+            [['password', 'password2'], 'string', 'min' => 6],
+            ['password2', 'compare', 'compareAttribute' => 'password'],
+        ]);
+
+        $post = Yii::$app->request->post();
+        if ($model->load($post) && $passwordModel->load($post)) {
+            if ($model->validate() && $passwordModel->validate()) {
+                if (!empty($passwordModel->password)) {
+                    $model->setPassword($passwordModel->password);
+                }
+                $model->save(false);
+                if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
+
+                    Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
+                    return $this->refresh();
+                } else {
+                    return $this->redirect(['index']);
+                }
+            }
         }
         return $this->render('update', [
             'model' => $model,
+            'passwordModel' => $passwordModel,
         ]);
     }
 
@@ -108,7 +175,9 @@ class UserController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        $model = Adm::getInstance()->manager->createUserQuery('findOne', $id);
+
+        if ($model !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

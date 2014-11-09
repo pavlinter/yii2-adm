@@ -18,19 +18,17 @@ class AdmAsset extends \yii\web\AssetBundle
         'css/style.css',
     ];
     public $js = [
-        'js/charts/sparkline/jquery.sparkline.min.js',
         'js/app.js',
         'js/app.plugin.js',
         'js/app.data.js',
         'js/slimscroll/jquery.slimscroll.min.js',
-        'js/charts/sparkline/jquery.sparkline.min.js',
         'js/charts/easypiechart/jquery.easy-pie-chart.js',
-        'js/charts/morris/raphael-min.js',
-        'js/charts/morris/morris.min.js',
         'js/common.js',
+
 
     ];
     public $depends = [
+        'pavlinter\adm\AdmIeAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
