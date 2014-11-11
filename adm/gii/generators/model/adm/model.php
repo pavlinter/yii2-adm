@@ -40,6 +40,16 @@ use pavlinter\translation\TranslationBehavior;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+<?php if ($generator->modelClassQuery): ?>
+    /**
+    * @inheritdoc
+    * @return <?= $className ?>Query
+    */
+    public static function find()
+    {
+        return new <?= $className ?>Query(get_called_class());
+    }
+<?php endif; ?>
 <?php if ($generator->modelLangClass): ?>
     /**
      * @inheritdoc

@@ -28,11 +28,12 @@ class Generator extends \yii\gii\Generator
     public $ns = 'app\models';
     public $tableName;
     public $modelClass;
+    public $modelClassQuery = true;
     public $modelLangClass;
     public $baseClass = 'yii\db\ActiveRecord';
     public $generateRelations = true;
     public $generateLabelsFromComments = false;
-    public $useTablePrefix = false;
+    public $useTablePrefix = true;
 
     /**
      * @inheritdoc
@@ -81,6 +82,7 @@ class Generator extends \yii\gii\Generator
             [['modelLangClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['generateRelations', 'generateLabelsFromComments'], 'boolean'],
+            [['modelClassQuery'], 'boolean'],
             [['enableI18N'], 'boolean'],
             [['useTablePrefix'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -193,6 +195,14 @@ class Generator extends \yii\gii\Generator
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $className . '.php',
                 $this->render('model.php', $params)
             );
+
+            if ($this->modelClassQuery) {
+                $files[] = new CodeFile(
+                    Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $className . 'Query.php',
+                    $this->render('modelScopes.php', $params)
+                );
+            }
+
         }
 
         return $files;
