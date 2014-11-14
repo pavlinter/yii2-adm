@@ -2,13 +2,17 @@
 
 namespace pavlinter\adm\widgets;
 
-
-use dosamigos\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
+use pavlinter\adm\Adm;
 use Yii;
+use mihaildev\ckeditor\CKEditor;
 use yii\widgets\InputWidget;
 
 class Redactor extends InputWidget
 {
+    /**
+     * @var $form \yii\widgets\ActiveForm
+     */
     public $form;
 
     public function init()
@@ -18,10 +22,8 @@ class Redactor extends InputWidget
 
     public function run()
     {
-        parent:: init();
         return $this->form->field($this->model, $this->attribute)->widget(CKEditor::className(), [
-            'options' => ['rows' => 6],
-            'preset' => 'basic'
+            'editorOptions' => ElFinder::ckeditorOptions(Adm::getInstance()->id.'/elfinder',[/* Some CKEditor Options */]),
         ]);
     }
 }

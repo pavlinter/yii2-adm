@@ -56,27 +56,7 @@ class Adm extends \yii\base\Module
                 '@admAsset' => '@admRoot/assets',
             ],
             'controllerMap' => [
-                'elfinder' => [
-                    'class' => 'mihaildev\elfinder\Controller',
-                    'access' => ['@', '?'], //глобальный доступ к фаил менеджеру @ - для авторизорованных , ? - для гостей , чтоб открыть всем ['@', '?']
-                    'disabledCommands' => ['netmount'], //отключение ненужных команд https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#commands
-                    'roots' => [
-                        [
-                            'baseUrl'=>'@web',
-                            'basePath'=>'@webroot',
-                            'path' => 'files',
-                            'name' => 'Global',
-                            'options' => [
-                                'uploadMaxSize' => '1G',
-                            ],
-                        ],
-                        [
-                            'class' => 'mihaildev\elfinder\UserPath',
-                            'path'  => 'files/user_{id}',
-                            'name'  => 'My Documents'
-                        ],
-                    ]
-                ],
+                'elfinder' => true
             ],
             'components' => [
                 'manager' => [
@@ -85,6 +65,8 @@ class Adm extends \yii\base\Module
                 'user' => Yii::$app->user,
             ],
         ], $config);
+
+
         parent::__construct($id, $parent, $config);
     }
     /**
@@ -96,8 +78,14 @@ class Adm extends \yii\base\Module
         self::$t = $this->tCategory;
         $this->params = ArrayHelper::merge($this->params(), $this->params);
 
+        if (is_callable($this->controllerMap['elfinder'])) {
+            $this->controllerMap['elfinder'] = call_user_func($this->controllerMap['elfinder'], $this->elfinderConfig());
+        } else if ($this->controllerMap['elfinder'] === true) {
+            $this->controllerMap['elfinder'] = $this->elfinderConfig();
+        }
+
         $this->get('user')->loginUrl = [$this->id.'/default/login'];
-        //Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
+        Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
 
         $this->widgets = ArrayHelper::merge([
             'FileManager' => '\pavlinter\adm\widgets\FileManager',
@@ -220,6 +208,35 @@ class Adm extends \yii\base\Module
                 ],
             ],
         ];
+    }
+
+    public function elfinderConfig()
+    {
+        $config = [
+            'class' => 'mihaildev\elfinder\Controller',
+            'access' => ['AdmRoot', 'Adm-User'],
+            'disabledCommands' => ['netmount'], // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#commands
+        ];
+
+        if ($this->user->can('AdmRoot')) {
+            $config['roots'][] = [
+                'baseUrl'=>'@web',
+                'basePath'=>'@webroot',
+                'path' => 'files',
+                'name' => 'Global',
+                'options' => [
+                    'uploadMaxSize' => '1G',
+                ],
+            ];
+        } else {
+            $config['roots'][] = [
+                'class' => 'mihaildev\elfinder\UserPath',
+                'path'  => 'files/user_{id}',
+                'name'  => 'Files'
+            ];
+        }
+
+        return $config;
     }
 
 }
