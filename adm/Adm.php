@@ -84,6 +84,10 @@ class Adm extends \yii\base\Module
             $this->controllerMap['elfinder'] = $this->elfinderConfig();
         }
 
+        if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
+            Yii::$app->getUrlManager()->onlyFriendlyParams = false;
+        }
+
         $this->get('user')->loginUrl = [$this->id.'/default/login'];
         Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
 
@@ -166,7 +170,8 @@ class Adm extends \yii\base\Module
                 ],*/
                 'elfinder' => [
                     'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files", ['dot' => false]) . '</span>',
-                    'url' => ['/' . $this->id . '/file/index']
+                    'url' => ['/' . $this->id . '/file/index'],
+                    'visible' => $this->user->can('Adm-FilesRoot') || $this->user->can('Adm-FilesAdmin'),
                 ],
                 'user' => [
                     'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Users", ['dot' => false]) . '</span>',
@@ -204,7 +209,7 @@ class Adm extends \yii\base\Module
                 'source-message' => [
                     'label' => '<i class="fa fa-file-text-o"></i><span>' . self::t("menu", "Translations", ['dot' => false]) . '</span>',
                     'url' => ['/' . $this->id . '/source-message/index'],
-                    'visible' => $this->user->can('Adm-SourceMessage'),
+                    'visible' => $this->user->can('Adm-Transl'),
                 ],
             ],
         ];
@@ -214,11 +219,11 @@ class Adm extends \yii\base\Module
     {
         $config = [
             'class' => 'mihaildev\elfinder\Controller',
-            'access' => ['AdmRoot', 'Adm-User'],
+            'access' => ['Adm-FilesRoot', 'Adm-FilesAdmin'],
             'disabledCommands' => ['netmount'], // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#commands
         ];
 
-        if ($this->user->can('AdmRoot')) {
+        if ($this->user->can('Adm-FilesRoot')) {
             $config['roots'][] = [
                 'baseUrl'=>'@web',
                 'basePath'=>'@webroot',
@@ -228,14 +233,15 @@ class Adm extends \yii\base\Module
                     'uploadMaxSize' => '1G',
                 ],
             ];
-        } else {
+        }
+
+        if ($this->user->can('Adm-FilesRoot')) {
             $config['roots'][] = [
                 'class' => 'mihaildev\elfinder\UserPath',
                 'path'  => 'files/user_{id}',
                 'name'  => 'Files'
             ];
         }
-
         return $config;
     }
 

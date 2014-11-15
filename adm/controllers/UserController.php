@@ -84,7 +84,7 @@ class UserController extends Controller
         $model->setScenario('adm-insert');
 
         $passwordModel = DynamicModel::validateData(['password', 'password2'], [
-            [['password'], 'required'],
+            [['password', 'password2'], 'required'],
             [['password', 'password2'], 'string', 'min' => 6],
             ['password2', 'compare', 'compareAttribute' => 'password'],
         ]);

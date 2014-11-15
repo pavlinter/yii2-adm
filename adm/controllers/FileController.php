@@ -23,9 +23,8 @@ class FileController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['AdmRoot'],
+                        'roles' => ['Adm-FilesRoot', 'Adm-FilesAdmin'],
                     ],
                 ],
             ],

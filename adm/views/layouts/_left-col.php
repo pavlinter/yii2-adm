@@ -17,7 +17,7 @@ foreach ($adm->params['left-menu'] as $name => $item) {
         <section class="pleft-col">
             <div class="">
                 <?php $adm->trigger(Adm::EVENT_BEFORE_LEFT_MENU); ?>
-                <nav class="nav-primary hidden-xs" data-ride="collapse">
+                <nav class="nav-primary hidden-xs adm-nav" data-ride="collapse">
                     <?php
                     echo Menu::widget([
                         'submenuTemplate' => "\n<ul class=\"nav none dker\">\n{items}\n</ul>\n",

@@ -5,6 +5,7 @@ namespace pavlinter\adm\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 
 /**
  * UserSearch represents the model behind the search form about `common\models\User`.
@@ -17,7 +18,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['role', 'status'], 'integer'],
             [['username', 'email'], 'safe'],
         ];
     }
@@ -51,11 +52,8 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
             'role' => $this->role,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])

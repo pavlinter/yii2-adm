@@ -22,21 +22,31 @@ $this->params['breadcrumbs'][] = $this->title;
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php \yii\widgets\Pjax::begin(); ?>
-
     <?= Adm::widget('GridView',[
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'username',
             'email:email',
             [
-                'attribute'=>'status',
-                'vAlign'=>'middle',
-                'value'=>function ($model, $key, $index, $widget) {
+                'attribute' => 'role',
+                'vAlign' => 'middle',
+                'value' => function ($model, $key, $index, $widget) {
+                    return $model->roles($model->role);
+                },
+                'filterType' => '\kartik\widgets\Select2',
+                'filter'=> $searchModel->roles(),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' =>true ],
+                ],
+                'filterInputOptions' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'format' => 'raw'
+            ],
+            [
+                'attribute' => 'status',
+                'vAlign' => 'middle',
+                'value' => function ($model, $key, $index, $widget) {
                     return $model->status($model->status);
                 },
                 'filterType' => '\kartik\widgets\Select2',
@@ -45,20 +55,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pluginOptions' => ['allowClear' =>true ],
                 ],
                 'filterInputOptions' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-                'format'=>'raw'
-            ],
-            [
-                'attribute' => 'created_at',
-                'value' => function ($model, $index, $widget) {
-                    return Yii::$app->formatter->asDate($model->created_at);
-                }
+                'format' => 'raw'
             ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
-    <?php \yii\widgets\Pjax::end(); ?>
+
 
 </div>
 

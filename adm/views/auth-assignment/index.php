@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= Adm::widget('GridView',[
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -37,36 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
-            /*[
-                'attribute' => 'user_id',
-                'format'=>'raw',
-                'value'=> function ($model, $index, $widget) {
-                    if ($model->user) {
-                        return $model->user->username;
-                    }
-
-                },
-                'filterOptions' => [
-                    'style' => 'padding:8px 1px;',
-                ],
-                'filterType' => GridView::FILTER_SELECT2,
-                'filter'=> [],
-                'filterWidgetOptions' => [
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'minimumInputLength' => 3,
-                        'ajax' => [
-                            'url' => Url::to(['find-user']),
-                            'dataType' => 'json',
-                            'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-                            'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-                        ],
-                    ],
-                ],
-                'options' => [
-                    'style' => 'width: 120px;',
-                ],
-            ],*/
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
@@ -76,9 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]);?>
-
-
-
 
 
 </div>

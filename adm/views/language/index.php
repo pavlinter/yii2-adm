@@ -1,7 +1,6 @@
 <?php
 
 use pavlinter\adm\Adm;
-use pavlinter\adm\widgets\GridView;
 use yii\helpers\Html;
 
 

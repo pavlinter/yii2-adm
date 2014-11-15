@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+
     <?= Adm::widget('GridView',[
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -38,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]);?>
+
 
 
 </div>

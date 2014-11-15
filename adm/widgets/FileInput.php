@@ -28,7 +28,7 @@ class FileInput extends InputWidget
             'buttonTag'     => 'a',
             'buttonName'    => '',
             'buttonOptions' => [
-                'class' => 'fa fa-folder-open filemanager-btn',
+                'class' => 'glyphicon glyphicon-folder-open filemanager-btn',
                 'href'  => 'javascript:void(0);'
             ],
             'multiple'      => false

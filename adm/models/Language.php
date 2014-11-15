@@ -3,6 +3,8 @@
 namespace pavlinter\adm\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%language}}".
@@ -15,8 +17,22 @@ use Yii;
  * @property integer $active
  * @property string $updated_at
  */
-class Language extends \yii\db\ActiveRecord
+class Language extends ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */

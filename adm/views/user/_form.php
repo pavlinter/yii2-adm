@@ -34,9 +34,9 @@ use pavlinter\adm\Adm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($passwordModel, 'password')->passwordInput() ?>
+    <?= $form->field($passwordModel, 'password')->passwordInput()->label(Adm::t('user', 'Password')) ?>
 
-    <?= $form->field($passwordModel, 'password2')->passwordInput() ?>
+    <?= $form->field($passwordModel, 'password2')->passwordInput()->label(Adm::t('user', 'Confirm Password')) ?>
 
     <?php if (!Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {?>
 

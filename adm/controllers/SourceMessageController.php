@@ -27,7 +27,13 @@ class SourceMessageController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['Adm-SourceMessage'],
+                        'roles' => ['Adm-Transl'],
+                        'actions' => ['index', 'create', 'fulledit', 'delete' , 'dot-translation'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['Adm-Transl:Html'],
+                        'actions' => ['update'],
                     ],
                 ],
             ],
@@ -48,7 +54,7 @@ class SourceMessageController extends Controller
             'dot-translation' => [
                 'class' => 'pavlinter\translation\TranslationAction',
                 'adminLink' => ['/'.Adm::getInstance()->id.'/source-message/fulledit'],
-                'htmlEncode' => false,
+                'htmlEncode' => !Adm::getInstance()->user->can('Adm-Transl:Html'),
             ],
         ];
     }
