@@ -119,11 +119,15 @@ class UserController extends Controller
         ]);
     }
 
+
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
+     * @param null $id
+     * @return string|\yii\web\Response
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionUpdate($id = null)
     {
@@ -176,8 +180,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        if (Adm::getInstance()->user->getId() != $id) {
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 

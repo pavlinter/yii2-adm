@@ -10,9 +10,8 @@ use pavlinter\adm\Adm;
 
 $this->title = Adm::t('user', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
-<div class="user-index" style="height: 1000px;">
+<div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -59,11 +58,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw'
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                    'delete' => function ($url, $model) {
+                        if ($model->id == Adm::getInstance()->user->getId()) {
+                            return null;
+                        }
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                            'title' => Yii::t('yii', 'Delete'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                        ]);
+                    }
+                ],
+
+            ],
         ],
     ]); ?>
-
-
-
 </div>
 
