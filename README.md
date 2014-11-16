@@ -23,7 +23,7 @@ php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
 Запустить миграцию
 -------------
 ```php
-    yii migrate --migrationPath=@vendor/pavlinter/adm/migrations
+    yii migrate --migrationPath=@vendor/pavlinter/yii2-adm/adm/migrations
 ```
 
 Настройка
@@ -79,6 +79,3 @@ php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
     ],
 ],
 ```
-
-Использование
------
