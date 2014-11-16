@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'active')->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('language', 'Create') : Adm::t('language', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Adm::t('language', 'Create') : Adm::t('language', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

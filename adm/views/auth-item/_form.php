@@ -47,7 +47,7 @@ $rules = Adm::getInstance()->manager->createAuthRuleQuery()->select('name')->asA
     <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

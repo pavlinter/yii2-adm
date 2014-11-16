@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Adm::t('language', 'Create Language'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Adm::t('language', 'Create Language'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= Adm::widget('GridView',[

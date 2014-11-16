@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Adm::t('auth', 'Create Auth Item'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Adm::t('auth', 'Create Auth Item'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
 

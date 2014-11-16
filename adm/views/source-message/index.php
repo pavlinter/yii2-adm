@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?= Html::a(Adm::t('source-message', 'Create Source Message'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Adm::t('source-message', 'Create Source Message'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= Adm::widget('GridView',[

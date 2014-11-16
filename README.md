@@ -5,20 +5,16 @@ Yii2: Adm CMS
 ------------
 Удобнее всего установить это расширение через [composer](http://getcomposer.org/download/).
 
-Либо запустить
-
 ```
-php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
+"pavlinter/yii2-adm": "@dev",
+"pavlinter/yii2-dot-translation": "@dev",
+"pavlinter/yii2-url-manager": "@dev",
+"mihaildev/yii2-ckeditor": "1.*",
+"mihaildev/yii2-elfinder": "1.*",
+"kartik-v/yii2-grid": "2.*",
+"kartik-v/yii2-widgets": "3.*",
+"kartik-v/yii2-checkbox-x": "1.*"
 ```
-
-или добавить
-
-```
-"pavlinter/yii2-adm": "dev-master"
-```
-
-в разделе require вашего composer.json файла.
-
 
 Настройка
 -------------
@@ -55,7 +51,7 @@ php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
     'i18n' => [
         'class'=>'pavlinter\translation\I18N', //https://github.com/pavlinter/yii2-dot-translation
         'access' => function () {
-            return Yii::$app->getUser()->can('Adm-SourceMessage');
+            return Yii::$app->getUser()->can('Adm-Transl');
         },
         'dotCategory' => ['app*' => false],
         'dialog' => 'jq',

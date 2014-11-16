@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Adm::t('auth', 'Create {modelClass}', [
     'modelClass' => 'Auth Rule',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+]), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
 

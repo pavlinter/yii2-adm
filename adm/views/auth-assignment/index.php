@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Adm::t('auth', 'Create {modelClass}', [
     'modelClass' => 'Auth Assignment',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+]), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= Adm::widget('GridView',[
