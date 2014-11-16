@@ -1,5 +1,6 @@
 <?php
 
+use pavlinter\adm\widgets\GridView;
 use yii\helpers\Html;
 use pavlinter\adm\Adm;
 
@@ -35,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model, $key, $index, $widget) {
                     return $model->roles($model->role);
                 },
-                'filterType' => '\kartik\widgets\Select2',
+                'filterType' => GridView::FILTER_SELECT2,
                 'filter'=> $searchModel->roles(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' =>true ],
@@ -49,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model, $key, $index, $widget) {
                     return $model->status($model->status);
                 },
-                'filterType' => '\kartik\widgets\Select2',
+                'filterType' => GridView::FILTER_SELECT2,
                 'filter'=> $searchModel->status(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' =>true ],

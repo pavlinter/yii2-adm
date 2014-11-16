@@ -7,6 +7,16 @@ class m141116_114354_rbac_data extends Migration
 {
     public function up()
     {
+        $this->batchInsert('{{%auth_rule}}', ['name', 'data', 'created_at', 'updated_at'],[
+            [
+                'Adm-IsOwnUser',
+                'O:30:"pavlinter\\adm\\rbac\\OwnUserRule":3:{s:4:"name";s:9:"isOwnUser";s:9:"createdAt";i:'.time().';s:9:"updatedAt";i:'.time().';}',
+                time(),
+                time(),
+            ],
+
+        ]);
+
         $this->batchInsert('{{%auth_item}}', ['name', 'type', 'description', 'rule_name', 'data', 'created_at', 'updated_at'],[
             [
                 'AdmRoot',
@@ -145,20 +155,10 @@ class m141116_114354_rbac_data extends Migration
             ],
         ]);
 
-        $this->batchInsert('{{%auth_rule}}', ['name', 'data', 'created_at', 'updated_at'],[
-            [
-                'Adm-IsOwnUser',
-                'O:30:"pavlinter\\adm\\rbac\\OwnUserRule":3:{s:4:"name";s:9:"isOwnUser";s:9:"createdAt";i:'.time().';s:9:"updatedAt";i:'.time().';}',
-                time(),
-                time(),
-            ],
-
-        ]);
-
         $this->insert('{{%user}}',[
             'username' => 'adm',
             'auth_key' => '',
-            'auth_key' => '$2y$13$ou51/VBEdXAQcLqwPYOFduppKv2EyE/KSGJkDrJZhPQyf3drRmKpu',
+            'password_hash' => '$2y$13$ou51/VBEdXAQcLqwPYOFduppKv2EyE/KSGJkDrJZhPQyf3drRmKpu',
             'email' => 'adm@adm.com',
             'role' => 5,
             'status' => 10,

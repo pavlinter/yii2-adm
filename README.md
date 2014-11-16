@@ -20,12 +20,6 @@ php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
 в разделе require вашего composer.json файла.
 
 
-Запустить миграцию
--------------
-```php
-    yii migrate --migrationPath=@vendor/pavlinter/yii2-adm/adm/migrations
-```
-
 Настройка
 -------------
 ```php
@@ -42,9 +36,6 @@ php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
     ],
     'gridview'=> [
         'class'=>'\kartik\grid\Module',
-    ],
-    'dynagrid'=> [
-        'class'=>'\kartik\dynagrid\Module',
     ],
 ],
 'components' => [
@@ -78,4 +69,10 @@ php composer.phar require --prefer-dist pavlinter/yii2-adm "dev-master"
         ],
     ],
 ],
+```
+
+Запустить миграцию
+-------------
+```php
+yii migrate --migrationPath=@vendor/pavlinter/yii2-adm/adm/migrations
 ```
