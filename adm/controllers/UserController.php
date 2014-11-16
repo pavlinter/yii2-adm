@@ -7,6 +7,7 @@ use pavlinter\adm\filters\AccessControl;
 use Yii;
 use pavlinter\adm\models\User;
 use yii\base\DynamicModel;
+use yii\rbac\Item;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -83,23 +84,38 @@ class UserController extends Controller
         $model = Adm::getInstance()->manager->createUser();
         $model->setScenario('adm-insert');
 
-        $passwordModel = DynamicModel::validateData(['password', 'password2'], [
+        $dynamicModel = DynamicModel::validateData(['password', 'password2', 'assignment'], [
             [['password', 'password2'], 'required'],
             [['password', 'password2'], 'string', 'min' => 6],
             ['password2', 'compare', 'compareAttribute' => 'password'],
+            ['assignment', 'exist', 'targetClass' =>Adm::getInstance()->manager->authItemClass , 'targetAttribute' => 'name', 'filter' => ['type' => Item::TYPE_ROLE]],
         ]);
 
         $post = Yii::$app->request->post();
-        if ($model->load($post) && $passwordModel->load($post)) {
-            if ($model->validate() && $passwordModel->validate()) {
-                $model->setPassword($passwordModel->password);
-                $model->save(false);
-                return $this->redirect(['index']);
+        if ($model->load($post) && $dynamicModel->load($post)) {
+            if ($model->validate() && $dynamicModel->validate()) {
+                $model->setPassword($dynamicModel->password);
+                if ($model->save(false)) {
+                    if (!empty($dynamicModel->assignment)) {
+                        $modelAssignment = Adm::getInstance()->manager->createAuthAssignment();
+                        $modelAssignment->item_name = $dynamicModel->assignment;
+                        $modelAssignment->user_id = (string)$model->id;
+                        if ($modelAssignment->save()) {
+                            return $this->redirect(['index']);
+                        }
+                    } else {
+                        return $this->redirect(['index']);
+                    }
+                }
             }
         }
+
+        $authItems = Adm::getInstance()->manager->createAuthItemQuery('find')->select(['name'])->where(['type' => Item::TYPE_ROLE])->all();
+
         return $this->render('create', [
             'model' => $model,
-            'passwordModel' => $passwordModel,
+            'dynamicModel' => $dynamicModel,
+            'authItems' => $authItems,
         ]);
     }
 
@@ -125,16 +141,16 @@ class UserController extends Controller
             throw new ForbiddenHttpException('Access denied');
         }
 
-        $passwordModel = DynamicModel::validateData(['password', 'password2'], [
+        $dynamicModel = DynamicModel::validateData(['password', 'password2'], [
             [['password', 'password2'], 'string', 'min' => 6],
             ['password2', 'compare', 'compareAttribute' => 'password'],
         ]);
 
         $post = Yii::$app->request->post();
-        if ($model->load($post) && $passwordModel->load($post)) {
-            if ($model->validate() && $passwordModel->validate()) {
-                if (!empty($passwordModel->password)) {
-                    $model->setPassword($passwordModel->password);
+        if ($model->load($post) && $dynamicModel->load($post)) {
+            if ($model->validate() && $dynamicModel->validate()) {
+                if (!empty($dynamicModel->password)) {
+                    $model->setPassword($dynamicModel->password);
                 }
                 $model->save(false);
                 if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
@@ -148,7 +164,7 @@ class UserController extends Controller
         }
         return $this->render('update', [
             'model' => $model,
-            'passwordModel' => $passwordModel,
+            'dynamicModel' => $dynamicModel,
         ]);
     }
 

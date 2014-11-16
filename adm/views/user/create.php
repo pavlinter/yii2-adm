@@ -5,7 +5,8 @@ use pavlinter\adm\Adm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\User */
-/* @var $passwordModel yii\base\DynamicModel */
+/* @var $dynamicModel yii\base\DynamicModel */
+/* @var $authItems array */
 
 $this->title = Adm::t('user', 'Create {modelClass}', [
     'modelClass' => 'User',
@@ -19,7 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'passwordModel' => $passwordModel,
+        'dynamicModel' => $dynamicModel,
+        'authItems' => $authItems,
     ]) ?>
 
 </div>

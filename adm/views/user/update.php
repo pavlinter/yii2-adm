@@ -5,7 +5,7 @@ use pavlinter\adm\Adm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\User */
-/* @var $passwordModel yii\base\DynamicModel */
+/* @var $dynamicModel yii\base\DynamicModel */
 
 if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
     $this->title = Adm::t('user', 'My Profile');
@@ -24,7 +24,7 @@ if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
 
     <?= $this->render('_form', [
         'model' => $model,
-        'passwordModel' => $passwordModel,
+        'dynamicModel' => $dynamicModel,
     ]) ?>
 
 </div>

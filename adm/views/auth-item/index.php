@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterOptions' => [
                     'style' => 'padding:8px 1px;',
                 ],
-                'filterType'=>GridView::FILTER_SELECT2,
+                'filterType' => GridView::FILTER_SELECT2,
                 'filter'=> AuthItem::typeList(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => [
