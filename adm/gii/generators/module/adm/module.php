@@ -16,6 +16,7 @@ echo "<?php\n";
 
 namespace <?= $ns ?>;
 
+use pavlinter\adm\Adm;
 use Yii;
 use yii\base\BootstrapInterface;
 
@@ -45,9 +46,7 @@ class <?= $className ?> extends \yii\base\Module implements BootstrapInterface
      */
     public function beforeAction($action)
     {
-        /* @var $user \yii\web\User */
-        $user = $this->module->user;
-        if (!parent::beforeAction($action) || !$user->can('AdmRoot')) {
+        if (!parent::beforeAction($action) || !Adm::getInstance()->user->can('AdmRoot')) {
             return false;
         }
         return true;

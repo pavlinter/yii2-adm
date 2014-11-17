@@ -19,6 +19,7 @@ Yii2: Adm CMS
 Настройка
 -------------
 ```php
+//main.php
 'bootstrap' => [
     'urlManager',
     'i18n',
@@ -32,6 +33,20 @@ Yii2: Adm CMS
     ],
     'gridview'=> [
         'class'=>'\kartik\grid\Module',
+    ],
+    'gii' => [
+        'class'      => 'yii\gii\Module',
+        'generators' => [
+            'model'   => [
+                'class'     => '\pavlinter\adm\gii\generators\model\Generator',
+            ],
+            'crud'   => [
+                'class'     => '\pavlinter\adm\gii\generators\crud\Generator',
+            ],
+            'module'   => [
+                'class'     => '\pavlinter\adm\gii\generators\module\Generator',
+            ],
+        ]
     ],
 ],
 'components' => [
@@ -57,6 +72,11 @@ Yii2: Adm CMS
         'dialog' => 'jq',
         'router' => '/adm/source-message/dot-translation',
         'translations' => [
+            'adm*' => [
+                'class' => 'pavlinter\translation\DbMessageSource',
+                'forceTranslation' => true,
+                'autoInsert' => true,
+            ],
             'app*' => [
                 'class' => 'pavlinter\translation\DbMessageSource',
                 'forceTranslation' => true,
@@ -65,6 +85,8 @@ Yii2: Adm CMS
         ],
     ],
 ],
+
+
 ```
 
 Запустить миграцию

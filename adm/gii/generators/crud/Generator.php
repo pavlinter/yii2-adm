@@ -331,7 +331,7 @@ class Generator extends \yii\gii\Generator
         }
 
         if ($column->comment == 'select2'){
-            return $field."->widget(\\kartik\\widgets\\Select2::classname(), [\n$t'data' => [],\n$t'options' => ['placeholder' => 'Select a item ...'],\n$t'pluginOptions' => [\n\t$t'allowClear' => true,\n$t]\n$t2]);";
+            return $field."->widget(\\kartik\\widgets\\Select2::classname(), [\n$t'data' => [],\n$t'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],\n$t'pluginOptions' => [\n\t$t'allowClear' => true,\n$t]\n$t2]);";
         }
 
 
