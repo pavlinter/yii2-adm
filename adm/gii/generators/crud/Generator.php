@@ -39,6 +39,7 @@ class Generator extends \yii\gii\Generator
     public $indexWidgetType = 'admGrid';
     public $searchModelClass = '';
     public $enableLanguage;
+    public $languagePanelType = 'panelTab';
 
     /**
      * @inheritdoc
@@ -84,6 +85,7 @@ class Generator extends \yii\gii\Generator
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
             [['controllerClass', 'searchModelClass'], 'validateNewClass'],
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list','admGrid']],
+            [['languagePanelType'], 'in', 'range' => ['panelTab', 'panelToggle']],
             [['modelClass'], 'validateModelClass'],
             [['moduleID'], 'validateModuleID'],
             [['enableI18N','enableLanguage'], 'boolean'],

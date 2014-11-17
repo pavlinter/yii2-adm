@@ -14,5 +14,11 @@ echo $form->field($generator, 'indexWidgetType')->dropDownList([
     'list' => 'ListView',
 ]);
 
+echo $form->field($generator, 'languagePanelType')->dropDownList([
+    'panelTab' => 'Panel-Tab',
+    'panelToggle' => 'Panel-Toggle',
+]);
+
+
 echo $form->field($generator, 'enableI18N')->checkbox();
 echo $form->field($generator, 'messageCategory');

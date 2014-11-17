@@ -49,6 +49,28 @@ if ($generator->enableI18N) {
 
     if (isset($behaviors['trans'],$behaviors['trans']['translationAttributes'])) {
 ?>
+<?php if ($generator->languagePanelType === 'panelTab') { ?>
+    <section class="panel">
+        <header class="panel-heading bg-light">
+            <ul class="nav nav-tabs nav-justified text-uc">
+            <?= "<?php " ?> foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
+                <li><a href="#lang-<?= "<?= " ?> $id_language ?>" data-toggle="tab"><?= "<?= " ?> $language['name'] ?></a></li>
+            <?= "<?php " ?> }?>
+            </ul>
+        </header>
+        <div class="panel-body">
+            <div class="tab-content">
+                <?= "<?php " ?> foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
+                    <div class="tab-pane" id="lang-<?= "<?= " ?> $id_language ?>">
+<?php foreach ($behaviors['trans']['translationAttributes'] as $translateField) {
+    echo "                    <?= " . $generator->generateActiveFieldLang($translateField) . " ?>\n";
+}?>
+                    </div>
+                <?= "<?php " ?> }?>
+            </div>
+        </div>
+    </section>
+<?php } else {?>
     <?= "<?php " ?> foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
         <section class="panel pos-rlt clearfix">
             <header class="panel-heading">
@@ -69,7 +91,10 @@ if ($generator->enableI18N) {
         </section>
 
     <?= "<?php " ?> }?>
-    <?php }}?>
+    <?php }?>
+
+<?php }}?>
+
     <div class="form-group">
         <?= "<?= " ?>Html::submitButton($model->isNewRecord ? <?= $generator->generateString('Create') ?> : <?= $generator->generateString('Update') ?>, ['class' => 'btn btn-primary']) ?>
     </div>
