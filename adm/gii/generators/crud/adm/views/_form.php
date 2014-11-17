@@ -34,7 +34,7 @@ if ($generator->enableI18N) {
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
 <?php if ($generator->enableLanguage) { ?>
 
-    <?= "<?=" ?> $form->errorSummary([$model] + $model->getLangModels()); ?>
+    <?= "<?=" ?> $form->errorSummary([$model] + $model->getLangModels(), ['class' => 'alert alert-danger']); ?>
 <?php }?>
 
 <?php foreach ($generator->getColumnNames() as $attribute) {

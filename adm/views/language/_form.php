@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'weight')->textInput() ?>
 
-    <?= $form->field($model, 'active')->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
+    <?= $form->field($model, 'active', ["template" => "{input}\n{label}\n{hint}\n{error}"])->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Adm::t('language', 'Create') : Adm::t('language', 'Update'), ['class' => 'btn btn-primary']) ?>
