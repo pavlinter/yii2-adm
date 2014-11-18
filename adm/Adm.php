@@ -96,6 +96,8 @@ class Adm extends \yii\base\Module
             'FileInput' => '\pavlinter\adm\widgets\FileInput',
             'GridView' => '\pavlinter\adm\widgets\GridView',
             'Redactor' => '\pavlinter\adm\widgets\Redactor',
+            'ActiveForm' => '\pavlinter\adm\widgets\ActiveForm',
+            'Alert' => '\pavlinter\adm\widgets\Alert',
         ],$this->widgets);
 
 
@@ -106,6 +108,7 @@ class Adm extends \yii\base\Module
             }
         }
     }
+
     /**
      * @inheritdoc
      */
@@ -116,6 +119,10 @@ class Adm extends \yii\base\Module
         }
         return true;
     }
+
+    /**
+     *
+     */
     public function registerTranslations()
     {
         if (!isset(Yii::$app->i18n->translations[$this->tCategory])) {
@@ -125,6 +132,13 @@ class Adm extends \yii\base\Module
             ];
         }
     }
+
+    /**
+     * @param $class
+     * @param array $config
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     */
     public static function widget($class, $config = [])
     {
         $adm = self::getInstance();
@@ -141,6 +155,48 @@ class Adm extends \yii\base\Module
         return $widget->run();
     }
 
+    /**
+     * @param $class
+     * @param array $config
+     * @return mixed
+     */
+    public static function begin($class, $config = [])
+    {
+        $adm = self::getInstance();
+        if ($adm === null) {
+            $adm = Yii::$app->getModule('adm');
+        }
+        $widgets = $adm->widgets;
+        if (isset($widgets[$class])) {
+            $class = $widgets[$class];
+        }
+        return forward_static_call_array([$class, 'begin'],[$config]);
+    }
+
+    /**
+     * @param $class
+     * @return mixed
+     */
+    public static function end($class)
+    {
+        $adm = self::getInstance();
+        if ($adm === null) {
+            $adm = Yii::$app->getModule('adm');
+        }
+        $widgets = $adm->widgets;
+        if (isset($widgets[$class])) {
+            $class = $widgets[$class];
+        }
+        return forward_static_call([$class, 'end']);
+    }
+
+    /**
+     * @param $category
+     * @param $message
+     * @param array $params
+     * @param null $language
+     * @return string
+     */
     public static function t($category, $message, $params = [], $language = null)
     {
         if (empty($category)) {
@@ -150,6 +206,11 @@ class Adm extends \yii\base\Module
         }
         return Yii::t($category, $message, $params, $language);
     }
+
+    /**
+     * @param bool $root
+     * @return mixed
+     */
     public static function getAsset($root = false)
     {
         list($assetRoot, $assetUrl) = Yii::$app->getAssetManager()->publish('@admAsset');
@@ -159,6 +220,10 @@ class Adm extends \yii\base\Module
             return $assetUrl;
         }
     }
+
+    /**
+     * @return array
+     */
     public function params()
     {
         return [
@@ -215,6 +280,9 @@ class Adm extends \yii\base\Module
         ];
     }
 
+    /**
+     * @return array
+     */
     public function elfinderConfig()
     {
         $config = [

@@ -1,6 +1,5 @@
 <?php
 
-use kartik\widgets\Alert;
 use kartik\widgets\Select2;
 use pavlinter\adm\models\User;
 use yii\helpers\Html;
@@ -14,20 +13,11 @@ use pavlinter\adm\Adm;
 /* @var $authItems array */
 
 
-
-
 ?>
 
 <div class="user-form">
 
-    <?php
-    if (Yii::$app->getSession()->hasFlash('success')) {
-        echo Alert::widget([
-            'type' => Alert::TYPE_SUCCESS,
-            'body' => Yii::$app->getSession()->getFlash('success')
-        ]);
-    }
-    ?>
+    <?php Adm::widget('Alert'); ?>
 
     <?php $form = ActiveForm::begin(); ?>
 

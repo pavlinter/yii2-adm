@@ -158,7 +158,6 @@ class UserController extends Controller
                 }
                 $model->save(false);
                 if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
-
                     Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                     return $this->refresh();
                 } else {
