@@ -20,28 +20,32 @@ $this->params['breadcrumbs'][] = Adm::t('source-message', 'Update');
 
     ]); ?>
 
-
-
-    <?php foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
-        <section class="panel pos-rlt clearfix">
-            <header class="panel-heading">
-                <ul class="nav nav-pills pull-right">
-                    <li>
-                        <a href="#" class="panel-toggle text-muted"><i class="fa fa-caret-down text-active"></i><i class="fa fa-caret-up text"></i></a>
-                    </li>
-                </ul>
-                <h3 class="panel-title"><?= $language['name'] ?></h3>
-            </header>
-            <div class="panel-body clearfix">
-                <?= Adm::widget('Redactor',[
-                    'form' => $form,
-                    'model'      => $model->getTranslation($id_language),
-                    'attribute'  => '['.$id_language.']translation',
-                ]);?>
-
+    <section class="panel adm-langs-panel">
+        <header class="panel-heading bg-light">
+            <ul class="nav nav-tabs nav-justified text-uc">
+                <?php  foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
+                    <li><a href="#lang-<?= $id_language ?>" data-toggle="tab"><?= $language['name'] ?></a></li>
+                <?php  }?>
+            </ul>
+        </header>
+        <div class="panel-body">
+            <div class="tab-content">
+                <?php  foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
+                    <div class="tab-pane" id="lang-<?= $id_language ?>">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <?= Adm::widget('Redactor',[
+                                    'form' => $form,
+                                    'model'      => $model->getTranslation($id_language),
+                                    'attribute'  => '['.$id_language.']translation',
+                                ]);?>
+                            </div>
+                        </div>
+                    </div>
+                <?php  }?>
             </div>
-        </section>
-    <?php }?>
+        </div>
+    </section>
 
     <div class="form-group">
         <?= Html::submitButton('Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

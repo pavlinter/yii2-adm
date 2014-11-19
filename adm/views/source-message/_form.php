@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="source-message-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
     <?= $form->field($model, 'category')->textInput(['maxlength' => 32]) ?>
 
@@ -21,6 +21,6 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton($model->isNewRecord ? Adm::t('source-message', 'Create') : Adm::t('source-message', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>

@@ -19,7 +19,7 @@ use pavlinter\adm\Adm;
 
     <?php Adm::widget('Alert'); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => 255]) ?>
 

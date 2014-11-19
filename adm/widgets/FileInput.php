@@ -31,7 +31,7 @@ class FileInput extends InputWidget
                 'class' => 'glyphicon glyphicon-folder-open filemanager-btn',
                 'href'  => 'javascript:void(0);'
             ],
-            'multiple'      => false
+            'multiple'      => true
         ], $this->fileManager);
 
         parent:: init();

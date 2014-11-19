@@ -50,7 +50,7 @@ if ($generator->enableI18N) {
     if (isset($behaviors['trans'],$behaviors['trans']['translationAttributes'])) {
 ?>
 <?php if ($generator->languagePanelType === 'panelTab') { ?>
-    <section class="panel">
+    <section class="panel adm-langs-panel">
         <header class="panel-heading bg-light">
             <ul class="nav nav-tabs nav-justified text-uc">
             <?= "<?php " ?> foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
@@ -72,7 +72,7 @@ if ($generator->enableI18N) {
     </section>
 <?php } else {?>
     <?= "<?php " ?> foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) { ?>
-        <section class="panel pos-rlt clearfix">
+        <section class="panel pos-rlt clearfix adm-langs-panel-toggle">
             <header class="panel-heading">
                 <ul class="nav nav-pills pull-right">
                     <li>

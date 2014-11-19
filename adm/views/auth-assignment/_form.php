@@ -6,7 +6,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthAssignment */
@@ -19,7 +18,7 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
 
 <div class="auth-assignment-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
 
     <?php
@@ -54,6 +53,6 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
         <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>

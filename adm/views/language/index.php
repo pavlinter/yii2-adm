@@ -1,5 +1,6 @@
 <?php
 
+use kartik\grid\GridView;
 use pavlinter\adm\Adm;
 use yii\helpers\Html;
 
@@ -44,6 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => '\kartik\grid\BooleanColumn',
                 'attribute' => 'active',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ],
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
 <div class="languages-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
     <?= $form->field($model, 'code')->textInput(['maxlength' => 16]) ?>
 
@@ -33,6 +33,6 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton($model->isNewRecord ? Adm::t('language', 'Create') : Adm::t('language', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>

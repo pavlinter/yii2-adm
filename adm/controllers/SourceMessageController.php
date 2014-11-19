@@ -129,8 +129,8 @@ class SourceMessageController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->validateAll(Yii::$app->request->post(), true)) {
-            if ($model->saveAllTranslation(false)) {
+        if ($model->loadLangs(Yii::$app->request->post())) {
+            if ($model->saveTranslations()) {
                 return $this->redirect(['index']);
             }
         }

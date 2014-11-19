@@ -2,7 +2,6 @@
 
 use pavlinter\adm\Adm;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthRule */
@@ -13,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="auth-rule-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
 
@@ -25,6 +24,6 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>

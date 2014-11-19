@@ -4,7 +4,6 @@ use kartik\widgets\Select2;
 use pavlinter\adm\Adm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthItem */
@@ -16,7 +15,7 @@ $rules = Adm::getInstance()->manager->createAuthRuleQuery()->select('name')->asA
 
 <div class="auth-item-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
 
@@ -50,6 +49,6 @@ $rules = Adm::getInstance()->manager->createAuthRuleQuery()->select('name')->asA
         <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>
