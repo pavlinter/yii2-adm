@@ -70,6 +70,6 @@ use pavlinter\adm\Adm;
         <?= Html::submitButton($model->isNewRecord ? Adm::t('user', 'Create') : Adm::t('user', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>
