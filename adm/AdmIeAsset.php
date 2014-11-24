@@ -6,6 +6,9 @@
 
 namespace pavlinter\adm;
 
+/**
+ * Class AdmIeAsset
+ */
 class AdmIeAsset extends \yii\web\AssetBundle
 {
     public $sourcePath = '@admAsset';

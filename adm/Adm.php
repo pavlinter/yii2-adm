@@ -88,8 +88,13 @@ class Adm extends \yii\base\Module
             Yii::$app->getUrlManager()->onlyFriendlyParams = false;
         }
 
-        $this->get('user')->loginUrl = [$this->id.'/default/login'];
+        $this->get('user')->loginUrl = [$this->id . '/default/login'];
         Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
+
+        //override default error handler
+        /*$handler = new \yii\web\ErrorHandler(['errorAction' => $this->id . '/default/error']);
+        Yii::$app->set('errorHandler', $handler);
+        $handler->register();*/
 
         $this->widgets = ArrayHelper::merge([
             'FileManager' => '\pavlinter\adm\widgets\FileManager',
@@ -108,18 +113,6 @@ class Adm extends \yii\base\Module
             }
         }
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function beforeAction($action)
-    {
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      *
      */
