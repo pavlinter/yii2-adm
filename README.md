@@ -17,7 +17,7 @@ Yii2: Adm CMS
 ```
 
 Настройка
--------------
+------------------
 ```php
 //main.php
 'bootstrap' => [
@@ -90,7 +90,12 @@ Yii2: Adm CMS
 ```
 
 Запустить миграцию
--------------
+------------------
 ```php
 yii migrate --migrationPath=@vendor/pavlinter/yii2-adm/adm/migrations
 ```
+
+Доступ
+------------------
+username: adm
+password: 123456
