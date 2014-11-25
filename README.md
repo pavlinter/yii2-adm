@@ -97,5 +97,7 @@ yii migrate --migrationPath=@vendor/pavlinter/yii2-adm/adm/migrations
 
 Доступ
 ------------------
+```php
 username: adm
 password: 123456
+```
