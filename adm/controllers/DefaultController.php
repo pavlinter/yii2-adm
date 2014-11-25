@@ -16,12 +16,27 @@ class DefaultController extends Controller
     /**
      * @inheritdoc
      */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => \pavlinter\adm\filters\AccessControl::className(),
                 'rules' => [
+                    [
+                        'actions' => ['error'],
+                        'allow' => true,
+                    ],
                     [
                         'actions' => ['login'],
                         'allow' => true,

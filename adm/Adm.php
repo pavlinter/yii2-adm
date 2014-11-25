@@ -92,9 +92,9 @@ class Adm extends \yii\base\Module
         Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
 
         //override default error handler
-        /*$handler = new \yii\web\ErrorHandler(['errorAction' => $this->id . '/default/error']);
+        $handler = new \yii\web\ErrorHandler(['errorAction' => $this->id . '/default/error']);
         Yii::$app->set('errorHandler', $handler);
-        $handler->register();*/
+        $handler->register();
 
         $this->widgets = ArrayHelper::merge([
             'FileManager' => '\pavlinter\adm\widgets\FileManager',
@@ -294,9 +294,7 @@ class Adm extends \yii\base\Module
                     'uploadMaxSize' => '1G',
                 ],
             ];
-        }
-
-        if ($this->user->can('Adm-FilesRoot')) {
+        } else if($this->user->can('AdmAdmin')) {
             $config['roots'][] = [
                 'class' => 'mihaildev\elfinder\UserPath',
                 'path'  => 'files/user_{id}',
