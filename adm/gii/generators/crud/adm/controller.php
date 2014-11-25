@@ -107,7 +107,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $model = new <?= $modelClass ?>();
 <?php if ($generator->enableLanguage) {?>
         if ($model->loadAll(Yii::$app->request->post()) && $model->validateAll()) {
-            if ($model->save(false) && $model->saveAllTranslation(false)) {
+            if ($model->save(false) && $model->saveTranslations(false)) {
                 return $this->redirect(['view', <?= $urlParams ?>]);
             }
         }
@@ -132,7 +132,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $model = $this->findModel(<?= $actionParams ?>);
 <?php if ($generator->enableLanguage) {?>
         if ($model->loadAll(Yii::$app->request->post()) && $model->validateAll()) {
-            if ($model->save(false) && $model->saveAllTranslation(false)) {
+            if ($model->save(false) && $model->saveTranslations(false)) {
                 return $this->redirect(['view', <?= $urlParams ?>]);
             }
         }
