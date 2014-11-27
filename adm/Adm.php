@@ -88,6 +88,9 @@ class Adm extends \yii\base\Module
             Yii::$app->getUrlManager()->onlyFriendlyParams = false;
         }
 
+        $view = Yii::$app->getView();
+        $view->title  = 'Adm';
+
         $this->get('user')->loginUrl = [$this->id . '/default/login'];
         Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
 
@@ -112,6 +115,7 @@ class Adm extends \yii\base\Module
                 $module->bootstrap($this);
             }
         }
+        ConflictAsset::register($view);
     }
     /**
      *
@@ -284,6 +288,11 @@ class Adm extends \yii\base\Module
             'disabledCommands' => ['netmount'], // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#commands
         ];
 
+        $startPath = Yii::$app->request->get('startPath');
+        if ($startPath) {
+            $startPath = Yii::getAlias('@webroot') . '/files' . DIRECTORY_SEPARATOR . strtr($startPath, '::', '/');
+        }
+
         if ($this->user->can('Adm-FilesRoot')) {
             $config['roots'][] = [
                 'baseUrl'=>'@web',
@@ -291,6 +300,7 @@ class Adm extends \yii\base\Module
                 'path' => 'files',
                 'name' => 'Global',
                 'options' => [
+                    'startPath' => $startPath,
                     'uploadMaxSize' => '1G',
                 ],
             ];
@@ -298,7 +308,10 @@ class Adm extends \yii\base\Module
             $config['roots'][] = [
                 'class' => 'mihaildev\elfinder\UserPath',
                 'path'  => 'files/user_{id}',
-                'name'  => 'Files'
+                'name'  => 'Files',
+                'options' => [
+                    'startPath' => $startPath,
+                ],
             ];
         }
         return $config;

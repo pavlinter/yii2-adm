@@ -9,7 +9,6 @@ use yii\helpers\Html;
  * @var string $content
  */
 AdmAsset::register($this);
-BootstrapPluginAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

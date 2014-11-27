@@ -29,5 +29,6 @@ class AdmAsset extends \yii\web\AssetBundle
         'pavlinter\adm\AdmIeAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
 }
