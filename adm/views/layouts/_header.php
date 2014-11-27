@@ -8,7 +8,7 @@ $adm = Adm::getInstance();
 $admAssetUrl = Adm::getAsset();
 ?>
 
-<header class="header bg-black navbar navbar-inverse pull-in">
+<header class="main-header header bg-black navbar navbar-inverse pull-in">
     <div class="navbar-header nav-bar aside dk">
         <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-primary">
             <i class="fa fa-bars"></i>
