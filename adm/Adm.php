@@ -88,8 +88,7 @@ class Adm extends \yii\base\Module
             Yii::$app->getUrlManager()->onlyFriendlyParams = false;
         }
 
-        $view = Yii::$app->getView();
-        $view->title  = 'Adm';
+
 
         $this->get('user')->loginUrl = [$this->id . '/default/login'];
         Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
@@ -115,6 +114,8 @@ class Adm extends \yii\base\Module
                 $module->bootstrap($this);
             }
         }
+
+        $view = Yii::$app->getView();
         ConflictAsset::register($view);
     }
     /**
@@ -307,7 +308,7 @@ class Adm extends \yii\base\Module
         } else if($this->user->can('AdmAdmin')) {
             $config['roots'][] = [
                 'class' => 'mihaildev\elfinder\UserPath',
-                'path'  => 'files/user_{id}',
+                'path'  => 'files/adm_users/user_{id}',
                 'name'  => 'Files',
                 'options' => [
                     'startPath' => $startPath,
