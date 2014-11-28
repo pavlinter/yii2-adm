@@ -41,6 +41,7 @@ use pavlinter\translation\TranslationBehavior;
  * @method \pavlinter\translation\TranslationBehavior loadLang
  * @method \pavlinter\translation\TranslationBehavior loadLangs
  * @method \pavlinter\translation\TranslationBehavior getTranslation
+ * @method \pavlinter\translation\TranslationBehavior hasTranslation
  *
 <?php endif; ?>
 <?php foreach ($tableSchema->columns as $column): ?>
