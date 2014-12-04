@@ -134,10 +134,14 @@ class GridNestable extends \yii\base\Widget
         $view = Yii::$app->getView();
         NestableAsset::register($view);
         $view->registerJs('
-                var nestableItemTemplate = \'' . $this->itemTemplate . '\';
-                var nestableLinksTemplate = \'' . $this->renderLinks() . '\';
+
 
                 $("#' . $this->id . '").nestable(' . Json::encode($this->clientOptions) .');
+
+                var nestableItemTemplate    = \'' . $this->itemTemplate . '\';
+                var nestableLinksTemplate   = \'' . $this->renderLinks() . '\';
+                var nestableSerialize       = $("#' . $this->id . '").nestable("serialize");
+
                 $("#' . $this->id . '").on("touchclick", function(e,that,action,$target, $item){
                     if(action == "expand"){
                         var id = $item.attr("data-id");
@@ -181,12 +185,16 @@ class GridNestable extends \yii\base\Widget
 
                 $("#' . $this->id . '").on("change", function() {
                     var $this = $(this);
-
+                    var items = $this.nestable("serialize");
+                    if(JSON.stringify(items) == JSON.stringify(nestableSerialize)){
+                        return;
+                    }
+                    nestableSerialize = items;
                     $.ajax({
                             url: "' . Url::to($this->actionUrl) . '",
                             type: "POST",
                             dataType: "json",
-                            data: {items: $this.nestable("serialize")}
+                            data: {items: items}
                         }).done(function(d){
 
                             if(d.error){
