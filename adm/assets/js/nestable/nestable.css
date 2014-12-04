@@ -28,10 +28,10 @@
 }
 
 .dd-handle {
-    display: block; 
-    margin: 5px 0; 
-    padding: 5px 10px; 
-    text-decoration: none; 
+    display: block;
+    margin: 5px 0;
+    padding: 5px 10px;
+    text-decoration: none;
     border: 1px solid #ebeff6;
     background: #fff;
     -webkit-border-radius: 3px;
@@ -63,7 +63,7 @@
 
 .nestable-lists { display: block; clear: both; padding: 30px 0; width: 100%; border: 0; border-top: 2px solid #ddd; border-bottom: 2px solid #ddd; }
 
-@media only screen and (min-width: 700px) { 
+@media only screen and (min-width: 700px) {
 
     .dd + .dd { margin-left: 2%; }
 
@@ -76,7 +76,7 @@
  */
 
 .dd3-content { display: block;margin: 5px 0;
-    padding: 5px 10px 5px 40px; 
+    padding: 5px 10px 5px 40px;
     text-decoration: none;
     border: 1px solid #ebeff6;
     background: #fff;
@@ -88,19 +88,36 @@
 .dd3-item > button { margin-left: 30px; }
 
 .dd3-handle {
+    display: inline-block;
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-weight: normal;
     position: absolute;
-    margin: 0; 
-    left: 0; 
-    top: 0; 
-    cursor: pointer; 
-    width: 30px; 
-    text-indent: 100%; 
-    white-space: nowrap; 
+    margin: 0;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    width: 30px;
+    text-indent: 100%;
+    white-space: nowrap;
     overflow: hidden;
     border: 1px solid #ebeff6;
     background: #fff;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    height: 31px;
 }
-.dd3-handle:before { content: '≡'; display: block; position: absolute; left: 0; top: 5px; width: 100%; text-align: center; text-indent: 0; color: #ccc; font-size: 20px; font-weight: normal; }
+.dd3-handle:before {
+    /* content: '≡'; */
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 100%;
+    text-align: center;
+    text-indent: 0;
+    color: #7d7d7d;
+    font-size: 13px;
+    font-weight: normal;
+}
 .dd3-handle:hover { background: #f7f7f7; }

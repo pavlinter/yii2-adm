@@ -1,0 +1,285 @@
+<?php
+
+namespace pavlinter\adm\widgets;
+
+use pavlinter\adm\Adm;
+use pavlinter\adm\NestableAsset;
+use Yii;
+use yii\helpers\Html;
+use yii\helpers\Json;
+use yii\helpers\Url;
+use yii\web\Request;
+
+
+/**
+ * Class GridNestable
+ * @package pavlinter\adm\widgets
+ */
+class GridNestable extends \yii\base\Widget
+{
+    public $grid;
+
+    public $clientOptions = [];
+
+    public $idCol = 'id';
+
+    public $nameCol = 'name';
+
+    public $btn;
+
+    public $actionUrl;
+
+    public $template = '{btn}<div class="dd" id="{nestableId}"><ol class="dd-list">{items}</ol>{pager}</div>';
+
+    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span> {id}-{name}{links}</div><ol class="dd-list"></ol></li>';
+
+    public $buttonsTemplate = '<div class="pull-right">{view} {update} {copy} {delete}</div>';
+
+    public $buttons = [];
+
+    private $_models = [];
+
+    public function init()
+    {
+
+        parent::init();
+
+        if ($this->btn === null) {
+            $this->btn = Html::tag('button', '', [
+                'class' => 'btn btn-info btn-adm-nestable',
+                'data' => [
+                    'is-nestable' => Yii::$app->getRequest()->get('nestable', 0),
+                    'gridview-text' => Adm::t('', 'Search',['dot' => false]),
+                    'nestable-text' => Adm::t('', 'Sort',['dot' => false]),
+                ],
+            ]);
+        }
+        if ($this->actionUrl === null) {
+            $this->actionUrl = [Yii::$app->controller->id . '/nestable'];
+        }
+
+        $this->initDefaultButtons();
+
+        $pagination = $this->grid->dataProvider->getPagination();
+
+
+        if (($params = $pagination->params) === null) {
+            $request = Yii::$app->getRequest();
+            $params = $request instanceof Request ? $request->getQueryParams() : [];
+        }
+        $params['nestable'] = 1;
+        $pagination->params = $params;
+
+        $this->_models = $this->grid->dataProvider->getModels();
+
+        if($this->_models) {
+            $this->registerAssets();
+            echo strtr($this->template, [
+                '{btn}' => $this->renderBtn(),
+                '{nestableId}' => $this->id,
+                '{items}' => $this->renderItems(),
+                '{pager}' => $this->renderPager()
+            ]);
+
+        }
+        unset($params['nestable']);
+        $pagination->params = $params;
+    }
+
+    /**
+     * Initializes the default button rendering callbacks
+     */
+    public function initDefaultButtons()
+    {
+        if (!isset($this->buttons['view'])) {
+            $this->buttons['view'] = function ($url) {
+                return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                    'title' => Yii::t('yii', 'View'),
+                    'data-pjax' => '0',
+                ]);
+            };
+        }
+        if (!isset($this->buttons['update'])) {
+            $this->buttons['update'] = function ($url) {
+                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                    'title' => Yii::t('yii', 'Update'),
+                    'data-pjax' => '0',
+                ]);
+            };
+        }
+        if (!isset($this->buttons['delete'])) {
+            $this->buttons['delete'] = function ($url) {
+                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                    'title' => Yii::t('yii', 'Delete'),
+                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                    'data-method' => 'post',
+                    'data-pjax' => '0',
+                ]);
+            };
+        }
+
+        if (!isset($this->buttons['copy'])) {
+            $this->buttons['copy'] = function ($url) {
+                return Html::a('<span class="fa fa-copy"></span>', $url, [
+                    'title' => Adm::t('', 'Copy'),
+                    'data-pjax' => '0',
+                ]);
+            };
+        }
+    }
+
+
+    public function registerAssets()
+    {
+        $view = Yii::$app->getView();
+        NestableAsset::register($view);
+        $view->registerJs('
+                var nestableItemTemplate = \'' . $this->itemTemplate . '\';
+                var nestableLinksTemplate = \'' . $this->renderLinks() . '\';
+
+                $("#' . $this->id . '").nestable(' . Json::encode($this->clientOptions) .');
+                $("#' . $this->id . '").on("touchclick", function(e,that,action,$target, $item){
+                    if(action == "expand"){
+                        var id = $item.attr("data-id");
+
+                        $collapse = $item.children("[data-action=\"collapse\"]").hide();
+                        $loading  = $(".nestable-loading-" + id, $item).removeClass("hide");
+
+                        $.ajax({
+                            url: "' . Url::to($this->actionUrl) . '",
+                            type: "get",
+                            dataType: "json",
+                            data: {id_parent: id},
+                        }).done(function(d){
+                            if(d.r){
+                                var lis = [];
+                                for (var i in d.items) {
+                                  var html = nestableItemTemplate.replace(/\{links\}/g, nestableLinksTemplate).replace(/\{id\}/g, d.items[i].id).replace(/\{name\}/g, d.items[i].name);
+                                  var $li = $(html);
+                                  $li.prepend($(that.options.expandBtnHTML));
+                                  $li.prepend($(that.options.collapseBtnHTML));
+                                  $li.children("[data-action=\"collapse\"]").hide();
+                                  lis.push($li);
+                                }
+                                $($item).children("." + that.options.listClass).prepend(lis);
+
+                            }
+                        }).always(function(jqXHR, textStatus){
+                            $loading.addClass("hide");
+                            $collapse.show();
+                            if (textStatus !== "success") {
+
+                            }
+                        }).fail(function(jqXHR, textStatus, message){
+                            alert(message);
+                        });
+                    } else {
+                        $("." + that.options.listClass, $item).empty();
+                    }
+
+                });
+
+                $("#' . $this->id . '").on("change", function() {
+                    var $this = $(this);
+
+                    $.ajax({
+                            url: "' . Url::to($this->actionUrl) . '",
+                            type: "POST",
+                            dataType: "json",
+                            data: {items: $this.nestable("serialize")}
+                        }).done(function(d){
+
+                            if(d.error){
+                               alert(error);
+                            }
+                        }).always(function(jqXHR, textStatus){
+                            if (textStatus !== "success") {
+
+                            }
+                        }).fail(function(jqXHR, textStatus, message){
+                            alert(message);
+                        });
+
+                });
+
+
+                $("#' . $this->grid->id . ',#' . $this->id . '").addClass("hide");
+                $(".btn-adm-nestable").on("click", function(e){
+                    var $this = $(this);
+                    var isNestable = parseInt($this.attr("data-is-nestable"));
+                    var text = isNestable ? $this.attr("data-gridview-text") : $this.attr("data-nestable-text");
+
+                    if(isNestable){
+                        $("#' . $this->grid->id . '").addClass("hide");
+                        $("#' . $this->id . '").removeClass("hide");
+                        $this.attr("data-is-nestable", 0);
+                    } else {
+                        $("#' . $this->id . '").addClass("hide");
+                        $("#' . $this->grid->id . '").removeClass("hide");
+                        $this.attr("data-is-nestable", 1);
+                    }
+                    $this.text(text);
+                    return false;
+                }).trigger("click");
+
+            ');
+    }
+
+    /**
+     * @return string
+     */
+    public function renderItems()
+    {
+        $links = $this->renderLinks();
+        $res = '';
+        foreach ($this->_models as $model) {
+            $res .= strtr($this->itemTemplate, [
+                '{id}' => $model->{$this->idCol},
+                '{name}' => $model->{$this->nameCol},
+                '{links}' => strtr($links, ['{id}' => $model->{$this->idCol}])
+            ]);
+        }
+        return $res;
+    }
+
+    /**
+     * @param $model
+     * @return string
+     */
+    public function renderLinks()
+    {
+        static $links;
+        if ($links !== null) {
+            return $links;
+        }
+        $links = $this->buttonsTemplate;
+        foreach ($this->buttons as $name => $func) {
+            if ($name === 'copy') {
+                $url = [Yii::$app->controller->id . '/create'];
+            } else {
+                $url = [Yii::$app->controller->id . '/' . $name];
+            }
+
+            $url[$this->idCol] = '{id}';
+            $links = strtr($links, [
+                '{' . $name . '}' => call_user_func_array($func,['url' => $url]),
+            ]);
+        }
+        return $links;
+    }
+    /**
+     * @return string
+     */
+    public function renderBtn()
+    {
+        return $this->btn;
+    }
+
+    /**
+     * @return string
+     */
+    public function renderPager()
+    {
+        return $this->grid->renderPager();
+    }
+}

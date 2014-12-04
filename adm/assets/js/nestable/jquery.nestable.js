@@ -1,6 +1,7 @@
 /*!
- * Nestable jQuery Plugin - Copyright (c) 2012 David Bushell - http://dbushell.com/
- * Dual-licensed under the BSD or MIT licenses
+ * Nestable only for adm module
+ * Nestable jQuery Plugin - http://dbushell.com
+ *
  */
 ;(function($, window, document, undefined)
 {
@@ -76,15 +77,15 @@
 
                 var target = $(e.currentTarget),
                     action = target.data('action'),
-                    item;
-                list.el.trigger('touchclick',[action]);
-                item = target.parent(list.options.itemNodeName);
+                    item = target.parent(list.options.itemNodeName);
                 if (action === 'collapse') {
                     list.collapseItem(item);
                 }
                 if (action === 'expand') {
                     list.expandItem(item);
                 }
+                var event = $.Event('touchclick');
+                list.el.trigger(event,[list, action, target , item]);
             });
 
             var onStartEvent = function(e)
@@ -240,7 +241,7 @@
                 li.prepend($(this.options.expandBtnHTML));
                 li.prepend($(this.options.collapseBtnHTML));
             }
-            li.children('[data-action="expand"]').hide();
+            li.children('[data-action="collapse"]').hide();
         },
 
         unsetParent: function(li)
@@ -373,7 +374,8 @@
                             list = $('<' + opt.listNodeName + '/>').addClass(opt.listClass);
                             list.append(this.placeEl);
                             prev.append(list);
-                            this.setParent(prev);
+                            console.log('aa');
+                            //this.setParent(prev);
                         } else {
                             // else append to next level up
                             list = prev.children(opt.listNodeName).last();
@@ -389,7 +391,7 @@
                         parent = this.placeEl.parent();
                         this.placeEl.closest(opt.itemNodeName).after(this.placeEl);
                         if (!parent.children().length) {
-                            this.unsetParent(parent.parent());
+                            //this.unsetParent(parent.parent());
                         }
                     }
                 }
@@ -447,7 +449,7 @@
                     this.pointEl.after(this.placeEl);
                 }
                 if (!parent.children().length) {
-                    this.unsetParent(parent.parent());
+                    //this.unsetParent(parent.parent());
                 }
                 if (!this.dragRootEl.find(opt.itemNodeName).length) {
                     this.dragRootEl.append('<div class="' + opt.emptyClass + '"/>');

@@ -2,44 +2,40 @@
 
 namespace pavlinter\adm\widgets;
 
-use pavlinter\adm\NestableAsset;
 use Yii;
 use yii\helpers\ArrayHelper;
 
+
+/**
+ * Class GridView
+ * @package pavlinter\adm\widgets
+ */
 class GridView extends \kartik\grid\GridView
 {
     public $export = false;
 
-    public $admNestable = [];
+    public $nestable = false;
 
     public function init()
     {
-
-        $nestable = ArrayHelper::merge([
-            'dbFields' => [
-                'id' => 'id',
-                'name' => 'name',
-            ],
-        ], $this->admNestable);
-
-        NestableAsset::register(Yii::$app->getView());
-        $models = $this->dataProvider->getModels();
-        if($models) {
-            ?>
-            <div class="dd" id="nestable1">
-                <ol class="dd-list">
-                    <?php foreach ($models as $model) {?>
-                    <li class="dd-item" data-id="<?= $model->{$nestable['dbFields']['id']} ?>">
-                        <div class="dd-handle"><?= $model->{$nestable['dbFields']['name']} ?></div>
-                        <ol class="dd-list">
-                            
-                        </ol>
-                    </li>
-                    <?php }?>
-                </ol>
-            </div>
-        <?php
-        }
         parent::init();
+        if ($this->nestable === true || is_array($this->nestable)) {
+            echo $this->nestableGrid();
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function nestableGrid()
+    {
+        if (!is_array($this->nestable)) {
+            $this->nestable = [];
+        }
+        $nestable = ArrayHelper::merge([
+            'class' => '\pavlinter\adm\widgets\GridNestable',
+            'grid' => $this,
+        ], $this->nestable);
+        return forward_static_call([$nestable['class'], 'widget'], $nestable);
     }
 }
