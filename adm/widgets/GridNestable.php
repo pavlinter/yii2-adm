@@ -31,7 +31,7 @@ class GridNestable extends \yii\base\Widget
 
     public $template = '{btn}<div class="dd" id="{nestableId}"><ol class="dd-list">{items}</ol>{pager}</div>';
 
-    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span> {id}-{name}{links}</div><ol class="dd-list"></ol></li>';
+    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span>{name}{links}</div><ol class="dd-list"></ol></li>';
 
     public $buttonsTemplate = '<div class="pull-right">{view} {update} {copy} {delete}</div>';
 
