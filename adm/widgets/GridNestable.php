@@ -92,7 +92,7 @@ class GridNestable extends \yii\base\Widget
     public function initDefaultButtons()
     {
         if (!isset($this->buttons['view'])) {
-            $this->buttons['view'] = function ($url) {
+            $this->buttons['view'] = function ($url, $that) {
                 return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
                     'title' => Yii::t('yii', 'View'),
                     'data-pjax' => '0',
@@ -100,7 +100,7 @@ class GridNestable extends \yii\base\Widget
             };
         }
         if (!isset($this->buttons['update'])) {
-            $this->buttons['update'] = function ($url) {
+            $this->buttons['update'] = function ($url, $that) {
                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                     'title' => Yii::t('yii', 'Update'),
                     'data-pjax' => '0',
@@ -108,7 +108,7 @@ class GridNestable extends \yii\base\Widget
             };
         }
         if (!isset($this->buttons['delete'])) {
-            $this->buttons['delete'] = function ($url) {
+            $this->buttons['delete'] = function ($url, $that) {
                 return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                     'title' => Yii::t('yii', 'Delete'),
                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
@@ -119,8 +119,23 @@ class GridNestable extends \yii\base\Widget
         }
 
         if (!isset($this->buttons['copy'])) {
-            $this->buttons['copy'] = function ($url) {
-                return Html::a('<span class="fa fa-copy"></span>', $url, [
+            $this->buttons['copy'] = function ($url, $that) {
+                return Html::a('<span class="fa fa-copy"></span>', [
+                    'create',
+                    $that->idCol => '{id}'
+                ], [
+                    'title' => Adm::t('', 'Copy'),
+                    'data-pjax' => '0',
+                ]);
+            };
+        }
+
+        if (!isset($this->buttons['copy'])) {
+            $this->buttons['copy'] = function ($url, $that) {
+                return Html::a('<span class="fa fa-copy"></span>', [
+                    'index',
+                    $that->idCol => '{id}'
+                ], [
                     'title' => Adm::t('', 'Copy'),
                     'data-pjax' => '0',
                 ]);
@@ -262,16 +277,13 @@ class GridNestable extends \yii\base\Widget
         }
         $links = $this->buttonsTemplate;
         foreach ($this->buttons as $name => $func) {
-            if ($name === 'copy') {
-                $url = [Yii::$app->controller->id . '/create'];
-            } else {
-                $url = [Yii::$app->controller->id . '/' . $name];
+            if (is_callable($func)) {
+                $url['0'] = $name;
+                $url[$this->idCol] = '{id}';
+                $links = strtr($links, [
+                    '{' . $name . '}' => call_user_func_array($func,['url' => $url, 'that' => $this]),
+                ]);
             }
-
-            $url[$this->idCol] = '{id}';
-            $links = strtr($links, [
-                '{' . $name . '}' => call_user_func_array($func,['url' => $url]),
-            ]);
         }
         return $links;
     }
