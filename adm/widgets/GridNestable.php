@@ -25,13 +25,15 @@ class GridNestable extends \yii\base\Widget
 
     public $nameCol = 'name';
 
+    public $weightCol = 'weight';
+
     public $btn;
 
     public $actionUrl;
 
     public $template = '{btn}<div class="dd" id="{nestableId}"><ol class="dd-list">{items}</ol>{pager}</div>';
 
-    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span>{name}{links}</div><ol class="dd-list"></ol></li>';
+    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span>{name} <span class="badge">{weight}</span>{links}</div><ol class="dd-list"></ol></li>';
 
     public $buttonsTemplate = '<div class="pull-right">{view} {update} {copy} {delete}</div>';
 
@@ -173,7 +175,7 @@ class GridNestable extends \yii\base\Widget
                             if(d.r){
                                 var lis = [];
                                 for (var i in d.items) {
-                                  var html = nestableItemTemplate.replace(/\{links\}/g, nestableLinksTemplate).replace(/\{id\}/g, d.items[i].id).replace(/\{name\}/g, d.items[i].name);
+                                  var html = nestableItemTemplate.replace(/\{links\}/g, nestableLinksTemplate).replace(/\{id\}/g, d.items[i].id).replace(/\{name\}/g, d.items[i].name).replace(/\{weight\}/g, d.items[i].weight);
                                   var $li = $(html);
                                   $li.prepend($(that.options.expandBtnHTML));
                                   $li.prepend($(that.options.collapseBtnHTML));
@@ -259,6 +261,7 @@ class GridNestable extends \yii\base\Widget
             $res .= strtr($this->itemTemplate, [
                 '{id}' => $model->{$this->idCol},
                 '{name}' => $model->{$this->nameCol},
+                '{weight}' => $model->{$this->weightCol},
                 '{links}' => strtr($links, ['{id}' => $model->{$this->idCol}])
             ]);
         }

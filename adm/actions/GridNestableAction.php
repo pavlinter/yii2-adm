@@ -52,7 +52,8 @@ class GridNestableAction extends Action
             foreach ($models as $model) {
                 $json['items'][] = [
                     'id' => $model->{$this->idCol},
-                    'name' => $model->{$this->nameCol}
+                    'name' => $model->{$this->nameCol},
+                    'weight' => $model->{$this->weightCol}
                 ];
             }
             $json['r'] = 1;
