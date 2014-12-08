@@ -11,7 +11,10 @@ use yii\widgets\ActiveForm;
 
 ?>
 <section id="content" class="m-t-lg wrapper-md animated fadeInUp">
-    <a class="nav-brand" href="index.html">Adm</a>
+    <a href="<?= Url::base(true) ?>" class="nav-brand" target="_blank">
+        Adm
+        <sup>cms</sup>
+    </a>
     <div class="row m-n">
         <div class="col-md-4 col-md-offset-4 m-t-lg">
             <section class="panel">
