@@ -247,19 +247,19 @@ class Adm extends \yii\base\Module
                     'visible' => $this->user->can('AdmRoot'),
                     'items' => [
                         [
-                            'label' => '<i class="fa fa-sign-in"></i><span>' . self::t("menu", "Auth Assignment", ['dot' => false]) . '</span>',
+                            'label' => '<span>' . self::t("menu", "Auth Assignment", ['dot' => false]) . '</span>',
                             'url' => ['/' . $this->id . '/auth-assignment/index']
                         ],
                         [
-                            'label' => '<i class="fa fa-sitemap"></i><span>' . self::t("menu", "Auth Item", ['dot' => false]) . '</span>',
+                            'label' => '<span>' . self::t("menu", "Auth Item", ['dot' => false]) . '</span>',
                             'url' => ['/' . $this->id . '/auth-item/index']
                         ],
                         [
-                            'label' => '<i class="fa fa-link"></i><span>' . self::t("menu", "Auth Item Child", ['dot' => false]) . '</span>',
+                            'label' => '' . self::t("menu", "Auth Item Child", ['dot' => false]) . '</span>',
                             'url' => ['/' . $this->id . '/auth-item-child/index']
                         ],
                         [
-                            'label' => '<i class="fa fa-unlock"></i><span>' . self::t("menu", "Auth Rule", ['dot' => false]) . '</span>',
+                            'label' => '<span>' . self::t("menu", "Auth Rule", ['dot' => false]) . '</span>',
                             'url' => ['/' . $this->id . '/auth-rule/index']
                         ]
                     ],
