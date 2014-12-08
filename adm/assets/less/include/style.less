@@ -58,3 +58,31 @@ section.pleft-col{
 .form-without-label{
   padding-top: 29px;
 }
+.adm-nav{
+  .nav{
+    li{
+      .nav{
+        li{
+          a{
+            &:focus,
+            &:hover,
+            &.active{
+              background-color: darken(@brand-black, 20%);
+              i, span{
+                color: white;
+              }
+            }
+          }
+          &.active{
+            a{
+              background-color: darken(@brand-black, 20%);
+              i, span{
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

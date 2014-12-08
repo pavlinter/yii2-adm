@@ -12,7 +12,7 @@ foreach ($adm->params['left-menu'] as $name => $item) {
 }
 ?>
 
-<aside class="aside bg-dark dk" id="nav">
+<aside class="aside dk" id="nav">
     <section class="vbox">
         <section class="pleft-col">
             <div class="">

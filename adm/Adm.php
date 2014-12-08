@@ -237,7 +237,7 @@ class Adm extends \yii\base\Module
                     'visible' => $this->user->can('Adm-FilesRoot') || $this->user->can('Adm-FilesAdmin'),
                 ],
                 'user' => [
-                    'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Users", ['dot' => false]) . '</span>',
+                    'label' => '<i class="fa fa-users"></i><span>' . self::t("menu", "Users", ['dot' => false]) . '</span>',
                     'url' => ['/' . $this->id . '/user/index'],
                     'visible' => $this->user->can('AdmRoot'),
                 ],

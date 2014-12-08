@@ -22,7 +22,7 @@ if (empty($this->title)) {
     <section>
         <section class="hbox stretch">
             <?= $this->render('_left-col') ?>
-            <section class="">
+            <section class="main-box">
                 <?php if (isset($this->params['breadcrumbs'])) {?>
 
                     <div class="breadcrumbs-box clearfix">

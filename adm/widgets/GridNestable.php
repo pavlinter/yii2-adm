@@ -46,9 +46,9 @@ class GridNestable extends \yii\base\Widget
 
         parent::init();
 
-        if ($this->btn === null) {
+        if ($this->btn === null || $this->btn === false) {
             $this->btn = Html::tag('button', '', [
-                'class' => 'btn btn-info btn-adm-nestable',
+                'class' => 'btn btn-primary btn-adm-nestable' . ($this->btn === false? ' hide' : ''),
                 'data' => [
                     'is-nestable' => Yii::$app->getRequest()->get('nestable', 0),
                     'gridview-text' => Adm::t('', 'Search',['dot' => false]),
@@ -229,6 +229,11 @@ class GridNestable extends \yii\base\Widget
 
 
                 $("#' . $this->grid->id . ',#' . $this->id . '").addClass("hide");
+                $(".btn-adm-nestable-view").on("click", function(e){
+                    $(".btn-adm-nestable").trigger("click");
+                    return false;
+                });
+
                 $(".btn-adm-nestable").on("click", function(e){
                     var $this = $(this);
                     var isNestable = parseInt($this.attr("data-is-nestable"));
@@ -244,6 +249,7 @@ class GridNestable extends \yii\base\Widget
                         $this.attr("data-is-nestable", 1);
                     }
                     $this.text(text);
+                    $(".btn-adm-nestable-view").text(text);
                     return false;
                 }).trigger("click");
 
