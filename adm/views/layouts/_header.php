@@ -13,7 +13,7 @@ $admAssetUrl = Adm::getAsset();
         <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-primary">
             <i class="fa fa-bars"></i>
         </a>
-        <a href="#" class="nav-brand" data-toggle="fullscreen">ADM</a>
+        <a href="<?= Url::base(true) ?>" class="nav-brand" target="_blank">ADM</a>
         <a class="btn btn-link visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
             <i class="fa fa-comment-o"></i>
         </a>
