@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
                     <?= $form->field($model, 'username') ?>
                     <?= $form->field($model, 'password')->passwordInput() ?>
                     <?= $form->field($model, 'rememberMe')->checkbox() ?>
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-info', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                     <div class="line line-dashed"></div>
                     <?php ActiveForm::end(); ?>
             </section>
