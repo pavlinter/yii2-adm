@@ -33,7 +33,7 @@ class GridNestable extends \yii\base\Widget
 
     public $template = '{btn}<div class="dd" id="{nestableId}"><ol class="dd-list">{items}</ol>{pager}</div>';
 
-    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span>{name} <span class="badge">{weight}</span>{links}</div><ol class="dd-list"></ol></li>';
+    public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading-{id} fa fa-spinner fa-spin hide"></span>{name} <span class="badge nestable-weight-{id}">{weight}</span>{links}</div><ol class="dd-list"></ol></li>';
 
     public $buttonsTemplate = '<div class="pull-right">{view} {update} {copy} {delete}</div>';
 
@@ -153,18 +153,27 @@ class GridNestable extends \yii\base\Widget
         $view->registerJs('
 
 
+
                 $("#' . $this->id . '").nestable(' . Json::encode($this->clientOptions) .');
 
                 var nestableItemTemplate    = \'' . $this->itemTemplate . '\';
                 var nestableLinksTemplate   = \'' . $this->renderLinks() . '\';
                 var nestableSerialize       = $("#' . $this->id . '").nestable("serialize");
-
+                var nestableLoadingItem = function(id, showLoading){
+                    var $loading = $(".nestable-loading-" + id);
+                    if (showLoading){
+                        $loading.removeClass("hide");
+                    } else {
+                        $loading.addClass("hide");
+                    }
+                    return $loading;
+                }
                 $("#' . $this->id . '").on("touchclick", function(e,that,action,$target, $item){
                     if(action == "expand"){
                         var id = $item.attr("data-id");
 
                         $collapse = $item.children("[data-action=\"collapse\"]").hide();
-                        $loading  = $(".nestable-loading-" + id, $item).removeClass("hide");
+                        nestableLoadingItem(id,true);
 
                         $.ajax({
                             url: "' . Url::to($this->actionUrl) . '",
@@ -186,7 +195,7 @@ class GridNestable extends \yii\base\Widget
 
                             }
                         }).always(function(jqXHR, textStatus){
-                            $loading.addClass("hide");
+                            nestableLoadingItem(id, false);
                             $collapse.show();
                             if (textStatus !== "success") {
 
@@ -200,12 +209,15 @@ class GridNestable extends \yii\base\Widget
 
                 });
 
-                $("#' . $this->id . '").on("change", function() {
+                $("#' . $this->id . '").on("change", function(e,el) {
+                    var id = $(el).attr("data-id");
                     var $this = $(this);
                     var items = $this.nestable("serialize");
                     if(JSON.stringify(items) == JSON.stringify(nestableSerialize)){
                         return;
                     }
+                    nestableLoadingItem(id, true);
+
                     nestableSerialize = items;
                     $.ajax({
                             url: "' . Url::to($this->actionUrl) . '",
@@ -213,11 +225,16 @@ class GridNestable extends \yii\base\Widget
                             dataType: "json",
                             data: {items: items}
                         }).done(function(d){
-
                             if(d.error){
                                alert(error);
                             }
+                            if (d.weight){
+                                for (var i in d.weight) {
+                                    $(".nestable-weight-" + i, $this).text(d.weight[i]);
+                                }
+                            }
                         }).always(function(jqXHR, textStatus){
+                            nestableLoadingItem(id, false);
                             if (textStatus !== "success") {
 
                             }

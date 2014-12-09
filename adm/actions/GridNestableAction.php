@@ -62,8 +62,9 @@ class GridNestableAction extends Action
 
         $items = Yii::$app->getRequest()->post('items');
         if (!empty($items)) {
-            $this->step($items);
-            return ['r' => 1];
+            $weight = [];
+            $this->step($weight, $items);
+            return ['r' => 1, 'weight' => $weight];
         }
     }
 
@@ -71,11 +72,11 @@ class GridNestableAction extends Action
      * @param $items
      * @param null $id_parent
      */
-    public function step($items, $id_parent = null)
+    public function step(&$json, $items, $id_parent = null)
     {
         foreach ($items as $item) {
             if(!empty($item['children'])) {
-                $this->step($item['children'], $item['id']);
+                $this->step($json, $item['children'], $item['id']);
             }
         }
 
@@ -87,8 +88,10 @@ class GridNestableAction extends Action
 
         $weight = ArrayHelper::getColumn($models, $this->weightCol, false);
 
+
         foreach ($ids as $i => $id) {
             if (isset($weight[$i], $models[$id])) {
+                $json[$id] = $weight[$i];
                 $models[$id]->{$this->weightCol} = $weight[$i];
                 if ($this->parentCol) {
                     $models[$id]->{$this->parentCol} = $id_parent;
