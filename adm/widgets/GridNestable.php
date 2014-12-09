@@ -171,6 +171,7 @@ class GridNestable extends \yii\base\Widget
                 $("#' . $this->id . '").on("touchclick", function(e,that,action,$target, $item){
                     if(action == "expand"){
                         var id = $item.attr("data-id");
+                        var $this = $(this);
 
                         $collapse = $item.children("[data-action=\"collapse\"]").hide();
                         nestableLoadingItem(id,true);
@@ -189,7 +190,11 @@ class GridNestable extends \yii\base\Widget
                                   $li.prepend($(that.options.expandBtnHTML));
                                   $li.prepend($(that.options.collapseBtnHTML));
                                   $li.children("[data-action=\"collapse\"]").hide();
-                                  lis.push($li);
+                                  var event = $.Event("appendItem");
+                                  $this.trigger(event,[$li, d.items[i]]);
+                                  if(event.result !== false){
+                                    lis.push($li);
+                                  }
                                 }
                                 $($item).children("." + that.options.listClass).prepend(lis);
 
