@@ -654,4 +654,29 @@ class Generator extends \yii\gii\Generator
 
         return false;
     }
+
+    /**
+     * @param $columns
+     * @return bool
+     */
+    public function timestampBehavior($columns)
+    {
+        $createField = '';
+        $updateField = '';
+        foreach ($columns as $column) {
+            if ($column->comment == 'created_at') {
+                $createField = "\n\t\t\t\t'createdAtAttribute' => '" . $column->name . "',";
+                continue;
+            }
+            if ($column->comment == 'updated_at') {
+                $updateField = "\n\t\t\t\t'updatedAtAttribute' => '" . $column->name . "',";
+                continue;
+            }
+        }
+
+        if ($createField || $updateField) {
+            return "\t\t\t[\n\t\t\t\t'class' => \\yii\\behaviors\\TimestampBehavior::className()," . $createField . "" . $updateField . "\n\t\t\t\t'value' => new \\yii\\db\\Expression('NOW()')\n\t\t\t],\n";
+        }
+        return false;
+    }
 }

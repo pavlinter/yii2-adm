@@ -21,9 +21,6 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
-<?php if ($generator->modelLangClass): ?>
-use pavlinter\translation\TranslationBehavior;
-<?php endif; ?>
 
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -73,8 +70,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function behaviors()
     {
         return [
+<?= $generator->timestampBehavior($tableSchema->columns) ?>
             'trans' => [
-                'class' => TranslationBehavior::className(),
+                'class' => \pavlinter\translation\TranslationBehavior::className(),
                 'translationAttributes' => [
 <?php
 $modelLangClassObj  = new $generator->modelLangClass();

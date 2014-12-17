@@ -296,7 +296,7 @@ class Generator extends \yii\gii\Generator
             }
         }
         $column = $tableSchema->columns[$attribute];
-        
+
         if ($lang) {
             $t = "\t\t\t\t\t";
             $t2 = "\t\t\t\t\t";
