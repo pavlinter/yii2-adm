@@ -296,46 +296,32 @@ class Generator extends \yii\gii\Generator
             }
         }
         $column = $tableSchema->columns[$attribute];
-        /*
-            yii\db\ColumnSchema Object
-            (
-                [name] => active
-                [allowNull] =>
-                [type] => smallint
-                [phpType] => integer
-                [dbType] => tinyint(1)
-                [defaultValue] => 0
-                [enumValues] =>
-                [size] => 1
-                [precision] => 1
-                [scale] =>
-                [isPrimaryKey] =>
-                [autoIncrement] =>
-                [unsigned] =>
-                [comment] =>
-            )
-        */
-
+        
         if ($lang) {
             $t = "\t\t\t\t\t";
-            $t2 = "\t\t\t\t";
+            $t2 = "\t\t\t\t\t";
+            $t3 = "\t\t\t\t\t\t";
         } else {
             $t  = "\t\t";
             $t2 = "\t";
+            $t3 = "\t\t";
         }
 
 
         if ($column->comment == 'Redactor'){
-            return "\\pavlinter\\adm\\Adm::widget('Redactor',[\n$t'form' => \$form,\n$t'model'      => " . $modelStr . ",\n$t'attribute'  => " . $attributeStr . "\n$t2])";
+            return "\\pavlinter\\adm\\Adm::widget('Redactor',[\n$t3'form' => \$form,\n$t3'model'      => " . $modelStr . ",\n$t3'attribute'  => " . $attributeStr . "\n$t2])";
         }
         if ($column->comment == 'FileInput'){
-            return "\\pavlinter\\adm\\Adm::widget('FileInput',[\n$t'form'        => \$form,\n$t'model'       => " . $modelStr . ",\n$t'attribute'   => " . $attributeStr . "\n$t2])";
+            return "\\pavlinter\\adm\\Adm::widget('FileInput',[\n$t3'form'        => \$form,\n$t3'model'       => " . $modelStr . ",\n$t3'attribute'   => " . $attributeStr . "\n$t2])";
         }
 
         if ($column->comment == 'select2'){
-            return $field."->widget(\\kartik\\widgets\\Select2::classname(), [\n$t'data' => [],\n$t'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],\n$t'pluginOptions' => [\n\t$t'allowClear' => true,\n$t]\n$t2]);";
+            return $field."->widget(\\kartik\\widgets\\Select2::classname(), [\n$t3'data' => [],\n$t3'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],\n$t3'pluginOptions' => [\n\t$t3'allowClear' => true,\n$t3]\n$t2]);";
         }
 
+        if ($column->comment == 'boolean'){
+            return "\$form->field(" . $modelStr . ", " . $attributeStr . ", [\"template\" => \"{input}\\n{label}\\n{hint}\\n{error}\"])->widget(\\kartik\\checkbox\\CheckboxX::classname(), [\n$t3'pluginOptions' => [\n\t$t3'threeState' => false\n$t3]\n$t2]);";
+        }
 
         if ($column->phpType === 'boolean' || $column->phpType === 'tinyint(1)') {
             return $field."->checkbox()";
