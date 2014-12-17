@@ -20,9 +20,6 @@ class AdmAsset extends \yii\web\AssetBundle
     ];
     public $js = [
         'js/app.js',
-        'js/app.plugin.js',
-        'js/app.data.js',
-        'js/slimscroll/jquery.slimscroll.min.js',
         'js/common.js',
     ];
     public $depends = [
