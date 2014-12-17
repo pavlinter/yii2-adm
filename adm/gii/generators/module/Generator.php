@@ -159,6 +159,10 @@ EOD;
             $modulePath . '/views/default/index.php',
             $this->render("view.php")
         );
+        $files[] = new CodeFile(
+            $modulePath . '/ModelManager.php',
+            $this->render("modelManager.php")
+        );
 
         return $files;
     }
