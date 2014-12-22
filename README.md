@@ -19,6 +19,17 @@ Yii2: Adm CMS
 Настройка
 ------------------
 ```php
+//console.php
+'components' => [
+    ...
+    'authManager' => [
+        'class' => 'yii\rbac\DbManager',
+    ],
+    ...
+],
+```
+
+```php
 //main.php
 'bootstrap' => [
     'urlManager',
@@ -89,8 +100,6 @@ Yii2: Adm CMS
         ],
     ],
 ],
-
-
 ```
 
 Запустить миграцию
