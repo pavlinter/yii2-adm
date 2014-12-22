@@ -50,6 +50,10 @@ Yii2: Adm CMS
     ],
 ],
 'components' => [
+    'user' => [
+        'identityClass' => 'pavlinter\adm\models\User',
+        'enableAutoLogin' => true,
+    ],
     'authManager' => [
         'class' => 'yii\rbac\DbManager',
     ],
