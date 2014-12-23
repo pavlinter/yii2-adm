@@ -44,6 +44,11 @@ class LanguageSearch extends Language
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> [
+                'defaultOrder' => [
+                    'weight' => SORT_ASC
+                ]
+            ],
         ]);
 
         if (!($this->load($params) && $this->validate())) {
