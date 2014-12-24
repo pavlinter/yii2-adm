@@ -74,6 +74,7 @@ class Adm extends \yii\base\Module
      */
     public function init()
     {
+        echo 'init adm' . '<br />';
         parent::init();
         self::$t = $this->tCategory;
         $this->params = ArrayHelper::merge($this->params(), $this->params);
@@ -96,10 +97,15 @@ class Adm extends \yii\base\Module
         ],$this->widgets);
 
 
-        foreach ($this->getModules() as $name => $module) {
-            $module = $this->getModule($name);
-            if ($module instanceof BootstrapInterface) {
-                $module->bootstrap($this);
+        $modules = $this->getModules();
+        foreach ($modules as $name => $module) {
+            if (is_integer($name)) {
+                $module = Yii::$app->getModule($module);
+            } else {
+                $module = $this->getModule($name);
+            }
+            if ($module instanceof AdmBootstrapInterface) {
+                $module->loading($this);
             }
         }
     }
