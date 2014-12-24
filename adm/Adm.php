@@ -84,19 +84,7 @@ class Adm extends \yii\base\Module
             $this->controllerMap['elfinder'] = $this->elfinderConfig();
         }
 
-        if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
-            Yii::$app->getUrlManager()->onlyFriendlyParams = false;
-        }
-
-
-
         $this->get('user')->loginUrl = [$this->id . '/default/login'];
-        Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
-
-        //override default error handler
-        $handler = new \yii\web\ErrorHandler(['errorAction' => $this->id . '/default/error']);
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
 
         $this->widgets = ArrayHelper::merge([
             'FileManager' => '\pavlinter\adm\widgets\FileManager',
@@ -114,10 +102,26 @@ class Adm extends \yii\base\Module
                 $module->bootstrap($this);
             }
         }
-
-        $view = Yii::$app->getView();
-        ConflictAsset::register($view);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeAction($action)
+    {
+        //override default error handler
+        $handler = new \yii\web\ErrorHandler(['errorAction' => $this->id . '/default/error']);
+        Yii::$app->set('errorHandler', $handler);
+        $handler->register();
+
+        if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
+            Yii::$app->getUrlManager()->onlyFriendlyParams = false;
+        }
+        Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
+        ConflictAsset::register(Yii::$app->getView());
+        return parent::beforeAction($action);
+    }
+
     /**
      *
      */
