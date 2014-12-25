@@ -10,7 +10,6 @@ namespace pavlinter\adm;
 
 use pavlinter\translation\I18N;
 use Yii;
-use yii\base\BootstrapInterface;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -74,7 +73,6 @@ class Adm extends \yii\base\Module
      */
     public function init()
     {
-        echo 'init adm' . '<br />';
         parent::init();
         self::$t = $this->tCategory;
         $this->params = ArrayHelper::merge($this->params(), $this->params);
