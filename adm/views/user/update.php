@@ -7,16 +7,16 @@ use pavlinter\adm\Adm;
 /* @var $model pavlinter\adm\models\User */
 /* @var $dynamicModel yii\base\DynamicModel */
 
+Yii::$app->i18n->disableDot();
 if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
     $this->title = Adm::t('user', 'My Profile');
 } else {
-    $this->title = Adm::t('user', 'Update {modelClass}: ', [
-            'modelClass' => 'User',
-        ]) . ' ' . $model->id;
+    $this->title = Adm::t('user', 'Update User: {id}', ['id' => $model->id]);
     $this->params['breadcrumbs'][] = ['label' => Adm::t('user', 'Users'), 'url' => ['index']];
     $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = Adm::t('user', 'Update');
 }
+Yii::$app->i18n->enableDot();
 ?>
 <div class="user-update">
 

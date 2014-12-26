@@ -9,8 +9,10 @@ use yii\helpers\Html;
 /* @var $searchModel pavlinter\adm\models\LanguageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+Yii::$app->i18n->disableDot();
 $this->title = Adm::t('language', 'Languages');
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 
 

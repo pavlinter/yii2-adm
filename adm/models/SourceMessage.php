@@ -70,9 +70,9 @@ class SourceMessage extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Adm::t('model.source-message', 'ID'),
-            'category' => Adm::t('model.source-message', 'Category'),
-            'message' => Adm::t('model.source-message', 'Message'),
+            'id' => Yii::t('admModel/source-message', 'ID'),
+            'category' => Yii::t('modelAdm/source-message', 'Category'),
+            'message' => Yii::t('modelAdm/source-message', 'Message'),
         ];
     }
 

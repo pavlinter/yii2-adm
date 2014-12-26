@@ -42,9 +42,9 @@ class Message extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Adm::t('model.message', 'ID'),
-            'language_id' => Adm::t('model.message', 'Language Id'),
-            'translation' => Adm::t('model.message', 'Translation'),
+            'id' => Yii::t('admModel/message', 'ID'),
+            'language_id' => Yii::t('modelAdm/message', 'Language Id'),
+            'translation' => Yii::t('modelAdm/message', 'Translation'),
         ];
     }
 

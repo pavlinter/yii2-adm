@@ -10,8 +10,10 @@ use yii\helpers\Html;
 /* @var $searchModel pavlinter\adm\models\AuthItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Auth Items');
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-item-index">
 

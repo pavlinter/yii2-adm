@@ -11,7 +11,7 @@ namespace pavlinter\adm;
  */
 class AdmIeAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@admAsset';
+    public $sourcePath = '@admRoot/assets';
 
     public $jsOptions = ['condition' => 'lte IE9'];
 

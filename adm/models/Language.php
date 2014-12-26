@@ -62,13 +62,13 @@ class Language extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('adm/model.language', 'ID'),
-            'code' => Yii::t('adm/model.language', 'Code'),
-            'name' => Yii::t('adm/model.language', 'Name'),
-            'image' => Yii::t('adm/model.language', 'Image'),
-            'weight' => Yii::t('adm/model.language', 'Weight'),
-            'active' => Yii::t('adm/model.language', 'Active'),
-            'updated_at' => Yii::t('adm/model.language', 'Updated At'),
+            'id' => Yii::t('modelAdm/language', 'ID'),
+            'code' => Yii::t('modelAdm/language', 'Code'),
+            'name' => Yii::t('modelAdm/language', 'Name'),
+            'image' => Yii::t('modelAdm/language', 'Image'),
+            'weight' => Yii::t('modelAdm/language', 'Weight'),
+            'active' => Yii::t('modelAdm/language', 'Active'),
+            'updated_at' => Yii::t('modelAdm/language', 'Updated At'),
         ];
     }
 }

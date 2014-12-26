@@ -7,9 +7,10 @@ use pavlinter\adm\Adm;
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+Yii::$app->i18n->disableDot();
 $this->title = Adm::t('user', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="user-index">
 
@@ -17,9 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Adm::t('user', 'Create {modelClass}', [
-    'modelClass' => 'User',
-]), ['create'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Adm::t('user', 'Create User'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= Adm::widget('GridView',[

@@ -6,10 +6,11 @@ use pavlinter\adm\Adm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\User */
-
+Yii::$app->i18n->disableDot();
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Adm::t('user', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="user-view">
 

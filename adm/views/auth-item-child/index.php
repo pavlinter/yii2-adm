@@ -8,8 +8,10 @@ use yii\grid\GridView;
 /* @var $searchModel pavlinter\adm\models\AuthItemChildSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Auth Item Children');
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-item-child-index">
 
@@ -17,9 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?= Html::a(Adm::t('auth', 'Create {modelClass}', [
-    'modelClass' => 'Auth Item Child',
-]), ['create'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Adm::t('auth', 'Create Auth Item Child'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
 

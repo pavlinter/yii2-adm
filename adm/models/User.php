@@ -85,8 +85,8 @@ class User extends ActiveRecord implements IdentityInterface
     public static function roles($key = null, $default = null)
     {
         $roles = [
-            self::ROLE_USER => Adm::t('user', 'User Role'),
-            self::ROLE_ADM  => Adm::t('user', 'Adm Role'),
+            self::ROLE_USER => Adm::t('user', 'User Role', ['dot' => false]),
+            self::ROLE_ADM  => Adm::t('user', 'Adm Role', ['dot' => false]),
         ];
         if ($key !== null) {
             if (isset($roles[$key])) {
@@ -106,8 +106,8 @@ class User extends ActiveRecord implements IdentityInterface
     public static function status($key = null, $default = null)
     {
         $status = [
-            self::STATUS_ACTIVE     => Adm::t('user', 'Active Status'),
-            self::STATUS_DELETED    => Adm::t('user', 'Deleted Status'),
+            self::STATUS_ACTIVE     => Adm::t('user', 'Active Status', ['dot' => false]),
+            self::STATUS_DELETED    => Adm::t('user', 'Deleted Status', ['dot' => false]),
         ];
         if ($key !== null) {
             if (isset($status[$key])) {

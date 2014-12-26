@@ -5,7 +5,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $adm = Adm::getInstance();
-$admAssetUrl = Adm::getAsset();
 ?>
 
 <header class="main-header header bg-black navbar navbar-inverse pull-in">
@@ -27,15 +26,15 @@ $admAssetUrl = Adm::getAsset();
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
-                        <?= Adm::getInstance()->user->identity->username ?> <b class="caret"></b>
+                        <?= $adm->user->identity->username ?> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu animated fadeInLeft">
                     <li>
-                        <a href="<?= Url::to(['/' . Adm::getInstance()->id . '/user/update']) ?>"><?= Adm::t("header", "Profile", ['dot' => false]) ?></a>
+                        <a href="<?= Url::to(['/' . $adm->id . '/user/update']) ?>"><?= Adm::t("header", "Profile", ['dot' => false]) ?></a>
                     </li>
                     <?php $adm->trigger(Adm::EVENT_INNER_PROFILE_MENU); ?>
                     <li>
-                        <?= Html::a(Adm::t("header", "Logout", ['dot' => false]),['/' . Adm::getInstance()->id . '/default/logout'],['data-method' => 'post']); ?>
+                        <?= Html::a(Adm::t("header", "Logout", ['dot' => false]),['/' . $adm->id . '/default/logout'],['data-method' => 'post']); ?>
                     </li>
                 </ul>
             </li>

@@ -1,5 +1,5 @@
 <?php
-
+use pavlinter\adm\Adm;
 use pavlinter\adm\AdmAsset;
 use yii\helpers\Html;
 
@@ -18,7 +18,7 @@ AdmAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <script type="text/javascript">
-        var admId = '<?= \pavlinter\adm\Adm::getInstance()->id; ?>';
+        var admId = '<?= Adm::getInstance()->id; ?>';
         var admController = '<?= $this->context->id ?>';
     </script>
     <?php $this->head() ?>

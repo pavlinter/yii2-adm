@@ -6,12 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthItemChild */
 
-$this->title = Adm::t('auth', 'Update {modelClass}: ', [
-    'modelClass' => 'Auth Item Child',
-]) . ' ' . $model->parent;
+$this->title = Adm::t('auth', 'Update Auth Item Child: {parent}', ['parent' => $model->parent]);
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Item Children'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->parent, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('auth', 'Update');
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-item-child-update">
 

@@ -21,7 +21,9 @@ use yii\helpers\Html;
     <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Adm::t('', 'Create', ['dot' => '.']) ?>
+        <?= Adm::t('', 'Update', ['dot' => '.']) ?>
     </div>
 
     <?php Adm::end('ActiveForm'); ?>

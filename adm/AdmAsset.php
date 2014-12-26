@@ -11,7 +11,8 @@ namespace pavlinter\adm;
  */
 class AdmAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@admAsset';
+    public $sourcePath = '@admRoot/assets';
+
     public $css = [
         'css/animate.css',
         'css/font-awesome.min.css',

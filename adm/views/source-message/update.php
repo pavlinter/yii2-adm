@@ -7,10 +7,12 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model \pavlinter\adm\models\SourceMessage */
 
-$this->title = Adm::t('source-message', 'Update Source Message: ') . ' ' . $model->id;
+Yii::$app->i18n->disableDot();
+$this->title = Adm::t('source-message', 'Update Source Message: {id}', [ 'id' => $model->id]);
 $this->params['breadcrumbs'][] = ['label' => Adm::t('source-message', 'Source Messages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->message, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('source-message', 'Update');
+Yii::$app->i18n->enableDot();
 ?>
 <div class="source-message-update">
 

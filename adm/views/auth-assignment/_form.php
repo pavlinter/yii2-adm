@@ -50,7 +50,9 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('auth', 'Create') : Adm::t('auth', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Adm::t('', 'Create', ['dot' => '.']) ?>
+        <?= Adm::t('', 'Update', ['dot' => '.']) ?>
     </div>
 
     <?php Adm::end('ActiveForm'); ?>

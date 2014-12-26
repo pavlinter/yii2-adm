@@ -7,11 +7,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthItemChild */
 
-$this->title = Adm::t('auth', 'Create {modelClass}', [
-    'modelClass' => 'Auth Item Child',
-]);
+Yii::$app->i18n->disableDot();
+$this->title = Adm::t('auth', 'Create Auth Item Child');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Item Children'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-item-child-create">
 

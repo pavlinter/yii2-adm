@@ -7,12 +7,11 @@ use pavlinter\adm\Adm;
 /* @var $model pavlinter\adm\models\User */
 /* @var $dynamicModel yii\base\DynamicModel */
 /* @var $authItems array */
-
-$this->title = Adm::t('user', 'Create {modelClass}', [
-    'modelClass' => 'User',
-]);
+Yii::$app->i18n->disableDot();
+$this->title = Adm::t('user', 'Create User');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('user', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="user-create">
 

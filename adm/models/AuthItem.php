@@ -66,16 +66,20 @@ class AuthItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('adm/model.authitem', 'Name'),
-            'type' => Yii::t('adm/model.authitem', 'Type'),
-            'description' => Yii::t('adm/model.authitem', 'Description'),
-            'rule_name' => Yii::t('adm/model.authitem', 'Rule Name'),
-            'data' => Yii::t('adm/model.authitem', 'Data'),
-            'created_at' => Yii::t('adm/model.authitem', 'Created At'),
-            'updated_at' => Yii::t('adm/model.authitem', 'Updated At'),
+            'name' => Yii::t('modelAdm/authitem', 'Name'),
+            'type' => Yii::t('modelAdm/authitem', 'Type'),
+            'description' => Yii::t('modelAdm/authitem', 'Description'),
+            'rule_name' => Yii::t('modelAdm/authitem', 'Rule Name'),
+            'data' => Yii::t('modelAdm/authitem', 'Data'),
+            'created_at' => Yii::t('modelAdm/authitem', 'Created At'),
+            'updated_at' => Yii::t('modelAdm/authitem', 'Updated At'),
         ];
     }
 
+    /**
+     * @param null $type
+     * @return array|null
+     */
     public static function typeList($type = null)
     {
         $list = [

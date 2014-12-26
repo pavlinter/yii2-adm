@@ -11,7 +11,7 @@ namespace pavlinter\adm;
  */
 class ConflictAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@admAsset';
+    public $sourcePath = '@admRoot/assets';
     public $css = [];
     public $js = [
         'js/elfinder.noConflict.js',

@@ -11,7 +11,7 @@ namespace pavlinter\adm;
  */
 class NestableAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@admAsset';
+    public $sourcePath = '@admRoot/assets';
     public $css = [
         'js/nestable/nestable.css',
     ];

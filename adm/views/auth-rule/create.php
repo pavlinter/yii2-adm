@@ -8,11 +8,11 @@ use yii\helpers\Html;
 /* @var $model pavlinter\adm\models\AuthRule */
 /* @var $dynamicModel yii\base\DynamicModel */
 
-$this->title = Adm::t('auth', 'Create {modelClass}', [
-    'modelClass' => 'Auth Rule',
-]);
+Yii::$app->i18n->disableDot();
+$this->title = Adm::t('auth', 'Create Auth Rule');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-rule-create">
 

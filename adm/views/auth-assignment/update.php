@@ -6,12 +6,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthAssignment */
 
-$this->title = Adm::t('auth', 'Update {modelClass}: ', [
-    'modelClass' => 'Auth Assignment',
-]) . ' ' . $model->item_name;
+Yii::$app->i18n->disableDot();
+$this->title = Adm::t('auth', 'Update Auth Assignment: {item_name}', [
+    'item_name' => $model->item_name,
+]);
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Assignments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->item_name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('auth', 'Update');
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-assignment-update">
 

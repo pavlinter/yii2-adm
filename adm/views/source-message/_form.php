@@ -18,7 +18,9 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('source-message', 'Create') : Adm::t('source-message', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?= Adm::t('', 'Create', ['dot' => '.']) ?>
+        <?= Adm::t('', 'Update', ['dot' => '.']) ?>
     </div>
 
     <?php Adm::end('ActiveForm'); ?>

@@ -8,17 +8,17 @@ use pavlinter\adm\widgets\GridView;
 /* @var $searchModel pavlinter\adm\models\AuthAssignmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Auth Assignments');
 $this->params['breadcrumbs'][] = $this->title;
+Yii::$app->i18n->enableDot();
 ?>
 <div class="auth-assignment-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Adm::t('auth', 'Create {modelClass}', [
-    'modelClass' => 'Auth Assignment',
-]), ['create'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Adm::t('auth', 'Create Auth Assignment'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= Adm::widget('GridView',[

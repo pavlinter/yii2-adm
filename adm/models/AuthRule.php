@@ -58,10 +58,10 @@ class AuthRule extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('adm/model.authrule', 'Name'),
-            'data' => Yii::t('adm/model.authrule', 'Data'),
-            'created_at' => Yii::t('adm/model.authrule', 'Created At'),
-            'updated_at' => Yii::t('adm/model.authrule', 'Updated At'),
+            'name' => Yii::t('modelAdm/authrule', 'Name'),
+            'data' => Yii::t('modelAdm/authrule', 'Data'),
+            'created_at' => Yii::t('modelAdm/authrule', 'Created At'),
+            'updated_at' => Yii::t('modelAdm/authrule', 'Updated At'),
         ];
     }
 
