@@ -11,7 +11,7 @@ $this->title = Adm::t('auth', 'Update Auth Item: {name}', ['name' => $model->nam
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Items'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('auth', 'Update');
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-item-update">
 

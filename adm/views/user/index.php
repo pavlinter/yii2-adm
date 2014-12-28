@@ -10,7 +10,7 @@ use pavlinter\adm\Adm;
 Yii::$app->i18n->disableDot();
 $this->title = Adm::t('user', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="user-index">
 

@@ -12,7 +12,7 @@ use yii\helpers\Html;
 Yii::$app->i18n->disableDot();
 $this->title = Adm::t('language', 'Languages');
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 
 

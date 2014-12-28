@@ -11,7 +11,7 @@ use yii\grid\GridView;
 Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Auth Rules');
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-rule-index">
 

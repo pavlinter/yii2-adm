@@ -11,7 +11,7 @@ $this->title = Adm::t('language', 'Update Language: {name}', ['name' => $model->
 $this->params['breadcrumbs'][] = ['label' => Adm::t('language', 'Languages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('language', 'Update');
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="languages-update">
 

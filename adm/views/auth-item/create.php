@@ -11,7 +11,7 @@ Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Create Auth Item');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Items'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-item-create">
 

@@ -12,7 +12,7 @@ $this->title = Adm::t('auth', 'Update Auth Rule: {name}');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('auth', 'Update');
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-rule-update">
 

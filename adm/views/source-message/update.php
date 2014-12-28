@@ -12,7 +12,7 @@ $this->title = Adm::t('source-message', 'Update Source Message: {id}', [ 'id' =>
 $this->params['breadcrumbs'][] = ['label' => Adm::t('source-message', 'Source Messages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->message, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('source-message', 'Update');
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="source-message-update">
 

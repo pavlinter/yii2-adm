@@ -11,7 +11,7 @@ Yii::$app->i18n->disableDot();
 $this->title = Adm::t('language', 'Create Language');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('language', 'Languages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="languages-create">
 

@@ -13,7 +13,7 @@ $this->title = Adm::t('auth', 'Update Auth Assignment: {item_name}', [
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Assignments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->item_name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = Adm::t('auth', 'Update');
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-assignment-update">
 

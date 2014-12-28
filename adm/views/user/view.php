@@ -10,7 +10,7 @@ Yii::$app->i18n->disableDot();
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Adm::t('user', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="user-view">
 

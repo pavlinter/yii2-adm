@@ -11,7 +11,7 @@ Yii::$app->i18n->disableDot();
 $this->title = Adm::t('source-message', 'Create Source Message');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('source-message', 'Source Messages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="source-message-create">
 

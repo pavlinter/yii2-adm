@@ -16,7 +16,7 @@ if (Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {
     $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
     $this->params['breadcrumbs'][] = Adm::t('user', 'Update');
 }
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="user-update">
 

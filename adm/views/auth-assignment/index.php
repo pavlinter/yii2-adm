@@ -11,7 +11,7 @@ use pavlinter\adm\widgets\GridView;
 Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Auth Assignments');
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-assignment-index">
 

@@ -12,7 +12,7 @@ Yii::$app->i18n->disableDot();
 $this->title = Adm::t('auth', 'Create Auth Rule');
 $this->params['breadcrumbs'][] = ['label' => Adm::t('auth', 'Auth Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->i18n->enableDot();
+Yii::$app->i18n->resetDot();
 ?>
 <div class="auth-rule-create">
 
