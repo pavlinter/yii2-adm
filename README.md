@@ -83,19 +83,14 @@ Yii2: Adm CMS
         'access' => function () {
             return Yii::$app->getUser()->can('Adm-Transl');
         },
-        'dotCategory' => ['app*' => false],
         'dialog' => 'jq',
         'router' => '/adm/source-message/dot-translation',
         'translations' => [
-            'adm*' => [
-                'class' => 'pavlinter\translation\DbMessageSource',
-                'forceTranslation' => true,
-                'autoInsert' => true,
-            ],
             'app*' => [
                 'class' => 'pavlinter\translation\DbMessageSource',
                 'forceTranslation' => true,
                 'autoInsert' => true,
+                'dotMode' => true,
             ],
         ],
     ],
