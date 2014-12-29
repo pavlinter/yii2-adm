@@ -663,19 +663,33 @@ class Generator extends \yii\gii\Generator
     {
         $createField = '';
         $updateField = '';
+        $createName  = '';
+        $updateName  = '';
         foreach ($columns as $column) {
             if ($column->comment == 'created_at') {
                 $createField = "\n\t\t\t\t'createdAtAttribute' => '" . $column->name . "',";
+                $createName = $column->name;
                 continue;
             }
             if ($column->comment == 'updated_at') {
                 $updateField = "\n\t\t\t\t'updatedAtAttribute' => '" . $column->name . "',";
+                $updateName = $column->name;
                 continue;
             }
         }
 
+        $attributes = '';
+        if ($createField && $updateField) {
+            $attributes .= "\n\t\t\t\t\t\\yii\\db\\BaseActiveRecord::EVENT_BEFORE_INSERT => ['" . $createName . "', '" . $updateName . "'],";
+            $attributes .= "\n\t\t\t\t\t\\yii\\db\\BaseActiveRecord::EVENT_BEFORE_UPDATE => ['" . $updateName . "']";
+        } else if($createField){
+            $attributes .= "\n\t\t\t\t\t\\yii\\db\\BaseActiveRecord::EVENT_BEFORE_INSERT => ['" . $createName . "']";
+        } else if($updateField){
+            $attributes .= "\n\t\t\t\t\t\\yii\\db\\BaseActiveRecord::EVENT_BEFORE_UPDATE => ['" . $updateName . "']";
+        }
+
         if ($createField || $updateField) {
-            return "\t\t\t[\n\t\t\t\t'class' => \\yii\\behaviors\\TimestampBehavior::className()," . $createField . "" . $updateField . "\n\t\t\t\t'value' => new \\yii\\db\\Expression('NOW()')\n\t\t\t],\n";
+            return "\t\t\t[\n\t\t\t\t'class' => \\yii\\behaviors\\TimestampBehavior::className()," . $createField . "" . $updateField . "\n\t\t\t\t'attributes' => [" . $attributes . "\n\t\t\t\t], \n\t\t\t\t'value' => new \\yii\\db\\Expression('NOW()')\n\t\t\t],\n";
         }
         return false;
     }
