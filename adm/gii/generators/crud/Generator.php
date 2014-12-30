@@ -325,7 +325,7 @@ class Generator extends \yii\gii\Generator
 
         if ($column->phpType === 'boolean' || $column->phpType === 'tinyint(1)') {
             return $field."->checkbox()";
-        } elseif ($column->type === 'text') {
+        } elseif ($column->type === 'text' || $column->comment == 'textarea') {
             return $field."->textarea(['rows' => 6])";
         } else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
