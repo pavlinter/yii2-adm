@@ -319,7 +319,7 @@ class Generator extends \yii\gii\Generator
             return $field."->widget(\\kartik\\widgets\\Select2::classname(), [\n$t3'data' => [],\n$t3'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],\n$t3'pluginOptions' => [\n\t$t3'allowClear' => true,\n$t3]\n$t2]);";
         }
 
-        if ($column->comment == 'boolean'){
+        if ($column->comment == 'checkbox'){
             return "\$form->field(" . $modelStr . ", " . $attributeStr . ", [\"template\" => \"{input}\\n{label}\\n{hint}\\n{error}\"])->widget(\\kartik\\checkbox\\CheckboxX::classname(), [\n$t3'pluginOptions' => [\n\t$t3'threeState' => false\n$t3]\n$t2]);";
         }
 
