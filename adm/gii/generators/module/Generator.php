@@ -110,10 +110,11 @@ EOD;
         'adm' => [
             'class' => 'pavlinter\adm\Adm',
             'modules' => [
-                '{$this->moduleID}' => [
-                    'class' => '{$this->moduleClass}',
-                ],
+                '{$this->moduleID}'
             ],
+        ],
+        '{$this->moduleID}' => [
+            'class' => '{$this->moduleClass}',
         ],
     ],
 EOD;
@@ -159,11 +160,13 @@ EOD;
             $modulePath . '/views/default/index.php',
             $this->render("view.php")
         );
-        $files[] = new CodeFile(
-            $modulePath . '/ModelManager.php',
-            $this->render("modelManager.php")
-        );
 
+        if ($this->template === 'adm') {
+            $files[] = new CodeFile(
+                $modulePath . '/ModelManager.php',
+                $this->render("modelManager.php")
+            );
+        }
         return $files;
     }
 
