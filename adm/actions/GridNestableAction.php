@@ -20,7 +20,7 @@ class GridNestableAction extends Action
 
     public $weightCol = 'weight';
 
-    public $parentCol = 'id_parent';
+    public $parentCol = 'id_parent'; //set false if parent field is not exist
 
     public $model;
 
@@ -44,7 +44,10 @@ class GridNestableAction extends Action
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         if ($id_parent) {
-
+            if (!$this->parentCol) {
+                $json['r'] = 0;
+                return $json;
+            }
             /* @var \yii\db\ActiveQuery $query */
             $query = forward_static_call([$this->model, 'find']);
             $models = $query->where([$this->parentCol => $id_parent])->orderBy([$this->weightCol => $this->order])->all();

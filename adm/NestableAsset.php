@@ -19,6 +19,6 @@ class NestableAsset extends \yii\web\AssetBundle
         'js/nestable/jquery.nestable.js',
     ];
     public $depends = [
-
+        'pavlinter\adm\AdmAsset'
     ];
 }
