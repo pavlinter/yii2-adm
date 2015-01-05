@@ -105,6 +105,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actionCreate()
     {
         $model = new <?= $modelClass ?>();
+        $model->loadDefaultValues();
 <?php if ($generator->enableLanguage) {?>
         if ($model->loadAll(Yii::$app->request->post()) && $model->validateAll()) {
             if ($model->save(false) && $model->saveTranslations(false)) {
