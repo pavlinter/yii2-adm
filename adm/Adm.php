@@ -209,7 +209,7 @@ class Adm extends \yii\base\Module
         }
         return forward_static_call_array([$class, 'begin'],[$config]);
     }
-    
+
     /**
      * @param $category
      * @param array $options
