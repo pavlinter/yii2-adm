@@ -10,9 +10,6 @@ use yii\widgets\Breadcrumbs;
  */
 
 $adm = Adm::getInstance();
-if (empty($this->title)) {
-    $this->title  = 'Adm';
-}
 ?>
 
 <?php $this->beginContent('@admRoot/views/layouts/base.php'); ?>
