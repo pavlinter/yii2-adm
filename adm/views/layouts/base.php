@@ -8,8 +8,9 @@ use yii\helpers\Html;
  * @var string $content
  */
 AdmAsset::register($this);
+$adm = Adm::getInstance();
 ?>
-<?php $this->beginPage() ?>
+<?php $adm->beginPage($this) ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -24,9 +25,9 @@ AdmAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
-    <?php $this->beginBody() ?>
+    <?php $adm->beginBody($this) ?>
     <?= $content ?>
-    <?php $this->endBody() ?>
+    <?php $adm->endBody($this) ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php $adm->endPage($this) ?>

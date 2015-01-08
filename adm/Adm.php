@@ -20,6 +20,22 @@ use yii\helpers\ArrayHelper;
 class Adm extends \yii\base\Module
 {
     const VERSION = '1.0.0';
+    /**
+     * @event Event an event that is triggered by [[beginPage()]].
+     */
+    const EVENT_BEGIN_PAGE = 'beginPage';
+    /**
+     * @event Event an event that is triggered by [[endPage()]].
+     */
+    const EVENT_END_PAGE = 'endPage';
+    /**
+     * @event Event an event that is triggered by [[beginBody()]].
+     */
+    const EVENT_BEGIN_BODY = 'beginBody';
+    /**
+     * @event Event an event that is triggered by [[endBody()]].
+     */
+    const EVENT_END_BODY = 'endBody';
 
     const EVENT_INNER_PROFILE_MENU  = 'innerProfileMenu';
 
@@ -326,5 +342,47 @@ class Adm extends \yii\base\Module
         }
         return $config;
     }
+    /**
+     * Marks the beginning of a page.
+     * @param \yii\web\View $view the view to be registered with
+     */
+    public function beginPage($view)
+    {
+        $view->beginPage();
+        $this->trigger(self::EVENT_BEGIN_PAGE);
+    }
+
+    /**
+     * Marks the ending of a page.
+     * @param \yii\web\View $view the view to be registered with
+     */
+    public function endPage($view)
+    {
+        $view->endPage();
+        $this->trigger(self::EVENT_END_PAGE);
+    }
+
+    /**
+     * Marks the beginning of an HTML body section.
+     * @param \yii\web\View $view the view to be registered with
+     */
+    public function beginBody($view)
+    {
+        $view->beginBody();
+        $this->trigger(self::EVENT_BEGIN_BODY);
+    }
+
+    /**
+     * Marks the ending of an HTML body section.
+     * @param \yii\web\View $view the view to be registered with
+     */
+    public function endBody($view)
+    {
+        $view->endBody();
+        $this->trigger(self::EVENT_END_BODY);
+    }
+
+
+
 
 }
