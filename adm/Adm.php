@@ -57,16 +57,8 @@ class Adm extends \yii\base\Module
                     'class' => 'pavlinter\adm\ModelManager'
                 ],
                 'user' => Yii::$app->user,
-                'view' => [
-                    'class'=>'\yii\web\View',
-                    'title' => 'ADM',
-                ],
             ],
         ], $config);
-
-        if ($config['components']['view'] === true) {
-            $config['components']['view'] = Yii::$app->getView();
-        }
 
         parent::__construct($id, $parent, $config);
     }
@@ -117,13 +109,11 @@ class Adm extends \yii\base\Module
     public static function register()
     {
         $adm = Yii::$app->getModule('adm');
-        $view = $adm->get('view');
+        $view = Yii::$app->getView();
         //override default error handler
         $handler = new \yii\web\ErrorHandler(['errorAction' => $adm->id . '/default/error']);
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
-
-        Yii::$app->set('view', $view);
 
         if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
             Yii::$app->getUrlManager()->onlyFriendlyParams = false;
