@@ -209,6 +209,21 @@ class Adm extends \yii\base\Module
         }
         return forward_static_call_array([$class, 'begin'],[$config]);
     }
+    
+    /**
+     * @param $category
+     * @param array $options
+     * @return mixed
+     */
+    public static function getDots($category, $options = [])
+    {
+        if (empty($category)) {
+            $category = 'adm';
+        } else {
+            $category = 'adm/' . $category;
+        }
+        return Yii::$app->getI18n()->getOnlyDots($category, $options);
+    }
 
     /**
      * @param $class
@@ -381,8 +396,4 @@ class Adm extends \yii\base\Module
         $view->endBody();
         $this->trigger(self::EVENT_END_BODY);
     }
-
-
-
-
 }
