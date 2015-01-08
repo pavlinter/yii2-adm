@@ -282,7 +282,7 @@ class Adm extends \yii\base\Module
                     'visible' => $this->user->can('AdmRoot'),
                 ],
                 'authItem' => [
-                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . Yii::t("adm/menu", "Rules") . '</span>',
+                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . self::t("menu", "Rules") . '</span>',
                     'url' => "#",
                     'visible' => $this->user->can('AdmRoot'),
                     'items' => [
