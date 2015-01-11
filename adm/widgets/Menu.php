@@ -82,23 +82,14 @@ class Menu extends \yii\widgets\Menu
     {
         if (isset($item['url'])) {
 
-            //if ($isSubmenu) {
-                //$template = ArrayHelper::getValue($item, 'template', $this->submenuLinkTemplate);
-            //} else {
-                $template = ArrayHelper::getValue($item, 'template', $this->linkTemplate);
-            //}
+            $template = ArrayHelper::getValue($item, 'template', $this->linkTemplate);
 
             return strtr($template, [
                 '{url}' => Url::to($item['url']),
                 '{label}' => $item['label'],
             ]);
         } else {
-            //if ($isSubmenu) {
-                //$template = ArrayHelper::getValue($item, 'template', $this->submenuLabelTemplate);
-            //} else {
-                $template = ArrayHelper::getValue($item, 'template', $this->labelTemplate);
-            //}
-
+            $template = ArrayHelper::getValue($item, 'template', $this->labelTemplate);
             return strtr($template, [
                 '{label}' => $item['label'],
             ]);

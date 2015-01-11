@@ -267,10 +267,6 @@ class Adm extends \yii\base\Module
         return [
             'user.passwordResetTokenExpire' => 3600,
             'left-menu' => [
-                /*'dashboard' => [
-                    'label' => '<i class="fa fa-desktop"></i><span>' . self::t("menu", "Dashboard") . '</span>',
-                    'url' => ['/' . $this->id . '/default/index']
-                ],*/
                 'elfinder' => [
                     'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files") . '</span>',
                     'url' => ['/' . $this->id . '/file/index'],
