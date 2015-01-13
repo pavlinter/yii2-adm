@@ -5,6 +5,8 @@ namespace pavlinter\adm\widgets;
 use mihaildev\elfinder\ElFinder;
 use pavlinter\adm\Adm;
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\web\JsExpression;
 use yii\widgets\InputWidget;
 
 /**
@@ -17,6 +19,10 @@ class Redactor extends InputWidget
      */
     public $form;
 
+    public $removeFirstTag = false;
+
+    public $clientOptions = [];
+
     public function init()
     {
         parent:: init();
@@ -28,12 +34,18 @@ class Redactor extends InputWidget
      */
     public function run()
     {
+        $ckeditorOptions = [];
+        if ($this->removeFirstTag) {
+            $ckeditorOptions['enterMode'] = new JsExpression('CKEDITOR.ENTER_BR');
+        }
+        $ckeditorOptions = ArrayHelper::merge($ckeditorOptions, $this->clientOptions);
+
         return $this->form->field($this->model, $this->attribute)->widget(CKEditor::className(), [
             'initOnEvent' => 'focus',
             'options' => [
                 'class' => 'form-control form-redactor',
             ],
-            'editorOptions' => ElFinder::ckeditorOptions(Adm::getInstance()->id.'/elfinder',[/* Some CKEditor Options */]),
+            'editorOptions' => ElFinder::ckeditorOptions(Adm::getInstance()->id.'/elfinder', $ckeditorOptions),
         ]);
     }
 }

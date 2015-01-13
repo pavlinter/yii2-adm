@@ -58,11 +58,15 @@ class SourceMessageController extends Controller
             ],
         ];
     }
+
+    /**
+     * @return \yii\web\Response
+     */
     public function actionFulledit()
     {
         $request = Yii::$app->getRequest();
         $category = $request->post('category');
-        $message  = $request->post('message');
+        $message  = rawurldecode($request->post('message'));
 
         $model = Adm::getInstance()->manager->createSourceMessageQuery('find')
             ->select('id')

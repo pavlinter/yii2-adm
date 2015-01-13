@@ -18,9 +18,7 @@ Yii::$app->i18n->resetDot();
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin([
-
-    ]); ?>
+    <?php $form = Adm::begin('ActiveForm'); ?>
 
     <section class="panel adm-langs-panel">
         <header class="panel-heading bg-light">
@@ -40,6 +38,7 @@ Yii::$app->i18n->resetDot();
                                     'form' => $form,
                                     'model'      => $model->getTranslation($id_language),
                                     'attribute'  => '['.$id_language.']translation',
+                                    'removeFirstTag' => true,
                                 ]);?>
                             </div>
                         </div>
@@ -53,6 +52,6 @@ Yii::$app->i18n->resetDot();
         <?= Html::submitButton('Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php Adm::end('ActiveForm'); ?>
 
 </div>
