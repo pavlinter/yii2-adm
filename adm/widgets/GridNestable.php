@@ -73,9 +73,9 @@ class GridNestable extends \yii\base\Widget
         $pagination->params = $params;
 
         $this->_models = $this->grid->dataProvider->getModels();
-
+        $view = Yii::$app->getView();
         if($this->_models) {
-            $this->registerAssets();
+            $this->registerAssets($view);
             echo strtr($this->template, [
                 '{btn}' => $this->renderBtn(),
                 '{nestableId}' => $this->id,
@@ -83,6 +83,10 @@ class GridNestable extends \yii\base\Widget
                 '{pager}' => $this->renderPager()
             ]);
 
+        } else {
+            $view->registerJs('
+                $(".btn-adm-nestable-view").hide();
+            ');
         }
         unset($params['nestable']);
         $pagination->params = $params;
@@ -146,14 +150,10 @@ class GridNestable extends \yii\base\Widget
     }
 
 
-    public function registerAssets()
+    public function registerAssets($view)
     {
-        $view = Yii::$app->getView();
         NestableAsset::register($view);
         $view->registerJs('
-
-
-
                 $("#' . $this->id . '").nestable(' . Json::encode($this->clientOptions) .');
 
                 var nestableItemTemplate    = \'' . $this->itemTemplate . '\';
