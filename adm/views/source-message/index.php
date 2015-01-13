@@ -35,7 +35,9 @@ Yii::$app->i18n->resetDot();
                 'attribute' => 'translation',
                 'format' => 'raw',
                 'value'=> function ($model, $index, $widget) {
-                    return Yii::t($model->category,$model->message,['dot' => true]);
+                    $text = Html::encode(Yii::t($model->category,$model->message,['dot' => false]));
+                    $dot  = Yii::t($model->category,$model->message,['dot' => '.']);
+                    return $text . $dot;
                 },
             ],
             [
