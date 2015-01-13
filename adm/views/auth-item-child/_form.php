@@ -16,26 +16,33 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
 
     <?php $form = Adm::begin('ActiveForm'); ?>
 
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?php
+            echo $form->field($model, 'parent')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map($items, 'name', 'name'),
+                'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?php
+            echo $form->field($model, 'child')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map($items, 'name', 'name'),
+                'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
 
-    <?php
-    echo $form->field($model, 'parent')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map($items, 'name', 'name'),
-        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-    ]);
-    ?>
 
-    <?php
-    echo $form->field($model, 'child')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map($items, 'name', 'name'),
-        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-    ]);
-    ?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>

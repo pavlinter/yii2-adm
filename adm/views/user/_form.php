@@ -21,48 +21,68 @@ use pavlinter\adm\Adm;
 
     <?php $form = Adm::begin('ActiveForm'); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => 255]) ?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'username')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($dynamicModel, 'password')->passwordInput()->label(Adm::t('user', 'Password')) ?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($dynamicModel, 'password')->passwordInput()->label(Yii::t('modelAdm/user', 'Password')) ?>
 
-    <?= $form->field($dynamicModel, 'password2')->passwordInput()->label(Adm::t('user', 'Confirm Password')) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($dynamicModel, 'password2')->passwordInput()->label(Yii::t('modelAdm/user', 'Confirm Password')) ?>
+        </div>
+    </div>
+
+
 
     <?php if (!Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {?>
 
-        <?php
-        echo $form->field($model, 'role')->widget(Select2::classname(), [
-            'data' => User::roles(),
-            'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-            'pluginOptions' => [
-
-            ],
-        ]);
-        ?>
-
-        <?php
-        echo $form->field($model, 'status')->widget(Select2::classname(), [
-            'data' => User::status(),
-            'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-            'pluginOptions' => [
-
-            ],
-        ]);
-        ?>
-
-
-        <?php
-            if ($model->isNewRecord) {
-                echo $form->field($dynamicModel, 'assignment')->widget(Select2::classname(), [
-                    'data' => \yii\helpers\ArrayHelper::map($authItems, 'name' , 'name'),
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <?php
+                echo $form->field($model, 'role')->widget(Select2::classname(), [
+                    'data' => User::roles(),
                     'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
                     'pluginOptions' => [
-                        'allowClear' => true,
+
                     ],
-                ])->label(Adm::t('user', 'Assignment Role'));
-            }
-        ?>
+                ]);
+                ?>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <?php
+                echo $form->field($model, 'status')->widget(Select2::classname(), [
+                    'data' => User::status(),
+                    'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                    'pluginOptions' => [
+
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <?php
+                if ($model->isNewRecord) {
+                    echo $form->field($dynamicModel, 'assignment')->widget(Select2::classname(), [
+                        'data' => \yii\helpers\ArrayHelper::map($authItems, 'name' , 'name'),
+                        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label(Yii::t('modelAdm/user', 'Assignment Role'));
+                }
+                ?>
+            </div>
+        </div>
 
     <?php }?>
 

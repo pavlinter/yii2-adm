@@ -65,6 +65,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['role', 'in', 'range' => array_keys(self::roles())],
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -76,6 +77,21 @@ class User extends ActiveRecord implements IdentityInterface
         $scenarios['adm-update'] = ['username', 'email', 'status', 'role'];
 
         return $scenarios;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('modelAdm/user', 'Username'),
+            'email' => Yii::t('modelAdm/user', 'Email'),
+            'role' => Yii::t('modelAdm/user', 'role'),
+            'status' => Yii::t('modelAdm/user', 'status'),
+            'created_at' => Yii::t('modelAdm/user', 'Created'),
+            'updated_at' => Yii::t('modelAdm/user', 'Updated'),
+        ];
     }
     /**
      * @param null $key

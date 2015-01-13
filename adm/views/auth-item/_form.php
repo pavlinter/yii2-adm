@@ -17,33 +17,42 @@ $rules = Adm::getInstance()->manager->createAuthRuleQuery()->select('name')->asA
 
     <?php $form = Adm::begin('ActiveForm'); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
 
-    <?php
-    echo $form->field($model, 'type')->widget(Select2::classname(), [
-        'data' => $model::typeList(),
-        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-        'pluginOptions' => [
+            <?php
+            echo $form->field($model, 'type')->widget(Select2::classname(), [
+                'data' => $model::typeList(),
+                'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'pluginOptions' => [
 
-        ],
-    ]);
-    ?>
-
-
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?php
-    echo $form->field($model, 'rule_name')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map($rules, 'name', 'name'),
-        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]);
-    ?>
+                ],
+            ]);
+            ?>
 
 
-    <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?php
+            echo $form->field($model, 'rule_name')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map($rules, 'name', 'name'),
+                'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]);
+            ?>
+
+
+            <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+        </div>
+    </div>
+
+
+
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>

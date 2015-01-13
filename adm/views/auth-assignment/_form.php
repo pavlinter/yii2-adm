@@ -20,34 +20,37 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
 
     <?php $form = Adm::begin('ActiveForm'); ?>
 
-
-    <?php
-    echo $form->field($model, 'item_name')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map($items, 'name', 'name'),
-        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-    ]);
-    ?>
-
-
-    <?php
-    echo $form->field($model, 'user_id')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map($users, 'id', 'username'),
-        'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-        'pluginOptions' => [
-            'allowClear' => true,
-            'minimumInputLength' => 3,
-            'ajax' => [
-                'url' => Url::to(['find-user']),
-                'dataType' => 'json',
-                'data' => new JsExpression('function(term,page) { return {search:term}; }'),
-                'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
-            ],
-        ],
-    ]);
-    ?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?php
+            echo $form->field($model, 'item_name')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map($items, 'name', 'name'),
+                'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?php
+            echo $form->field($model, 'user_id')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map($users, 'id', 'username'),
+                'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'minimumInputLength' => 3,
+                    'ajax' => [
+                        'url' => Url::to(['find-user']),
+                        'dataType' => 'json',
+                        'data' => new JsExpression('function(term,page) { return {search:term}; }'),
+                        'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>

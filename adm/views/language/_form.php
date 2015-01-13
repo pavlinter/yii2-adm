@@ -15,19 +15,41 @@ use yii\widgets\ActiveForm;
 
     <?php $form = Adm::begin('ActiveForm'); ?>
 
-    <?= $form->field($model, 'code')->textInput(['maxlength' => 16]) ?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'code')->textInput(['maxlength' => 16]) ?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => 20]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 20]) ?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= Adm::widget('FileInput',[
+                'form' => $form,
+                'model'      => $model,
+                'attribute'  => 'image',
+            ]);?>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'weight')->textInput() ?>
+        </div>
+    </div>
 
-    <?= Adm::widget('FileInput',[
-        'form' => $form,
-        'model'      => $model,
-        'attribute'  => 'image',
-    ]);?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <?= $form->field($model, 'active', ["template" => "{input}\n{label}\n{hint}\n{error}"])->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'weight')->textInput() ?>
 
-    <?= $form->field($model, 'active', ["template" => "{input}\n{label}\n{hint}\n{error}"])->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
+
+
+
+
+
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>
