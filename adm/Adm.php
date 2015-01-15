@@ -14,9 +14,8 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * @property \pavlinter\adm\components\User $user
+ * @property \yii\web\User $user
  * @property \pavlinter\adm\ModelManager $manager
- * @property \yii\rbac\DbManager $authManager
  */
 class Adm extends \yii\base\Module
 {
