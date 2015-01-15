@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
+ */
+
 namespace pavlinter\adm\controllers;
 
 use pavlinter\adm\Adm;
 use pavlinter\adm\filters\AccessControl;
 use Yii;
-use yii\helpers\Html;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

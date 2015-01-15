@@ -1,12 +1,21 @@
 <?php
 
+/**
+ * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
+ */
+
 namespace pavlinter\adm\widgets;
 
 use mihaildev\elfinder\ElFinder;
 use pavlinter\adm\Adm;
 use Yii;
 
-
+/**
+ * Class FileManager
+ */
 class FileManager extends ElFinder{
 
     public $language;

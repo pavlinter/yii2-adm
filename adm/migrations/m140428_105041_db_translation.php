@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
+ */
+
 use yii\db\Schema;
 
 class m140428_105041_db_translation extends \yii\db\Migration

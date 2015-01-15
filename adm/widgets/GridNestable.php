@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
+ */
+
 namespace pavlinter\adm\widgets;
 
 use pavlinter\adm\Adm;
@@ -13,7 +20,6 @@ use yii\web\Request;
 
 /**
  * Class GridNestable
- * @package pavlinter\adm\widgets
  */
 class GridNestable extends \yii\base\Widget
 {

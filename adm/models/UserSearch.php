@@ -1,11 +1,17 @@
 <?php
 
+/**
+ * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
+ */
+
 namespace pavlinter\adm\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\db\Expression;
 
 /**
  * UserSearch represents the model behind the search form about `common\models\User`.

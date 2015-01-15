@@ -1,8 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2014
  * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
  */
 
 namespace pavlinter\adm\controllers;
@@ -11,6 +13,10 @@ use pavlinter\adm\Adm;
 use Yii;
 use yii\web\Controller;
 
+/**
+ * Class DefaultController
+ * @package pavlinter\adm\controllers
+ */
 class DefaultController extends Controller
 {
     /**
@@ -96,11 +102,4 @@ class DefaultController extends Controller
         Adm::getInstance()->user->logout();
         return $this->redirect(['login']);
     }
-
-    public function actionInstall()
-    {
-        Adm::getInstance()->user->logout();
-        return $this->redirect(['login']);
-    }
-
 }

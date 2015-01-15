@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package yii2-adm
+ * @author Pavels Radajevs <pavlinter@gmail.com>
+ * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
+ * @version 1.0.0
+ */
+
 namespace pavlinter\adm\actions;
 
 use Yii;
@@ -9,8 +16,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 
 /**
- *
- * @author Pavels Radajevs <pavlinter@gmail.com>
+ * Class GridNestableAction
  */
 class GridNestableAction extends Action
 {
