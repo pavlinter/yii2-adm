@@ -9,6 +9,7 @@ Yii2: Adm CMS
 "pavlinter/yii2-adm": "@dev",
 "pavlinter/yii2-dot-translation": "@dev",
 "pavlinter/yii2-url-manager": "@dev",
+"pavlinter/yii2-buttons": "@dev",
 "mihaildev/yii2-ckeditor": "1.*",
 "mihaildev/yii2-elfinder": "1.*",
 "kartik-v/yii2-grid": "2.*",
