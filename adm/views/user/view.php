@@ -7,7 +7,7 @@ use pavlinter\adm\Adm;
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\User */
 Yii::$app->i18n->disableDot();
-$this->title = $model->id;
+$this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Adm::t('user', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->i18n->resetDot();
@@ -18,19 +18,21 @@ Yii::$app->i18n->resetDot();
 
     <p>
         <?= Html::a(Adm::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Adm::t('user', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Adm::t('user', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
+
+        <?php if (!Adm::getInstance()->user->can('Adm-UpdateOwnUser', $model)) {?>
+            <?= Html::a(Adm::t('user', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Adm::t('user', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        <?php }?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'username',
             'email:email',
             [
