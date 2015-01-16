@@ -71,10 +71,7 @@ class AuthAssignmentController extends Controller
         $model = Adm::getInstance()->manager->createAuthAssignment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (($redirect = Yii::$app->request->post('redirect'))) {
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(['index']);
+            return Adm::redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -94,10 +91,7 @@ class AuthAssignmentController extends Controller
         $model = $this->findModel($item_name, $user_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (($redirect = Yii::$app->request->post('redirect'))) {
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(['index']);
+            return Adm::redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -115,10 +109,7 @@ class AuthAssignmentController extends Controller
     public function actionDelete($item_name, $user_id)
     {
         $this->findModel($item_name, $user_id)->delete();
-        if (($redirect = Yii::$app->request->post('redirect'))) {
-            return $this->redirect($redirect);
-        }
-        return $this->redirect(['index']);
+        return Adm::redirect(['index']);
     }
 
     /**
@@ -140,6 +131,10 @@ class AuthAssignmentController extends Controller
         }
     }
 
+    /**
+     * @param null $search
+     * @return string
+     */
     public function actionFindUser($search = null) {
         $out = ['more' => false];
         if (!is_null($search)) {

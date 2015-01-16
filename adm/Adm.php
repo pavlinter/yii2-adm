@@ -12,6 +12,7 @@ namespace pavlinter\adm;
 use pavlinter\translation\I18N;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /**
  * @property \yii\web\User $user
@@ -391,5 +392,42 @@ class Adm extends \yii\base\Module
     {
         $view->endBody();
         $this->trigger(self::EVENT_END_BODY);
+    }
+
+    /**
+     * @param string|array $url the URL to be redirected to. This can be in one of the following formats:
+     * - a string representing a URL (e.g. "http://example.com")
+     * - a string representing a URL alias (e.g. "@example.com")
+     * - an array in the format of `[$route, ...name-value pairs...]` (e.g. `['site/index', 'ref' => 1]`)
+     *   [[Url::to()]] will be used to convert the array into a URL.
+     * @param array $options
+     * @return \yii\web\Response|\yii\console\Response the response component.
+     */
+    public static function redirect($url, $options = [])
+    {
+        $response = Yii::$app->getResponse();
+        $options = ArrayHelper::merge([
+            'onlyRedirect' => false,
+            'post' => 'redirect',
+            'statusCode' => 302,
+            'params' => [],
+        ], $options);
+        $redirect = Yii::$app->request->post($options['post']);
+        if ($redirect && $options['post'] !== false) {
+            $template = [];
+            if (is_array($url)) {
+                $params = ArrayHelper::merge($url, $options['params']);
+                ArrayHelper::remove($params, '0');
+            } else {
+                $params = $options['params'];
+            }
+            foreach ($params as $k => $v) {
+                $template['{' . $k . '}'] = $v;
+            }
+            $url = strtr($redirect, $template);
+        }
+        if ($options['onlyRedirect'] === false) {
+            return $response->redirect(Url::to($url), $options['statusCode']);
+        }
     }
 }

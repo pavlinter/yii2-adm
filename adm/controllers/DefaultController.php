@@ -87,10 +87,7 @@ class DefaultController extends Controller
         $this->layout = 'base';
         $model = Adm::getInstance()->manager->createLoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            if (($redirect = Yii::$app->request->post('redirect'))) {
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(['index']);
+            return Adm::redirect(['index']);
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -103,6 +100,6 @@ class DefaultController extends Controller
     public function actionLogout()
     {
         Adm::getInstance()->user->logout();
-        return $this->redirect(['login']);
+        return Adm::redirect(['login']);
     }
 }

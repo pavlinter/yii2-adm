@@ -87,10 +87,7 @@ class AuthRuleController extends Controller
                     $model->data = serialize($ruleModel);
                 }
                 $model->save(false);
-                if (($redirect = Yii::$app->request->post('redirect'))) {
-                    return $this->redirect($redirect);
-                }
-                return $this->redirect(['index']);
+                return Adm::redirect(['index']);
             }
         }
         return $this->render('create', [
@@ -127,10 +124,7 @@ class AuthRuleController extends Controller
                     $model->data = serialize($ruleModel);
                 }
                 $model->save(false);
-                if (($redirect = Yii::$app->request->post('redirect'))) {
-                    return $this->redirect($redirect);
-                }
-                return $this->redirect(['index']);
+                return Adm::redirect(['index']);
             }
         }
         return $this->render('update', [
@@ -148,10 +142,7 @@ class AuthRuleController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        if (($redirect = Yii::$app->request->post('redirect'))) {
-            return $this->redirect($redirect);
-        }
-        return $this->redirect(['index']);
+        return Adm::redirect(['index']);
     }
 
     /**

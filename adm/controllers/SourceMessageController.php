@@ -119,10 +119,7 @@ class SourceMessageController extends Controller
         $model = Adm::getInstance()->manager->createSourceMessage();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (($redirect = Yii::$app->request->post('redirect'))) {
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(['update', 'id' => $model->id]);
+            return Adm::redirect(['update', 'id' => $model->id]);
         } else {
 
             if ($category != '') {
@@ -149,10 +146,7 @@ class SourceMessageController extends Controller
 
         if ($model->loadLangs(Yii::$app->request->post())) {
             if ($model->saveTranslations()) {
-                if (($redirect = Yii::$app->request->post('redirect'))) {
-                    return $this->redirect($redirect);
-                }
-                return $this->redirect(['index']);
+                return Adm::redirect(['index']);
             }
         }
         return $this->render('update', [
@@ -170,10 +164,7 @@ class SourceMessageController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        if (($redirect = Yii::$app->request->post('redirect'))) {
-            return $this->redirect($redirect);
-        }
-        return $this->redirect(['index']);
+        return Adm::redirect(['index']);
     }
 
     /**

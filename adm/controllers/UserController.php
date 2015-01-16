@@ -108,16 +108,10 @@ class UserController extends Controller
                         $modelAssignment->item_name = $dynamicModel->assignment;
                         $modelAssignment->user_id = (string)$model->id;
                         if ($modelAssignment->save()) {
-                            if (($redirect = Yii::$app->request->post('redirect'))) {
-                                return $this->redirect($redirect);
-                            }
-                            return $this->redirect(['index']);
+                            return Adm::redirect(['index']);
                         }
                     } else {
-                        if (($redirect = Yii::$app->request->post('redirect'))) {
-                            return $this->redirect($redirect);
-                        }
-                        return $this->redirect(['index']);
+                        return Adm::redirect(['index']);
                     }
                 }
             }
@@ -174,10 +168,7 @@ class UserController extends Controller
                     Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                     return $this->refresh();
                 } else {
-                    if (($redirect = Yii::$app->request->post('redirect'))) {
-                        return $this->redirect($redirect);
-                    }
-                    return $this->redirect(['index']);
+                    return Adm::redirect(['index']);
                 }
             }
         }
@@ -198,10 +189,7 @@ class UserController extends Controller
         if (Adm::getInstance()->user->getId() != $id) {
             $this->findModel($id)->delete();
         }
-        if (($redirect = Yii::$app->request->post('redirect'))) {
-            return $this->redirect($redirect);
-        }
-        return $this->redirect(['index']);
+        return Adm::redirect(['index']);
     }
 
     /**

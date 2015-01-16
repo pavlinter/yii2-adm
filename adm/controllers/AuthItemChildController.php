@@ -70,10 +70,7 @@ class AuthItemChildController extends Controller
         $model = Adm::getInstance()->manager->createAuthItemChild();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (($redirect = Yii::$app->request->post('redirect'))) {
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(['index']);
+            return Adm::redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -93,10 +90,7 @@ class AuthItemChildController extends Controller
         $model = $this->findModel($parent, $child);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (($redirect = Yii::$app->request->post('redirect'))) {
-                return $this->redirect($redirect);
-            }
-            return $this->redirect(['index']);
+            return Adm::redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -114,10 +108,7 @@ class AuthItemChildController extends Controller
     public function actionDelete($parent, $child)
     {
         $this->findModel($parent, $child)->delete();
-        if (($redirect = Yii::$app->request->post('redirect'))) {
-            return $this->redirect($redirect);
-        }
-        return $this->redirect(['index']);
+        return Adm::redirect(['index']);
     }
 
     /**
