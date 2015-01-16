@@ -9,6 +9,7 @@
 
 namespace pavlinter\adm\models;
 
+use pavlinter\adm\Adm;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -48,8 +49,18 @@ class SourceMessageSearch extends SourceMessage
      */
     public function search($params)
     {
-        $query = self::find();
+        $sourceMessageTable = self::tableName();
+        $query = self::find()->from(['s' => $sourceMessageTable]);
 
+        $sort = isset($params['sort']) ? $params['sort'] : null;
+        $isTranslationSearch = isset($params['SourceMessageSearch']['translation']) && $params['SourceMessageSearch']['translation'];
+        $isTranslationSort   = in_array($sort, ['-translation', 'translation']) ? $sort : null;
+
+        if ($isTranslationSearch || $isTranslationSort) {
+            $messageTable = Adm::getInstance()->manager->createMessageQuery('tableName');
+            $query->innerJoin(['m'=> $messageTable],'m.id=s.id')->with(['messages']);
+        }
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> [
@@ -57,16 +68,19 @@ class SourceMessageSearch extends SourceMessage
             ]
         ]);
 
+        $dataProvider->sort->attributes['translation']['asc'] = ['m.translation' => SORT_ASC];
+        $dataProvider->sort->attributes['translation']['desc'] = ['m.translation' => SORT_DESC];
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
+        if ($isTranslationSearch) {
+            $query->andFilterWhere(['like', 'm.translation', $this->translation]);
+        }
 
-        $query->andFilterWhere(['like', 'category', $this->category])
-            ->andFilterWhere(['like', 'message', $this->message]);
+        $query->andFilterWhere(['like', 's.category', $this->category])
+            ->andFilterWhere(['like', 's.message', $this->message]);
 
         return $dataProvider;
     }

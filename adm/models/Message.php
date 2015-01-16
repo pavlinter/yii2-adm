@@ -18,7 +18,7 @@ use Yii;
  * @property integer $language_id
  * @property string $translation
  *
- * @property SourceMessage $id0
+ * @property SourceMessage $sourceMessage
  */
 class Message extends \yii\db\ActiveRecord
 {
@@ -57,7 +57,7 @@ class Message extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+    public function getSourceMessage()
     {
         return $this->hasOne(SourceMessage::className(), ['id' => 'id']);
     }
