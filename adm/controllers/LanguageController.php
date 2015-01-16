@@ -70,6 +70,9 @@ class LanguageController extends Controller
         $model = Adm::getInstance()->manager->createLanguage();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (($redirect = Yii::$app->request->post('redirect'))) {
+                return $this->redirect($redirect);
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -89,6 +92,9 @@ class LanguageController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (($redirect = Yii::$app->request->post('redirect'))) {
+                return $this->redirect($redirect);
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -106,7 +112,9 @@ class LanguageController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        if (($redirect = Yii::$app->request->post('redirect'))) {
+            return $this->redirect($redirect);
+        }
         return $this->redirect(['index']);
     }
     /**

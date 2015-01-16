@@ -87,6 +87,9 @@ class DefaultController extends Controller
         $this->layout = 'base';
         $model = Adm::getInstance()->manager->createLoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if (($redirect = Yii::$app->request->post('redirect'))) {
+                return $this->redirect($redirect);
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('login', [

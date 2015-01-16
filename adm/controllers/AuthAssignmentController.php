@@ -71,6 +71,9 @@ class AuthAssignmentController extends Controller
         $model = Adm::getInstance()->manager->createAuthAssignment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (($redirect = Yii::$app->request->post('redirect'))) {
+                return $this->redirect($redirect);
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -91,6 +94,9 @@ class AuthAssignmentController extends Controller
         $model = $this->findModel($item_name, $user_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (($redirect = Yii::$app->request->post('redirect'))) {
+                return $this->redirect($redirect);
+            }
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -109,7 +115,9 @@ class AuthAssignmentController extends Controller
     public function actionDelete($item_name, $user_id)
     {
         $this->findModel($item_name, $user_id)->delete();
-
+        if (($redirect = Yii::$app->request->post('redirect'))) {
+            return $this->redirect($redirect);
+        }
         return $this->redirect(['index']);
     }
 
