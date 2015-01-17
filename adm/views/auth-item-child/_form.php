@@ -2,8 +2,10 @@
 
 use kartik\widgets\Select2;
 use pavlinter\adm\Adm;
+use pavlinter\buttons\InputButton;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthItemChild */
@@ -41,13 +43,34 @@ $items = Adm::getInstance()->manager->createAuthItemQuery()->select('name')->asA
         </div>
     </div>
 
-
-
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>
-        <?= Adm::t('', 'Create', ['dot' => '.']) ?>
-        <?= Adm::t('', 'Update', ['dot' => '.']) ?>
+        <?= InputButton::widget([
+            'label' => $model->isNewRecord ? Adm::t('', 'Create', ['dot' => false]) : Adm::t('', 'Update', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'formSelector' => $form,
+        ]);?>
+
+        <?php if ($model->isNewRecord) {?>
+            <?= InputButton::widget([
+                'label' => Adm::t('', 'Create and insert new', ['dot' => false]),
+                'options' => ['class' => 'btn btn-primary'],
+                'input' => 'adm-redirect',
+                'name' => 'redirect',
+                'value' => Url::to(['create']),
+                'formSelector' => $form, //form object or form selector
+            ]);?>
+        <?php }?>
+
+        <?= InputButton::widget([
+            'label' => $model->isNewRecord ? Adm::t('', 'Create and list', ['dot' => false]) : Adm::t('', 'Update and list', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'value' => Url::to(['index']),
+            'formSelector' => $form, //form object or form selector
+        ]);?>
     </div>
 
     <?php Adm::end('ActiveForm'); ?>

@@ -108,10 +108,10 @@ class UserController extends Controller
                         $modelAssignment->item_name = $dynamicModel->assignment;
                         $modelAssignment->user_id = (string)$model->id;
                         if ($modelAssignment->save()) {
-                            return Adm::redirect(['index']);
+                            return Adm::redirect(['update', 'id' => $model->id]);
                         }
                     } else {
-                        return Adm::redirect(['index']);
+                        return Adm::redirect(['update', 'id' => $model->id]);
                     }
                 }
             }
@@ -168,7 +168,7 @@ class UserController extends Controller
                     Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                     return $this->refresh();
                 } else {
-                    return Adm::redirect(['index']);
+                    return Adm::redirect(['update', 'id' => $model->id]);
                 }
             }
         }

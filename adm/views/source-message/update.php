@@ -1,7 +1,9 @@
 <?php
 
 use pavlinter\adm\Adm;
+use pavlinter\buttons\InputButton;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -49,7 +51,22 @@ Yii::$app->i18n->resetDot();
     </section>
 
     <div class="form-group">
-        <?= Html::submitButton('Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= InputButton::widget([
+            'label' => Adm::t('', 'Update', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'formSelector' => $form,
+        ]);?>
+
+        <?= InputButton::widget([
+            'label' => Adm::t('', 'Update and list', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'value' => Url::to(['index']),
+            'formSelector' => $form, //form object or form selector
+        ]);?>
     </div>
 
     <?php Adm::end('ActiveForm'); ?>

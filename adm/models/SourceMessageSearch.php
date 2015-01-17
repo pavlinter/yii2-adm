@@ -60,7 +60,7 @@ class SourceMessageSearch extends SourceMessage
             $messageTable = Adm::getInstance()->manager->createMessageQuery('tableName');
             $query->innerJoin(['m'=> $messageTable],'m.id=s.id')->with(['messages']);
         }
-        
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> [

@@ -68,9 +68,10 @@ class LanguageController extends Controller
     public function actionCreate()
     {
         $model = Adm::getInstance()->manager->createLanguage();
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Adm::redirect(['index']);
+            return Adm::redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -89,7 +90,7 @@ class LanguageController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Adm::redirect(['index']);
+            return Adm::redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

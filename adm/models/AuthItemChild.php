@@ -17,8 +17,8 @@ use Yii;
  * @property string $parent
  * @property string $child
  *
- * @property AuthItem $parent0
- * @property AuthItem $child0
+ * @property AuthItem $itemParent
+ * @property AuthItem $itemChild
  */
 class AuthItemChild extends \yii\db\ActiveRecord
 {
@@ -36,6 +36,7 @@ class AuthItemChild extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['parent', 'child'], 'unique', 'targetAttribute' => ['parent', 'child']],
             [['parent', 'child'], 'required'],
             [['parent', 'child'], 'string', 'max' => 64],
             [['child'], 'compare','compareAttribute' => 'parent', 'operator' => '!='],
@@ -56,7 +57,7 @@ class AuthItemChild extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParent0()
+    public function getItemParent()
     {
         return $this->hasOne(AuthItem::className(), ['name' => 'parent']);
     }
@@ -64,7 +65,7 @@ class AuthItemChild extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getChild0()
+    public function getItemChild()
     {
         return $this->hasOne(AuthItem::className(), ['name' => 'child']);
     }

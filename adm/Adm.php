@@ -128,9 +128,8 @@ class Adm extends \yii\base\Module
         $adm = Yii::$app->getModule('adm');
         $view = Yii::$app->getView();
         //override default error handler
-        $handler = new \yii\web\ErrorHandler(['errorAction' => $adm->id . '/default/error']);
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
+        $handler = Yii::$app->getErrorHandler();
+        $handler->errorAction = '/' . $adm->id . '/default/error';
 
         if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
             Yii::$app->getUrlManager()->onlyFriendlyParams = false;

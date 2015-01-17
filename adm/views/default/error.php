@@ -12,11 +12,10 @@ use yii\helpers\Url;
  */
 
 $this->title = $name;
-
 if (!Adm::getInstance()->user->getIsGuest()) {
-    $this->context->module->layout = 'main';
+    $this->context->layout = 'main';
 } else {
-    $this->context->module->layout = 'base';
+    $this->context->layout = 'base';
 }
 ?>
 <section id="content">

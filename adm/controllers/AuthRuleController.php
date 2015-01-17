@@ -74,20 +74,21 @@ class AuthRuleController extends Controller
         $dynamicModel->addRule(['ruleNamespace'],function($attribute, $params) use($dynamicModel){
             $this->validateClass($dynamicModel, $attribute, ['extends' => \yii\rbac\Rule::className()]);
         });
+        $dynamicModel->addRule(['ruleNamespace'], 'required');
         $post = Yii::$app->request->post();
-
 
         if ($model->load($post) && $dynamicModel->load($post)) {
             if ($model->validate() && $dynamicModel->validate()) {
-                if (!empty($dynamicModel->ruleNamespace)) {
-                    $ruleModel = new $dynamicModel->ruleNamespace;
-                    $time = time();
-                    $ruleModel->createdAt = $time;
-                    $ruleModel->updatedAt = $time;
-                    $model->data = serialize($ruleModel);
+
+                $ruleModel = new $dynamicModel->ruleNamespace;
+                $time = time();
+                $ruleModel->createdAt = $time;
+                $ruleModel->updatedAt = $time;
+                $model->data = serialize($ruleModel);
+
+                if ($model->save(false)) {
+                    return Adm::redirect(['update', 'id' => $model->name]);
                 }
-                $model->save(false);
-                return Adm::redirect(['index']);
             }
         }
         return $this->render('create', [
@@ -107,24 +108,34 @@ class AuthRuleController extends Controller
     {
         $model = $this->findModel($id);
 
+
         $dynamicModel = new DynamicModel(['ruleNamespace']);
-        $dynamicModel->addRule(['ruleNamespace'],function($attribute, $params) use($dynamicModel){
+        $dynamicModel->addRule(['ruleNamespace'], function($attribute, $params) use($dynamicModel){
             $this->validateClass($dynamicModel, $attribute, ['extends' => \yii\rbac\Rule::className()]);
         });
+
+        $dynamicModel->addRule(['ruleNamespace'], 'required');
+
+        if ($model->data && ($ruleNamespace = unserialize($model->data)) !== false) {
+            if (method_exists($ruleNamespace, 'className')) {
+                $dynamicModel->ruleNamespace = $ruleNamespace::className();
+            }
+        }
+
         $post = Yii::$app->request->post();
 
 
         if ($model->load($post) && $dynamicModel->load($post)) {
             if ($model->validate() && $dynamicModel->validate()) {
-                if (!empty($dynamicModel->ruleNamespace)) {
-                    $ruleModel = new $dynamicModel->ruleNamespace;
-                    $time = time();
-                    $ruleModel->createdAt = $time;
-                    $ruleModel->updatedAt = $time;
-                    $model->data = serialize($ruleModel);
+
+                $ruleModel = new $dynamicModel->ruleNamespace;
+                $time = time();
+                $ruleModel->createdAt = $time;
+                $ruleModel->updatedAt = $time;
+                $model->data = serialize($ruleModel);
+                if ($model->save(false)) {
+                    return Adm::redirect(['update', 'id' => $model->name]);
                 }
-                $model->save(false);
-                return Adm::redirect(['index']);
             }
         }
         return $this->render('update', [

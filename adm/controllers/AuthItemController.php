@@ -70,7 +70,7 @@ class AuthItemController extends Controller
         $model = Adm::getInstance()->manager->createAuthItem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Adm::redirect(['index']);
+            return Adm::redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -89,7 +89,7 @@ class AuthItemController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Adm::redirect(['index']);
+            return Adm::redirect(['update', 'id' => $model->name]);
         } else {
             return $this->render('update', [
                 'model' => $model,

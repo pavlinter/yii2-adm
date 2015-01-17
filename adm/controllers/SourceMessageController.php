@@ -146,7 +146,7 @@ class SourceMessageController extends Controller
 
         if ($model->loadLangs(Yii::$app->request->post())) {
             if ($model->saveTranslations()) {
-                return Adm::redirect(['index']);
+                return Adm::redirect(['update', 'id' => $model->id]);
             }
         }
         return $this->render('update', [

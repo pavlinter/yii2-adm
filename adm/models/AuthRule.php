@@ -53,6 +53,7 @@ class AuthRule extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'unique', 'targetAttribute' => ['name']],
             [['data'], 'default', 'value' => null],
             [['name'], 'required'],
             [['data'], 'string'],

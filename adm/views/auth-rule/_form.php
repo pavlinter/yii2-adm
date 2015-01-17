@@ -1,7 +1,9 @@
 <?php
 
 use pavlinter\adm\Adm;
+use pavlinter\buttons\InputButton;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\AuthRule */
@@ -25,14 +27,38 @@ use yii\helpers\Html;
 
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
-        </div
+            <?= $form->field($model, 'data')->textarea(['rows' => 6, 'readonly' => true]) ?>
+        </div>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Adm::t('', 'Create') : Adm::t('', 'Update'), ['class' => 'btn btn-primary']) ?>
-        <?= Adm::t('', 'Create', ['dot' => '.']) ?>
-        <?= Adm::t('', 'Update', ['dot' => '.']) ?>
+        <?= InputButton::widget([
+            'label' => Adm::t('', 'Create', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'formSelector' => $form,
+        ]);?>
+
+
+        <?= InputButton::widget([
+            'label' => Adm::t('', 'Create and insert new', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'value' => Url::to(['create']),
+            'formSelector' => $form, //form object or form selector
+        ]);?>
+
+
+        <?= InputButton::widget([
+            'label' => Adm::t('', 'Create and list', ['dot' => false]),
+            'options' => ['class' => 'btn btn-primary'],
+            'input' => 'adm-redirect',
+            'name' => 'redirect',
+            'value' => Url::to(['index']),
+            'formSelector' => $form, //form object or form selector
+        ]);?>
     </div>
 
     <?php Adm::end('ActiveForm'); ?>

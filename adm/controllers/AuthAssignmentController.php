@@ -71,7 +71,7 @@ class AuthAssignmentController extends Controller
         $model = Adm::getInstance()->manager->createAuthAssignment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Adm::redirect(['index']);
+            return Adm::redirect(['update', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -91,7 +91,7 @@ class AuthAssignmentController extends Controller
         $model = $this->findModel($item_name, $user_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return Adm::redirect(['index']);
+            return Adm::redirect(['update', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -135,11 +135,14 @@ class AuthAssignmentController extends Controller
      * @param null $search
      * @return string
      */
-    public function actionFindUser($search = null) {
+    public function actionFindUser($search = null, $id = null) {
         $out = ['more' => false];
         if (!is_null($search)) {
-            $data = Adm::getInstance()->manager->createUserQuery()->select(['id', 'text' => 'username',])->where(['like', 'username', $search])->limit(20)->asArray()->all();
+            $data = Adm::getInstance()->manager->createUserQuery()->select(['id', 'text' => 'username'])->where(['like', 'username', $search])->limit(20)->asArray()->all();
             $out['results'] = array_values($data);
+        } else if ($id > 0) {
+            $user = Adm::getInstance()->manager->createUserQuery()->where(['id' => $id])->one();
+            $out['results'] = ['id' => $id, 'text' => $user->username];
         } else {
             $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
         }
