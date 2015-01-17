@@ -54,6 +54,7 @@ class Language extends ActiveRecord
     public function rules()
     {
         return [
+            [['weight'], 'default', 'value' => null],
             [['code', 'name'], 'required'],
             [['weight', 'active'], 'integer'],
             [['updated_at'], 'safe'],
@@ -77,5 +78,21 @@ class Language extends ActiveRecord
             'active' => Yii::t('modelAdm/language', 'Active'),
             'updated_at' => Yii::t('modelAdm/language', 'Updated At'),
         ];
+    }
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if ($this->weight === null) {
+            $query = self::find()->select(['MAX(weight)']);
+            if (!$insert) {
+                $query->where(['!=', 'id', $this->id]);
+            }
+            $this->weight = $query->scalar() + 50;
+        }
+        return parent::beforeSave($insert);
     }
 }

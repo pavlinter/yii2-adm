@@ -23,11 +23,18 @@ Yii::$app->i18n->resetDot();
 
     <p>
         <?= Html::a(Adm::t('language', 'Create Language'), ['create'], ['class' => 'btn btn-primary']) ?>
+
+        <?= Html::a('!', '#', ['class' => 'btn btn-primary btn-adm-nestable-view']) ?>
     </p>
 
     <?= Adm::widget('GridView',[
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'nestable' => [
+            'id' => 'pages-nestable-grid',
+            'btn' => false, //hide btn
+            'nameCol' => 'name',
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
