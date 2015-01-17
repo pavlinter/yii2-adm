@@ -13,7 +13,7 @@
 /* @var $relations array list of relations (name => relation declaration) */
 /* @var $modelLangClass \yii\db\ActiveRecord */
 $modelLangClassName = \yii\helpers\StringHelper::basename($generator->modelLangClass);
-
+$haveWeight = $generator->haveWeight($tableSchema->columns);
 
 echo "<?php\n";
 ?>
@@ -55,9 +55,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 {
 <?php if ($generator->modelClassQuery): ?>
     /**
-    * @inheritdoc
-    * @return <?= $className ?>Query
-    */
+     * @inheritdoc
+     * @return <?= $className ?>Query
+     */
     public static function find()
     {
         return new <?= $className ?>Query(get_called_class());
@@ -116,13 +116,14 @@ foreach ($modelLangClassObj->attributes() as $attribute){
     }
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     public function scenarios()
     {
         $scenarios = parent::scenarios();
         return $scenarios;
     }
+
     /**
      * @inheritdoc
      */
@@ -134,6 +135,24 @@ foreach ($modelLangClassObj->attributes() as $attribute){
 <?php endforeach; ?>
         ];
     }
+<?php if ($haveWeight !== false) {?>
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (empty($this-><?= $haveWeight ?>) && $this-><?= $haveWeight ?> != 0) {
+            $query = self::find()->select(['MAX(<?= $haveWeight ?>)']);
+            if (!$insert) {
+                $query->where(['!=', 'id', $this->id]);
+            }
+            $this-><?= $haveWeight ?> = $query->scalar() + 50;
+        }
+        return parent::beforeSave($insert);
+    }
+
+<?php }?>
 <?php foreach ($relations as $name => $relation): ?>
 
     /**

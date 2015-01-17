@@ -695,4 +695,18 @@ class Generator extends \yii\gii\Generator
         }
         return false;
     }
+
+    /**
+     * @param $columns
+     * @return bool
+     */
+    public function haveWeight($columns)
+    {
+        foreach ($columns as $column) {
+            if ($column->comment == 'weight') {
+                return $column->name;
+            }
+        }
+        return false;
+    }
 }
