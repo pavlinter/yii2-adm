@@ -53,7 +53,7 @@ Yii::$app->i18n->resetDot();
             'description:ntext',
             'rule_name',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => '\kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'options' => [
                     'style' => 'width:70px;',

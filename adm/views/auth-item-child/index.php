@@ -31,7 +31,7 @@ Yii::$app->i18n->resetDot();
             'parent',
             'child',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => '\kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'options' => [
                     'style' => 'width:70px;',

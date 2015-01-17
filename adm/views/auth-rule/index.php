@@ -30,7 +30,7 @@ Yii::$app->i18n->resetDot();
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => '\kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'options' => [
                     'style' => 'width:70px;',

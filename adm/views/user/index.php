@@ -57,7 +57,7 @@ Yii::$app->i18n->resetDot();
             ],
 
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => '\kartik\grid\ActionColumn',
                 'buttons' => [
                     'delete' => function ($url, $model) {
                         if ($model->id == Adm::getInstance()->user->getId()) {
