@@ -19,8 +19,6 @@ use pavlinter\adm\Adm;
 
 <div class="user-form">
 
-    <?php Adm::widget('Alert'); ?>
-
     <?php $form = Adm::begin('ActiveForm'); ?>
 
     <div class="row">

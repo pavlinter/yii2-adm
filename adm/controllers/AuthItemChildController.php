@@ -70,6 +70,7 @@ class AuthItemChildController extends Controller
         $model = Adm::getInstance()->manager->createAuthItemChild();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
             return Adm::redirect(['update', 'parent' => $model->parent, 'child' => $model->child]);
         } else {
             return $this->render('create', [
@@ -90,6 +91,7 @@ class AuthItemChildController extends Controller
         $model = $this->findModel($parent, $child);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
             return Adm::redirect(['update', 'parent' => $model->parent, 'child' => $model->child]);
         } else {
             return $this->render('update', [
@@ -108,6 +110,7 @@ class AuthItemChildController extends Controller
     public function actionDelete($parent, $child)
     {
         $this->findModel($parent, $child)->delete();
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         return Adm::redirect(['index']);
     }
 

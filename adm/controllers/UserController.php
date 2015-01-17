@@ -95,7 +95,7 @@ class UserController extends Controller
             [['password', 'password2'], 'required'],
             [['password', 'password2'], 'string', 'min' => 6],
             ['password2', 'compare', 'compareAttribute' => 'password'],
-            ['assignment', 'exist', 'targetClass' =>Adm::getInstance()->manager->authItemClass , 'targetAttribute' => 'name', 'filter' => ['type' => Item::TYPE_ROLE]],
+            ['assignment', 'exist', 'targetClass' => Adm::getInstance()->manager->authItemClass , 'targetAttribute' => 'name', 'filter' => ['type' => Item::TYPE_ROLE]],
         ]);
 
         $post = Yii::$app->request->post();
@@ -108,9 +108,11 @@ class UserController extends Controller
                         $modelAssignment->item_name = $dynamicModel->assignment;
                         $modelAssignment->user_id = (string)$model->id;
                         if ($modelAssignment->save()) {
+                            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
                             return Adm::redirect(['update', 'id' => $model->id]);
                         }
                     } else {
+                        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
                         return Adm::redirect(['update', 'id' => $model->id]);
                     }
                 }
@@ -168,6 +170,7 @@ class UserController extends Controller
                     Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                     return $this->refresh();
                 } else {
+                    Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                     return Adm::redirect(['update', 'id' => $model->id]);
                 }
             }
@@ -188,6 +191,7 @@ class UserController extends Controller
     {
         if (Adm::getInstance()->user->getId() != $id) {
             $this->findModel($id)->delete();
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         }
         return Adm::redirect(['index']);
     }

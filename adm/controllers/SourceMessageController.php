@@ -119,6 +119,7 @@ class SourceMessageController extends Controller
         $model = Adm::getInstance()->manager->createSourceMessage();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
             return Adm::redirect(['update', 'id' => $model->id]);
         } else {
 
@@ -146,6 +147,7 @@ class SourceMessageController extends Controller
 
         if ($model->loadLangs(Yii::$app->request->post())) {
             if ($model->saveTranslations()) {
+                Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                 return Adm::redirect(['update', 'id' => $model->id]);
             }
         }
@@ -164,6 +166,7 @@ class SourceMessageController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         return Adm::redirect(['index']);
     }
 

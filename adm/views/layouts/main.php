@@ -38,6 +38,11 @@ if (empty($this->title)) {
                     </div>
                 <?php }?>
                 <div class="wrapper">
+                        <?php Adm::widget('Alert', [
+                            'options' => [
+                                'class' => 'main-alert',
+                            ]
+                        ]);?>
                     <?= $content; ?>
                 </div>
             </section>

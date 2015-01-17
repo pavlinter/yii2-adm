@@ -71,6 +71,7 @@ class AuthAssignmentController extends Controller
         $model = Adm::getInstance()->manager->createAuthAssignment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
             return Adm::redirect(['update', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
         } else {
             return $this->render('create', [
@@ -91,6 +92,7 @@ class AuthAssignmentController extends Controller
         $model = $this->findModel($item_name, $user_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
             return Adm::redirect(['update', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
         } else {
             return $this->render('update', [
@@ -109,6 +111,7 @@ class AuthAssignmentController extends Controller
     public function actionDelete($item_name, $user_id)
     {
         $this->findModel($item_name, $user_id)->delete();
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         return Adm::redirect(['index']);
     }
 

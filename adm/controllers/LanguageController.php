@@ -84,6 +84,7 @@ class LanguageController extends Controller
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
             return Adm::redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -103,6 +104,7 @@ class LanguageController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
             return Adm::redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -120,6 +122,7 @@ class LanguageController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         return Adm::redirect(['index']);
     }
     /**

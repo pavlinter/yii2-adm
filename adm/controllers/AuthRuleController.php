@@ -87,6 +87,7 @@ class AuthRuleController extends Controller
                 $model->data = serialize($ruleModel);
 
                 if ($model->save(false)) {
+                    Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
                     return Adm::redirect(['update', 'id' => $model->name]);
                 }
             }
@@ -134,6 +135,7 @@ class AuthRuleController extends Controller
                 $ruleModel->updatedAt = $time;
                 $model->data = serialize($ruleModel);
                 if ($model->save(false)) {
+                    Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
                     return Adm::redirect(['update', 'id' => $model->name]);
                 }
             }
@@ -153,6 +155,7 @@ class AuthRuleController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         return Adm::redirect(['index']);
     }
 
