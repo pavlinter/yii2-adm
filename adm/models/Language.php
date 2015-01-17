@@ -54,7 +54,6 @@ class Language extends ActiveRecord
     public function rules()
     {
         return [
-            [['weight'], 'default', 'value' => null],
             [['code', 'name'], 'required'],
             [['weight', 'active'], 'integer'],
             [['updated_at'], 'safe'],
@@ -86,7 +85,7 @@ class Language extends ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if ($this->weight === null) {
+        if (empty($this->weight) && $this->weight != 0) {
             $query = self::find()->select(['MAX(weight)']);
             if (!$insert) {
                 $query->where(['!=', 'id', $this->id]);
