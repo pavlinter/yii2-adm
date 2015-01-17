@@ -48,7 +48,11 @@ class GridNestableAction extends Action
     public function run($id_parent = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-
+        $request = Yii::$app->getRequest();
+        $headers = $request->getHeaders();
+        if (isset($headers['adm-nestable-ajax'])) {
+            echo 'daaaaaaa';
+        }
         if ($id_parent) {
             if (!$this->parentCol) {
                 $json['r'] = 0;

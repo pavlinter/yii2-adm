@@ -12,10 +12,13 @@ namespace pavlinter\adm\widgets;
 use pavlinter\adm\Adm;
 use pavlinter\adm\NestableAsset;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii\web\Application;
 use yii\web\Request;
+use yii\web\Response;
 
 
 /**
@@ -33,9 +36,9 @@ class GridNestable extends \yii\base\Widget
 
     public $weightCol = 'weight';
 
-    public $btn;
+    public $parentCol = 'id_parent'; //set false if parent field is not exist
 
-    public $actionUrl;
+    public $btn;
 
     public $template = '{btn}<div class="dd" id="{nestableId}"><ol class="dd-list">{items}</ol>{pager}</div>';
 
@@ -49,7 +52,6 @@ class GridNestable extends \yii\base\Widget
 
     public function init()
     {
-
         parent::init();
 
         if ($this->btn === null || $this->btn === false) {
@@ -62,9 +64,10 @@ class GridNestable extends \yii\base\Widget
                 ],
             ]);
         }
-        if ($this->actionUrl === null) {
-            $this->actionUrl = [Yii::$app->controller->id . '/nestable'];
-        }
+
+        $request = Yii::$app->getRequest();
+        $headers = $request->getHeaders();
+
 
         $this->initDefaultButtons();
 
@@ -72,23 +75,43 @@ class GridNestable extends \yii\base\Widget
 
 
         if (($params = $pagination->params) === null) {
-            $request = Yii::$app->getRequest();
             $params = $request instanceof Request ? $request->getQueryParams() : [];
         }
         $params['nestable'] = 1;
         $pagination->params = $params;
 
         $this->_models = $this->grid->dataProvider->getModels();
+        //ajax
+        if (isset($headers['adm-nestable-ajax'])) {
+            $output = $this->ajax();
+
+            if (is_array($output)) {
+                exit('dd');
+
+            }
+
+            Yii::$app->on(Application::EVENT_AFTER_REQUEST, function ($event) {
+                $response = Yii::$app->getResponse();
+                if (is_array($event->data['output'])) {
+                    exit('dd');
+                    $response->data = Json::encode($event->data['output']);
+                } else {
+                    echo gettype($event->data['output']);
+                    $response->data = $event->data['output'];
+                }
+            },['output' => $output]);
+            return null;
+        }
         $view = Yii::$app->getView();
         if($this->_models) {
             $this->registerAssets($view);
-            echo strtr($this->template, [
+            $output = strtr($this->template, [
                 '{btn}' => $this->renderBtn(),
                 '{nestableId}' => $this->id,
                 '{items}' => $this->renderItems(),
                 '{pager}' => $this->renderPager()
             ]);
-
+            echo $output;
         } else {
             $view->registerJs('
                 $(".btn-adm-nestable-view").hide();
@@ -155,7 +178,9 @@ class GridNestable extends \yii\base\Widget
         }
     }
 
-
+    /**
+     * @param $view
+     */
     public function registerAssets($view)
     {
         NestableAsset::register($view);
@@ -183,10 +208,13 @@ class GridNestable extends \yii\base\Widget
                         nestableLoadingItem(id,true);
 
                         $.ajax({
-                            url: "' . Url::to($this->actionUrl) . '",
+                            url: "' . Url::to(Yii::$app->request->url) . '",
                             type: "get",
                             dataType: "json",
                             data: {id_parent: id},
+                            beforeSend: function (request){
+                                request.setRequestHeader("adm-nestable-ajax", "1");
+                            },
                         }).done(function(d){
                             if(d.r){
                                 var lis = [];
@@ -231,7 +259,7 @@ class GridNestable extends \yii\base\Widget
 
                     nestableSerialize = items;
                     $.ajax({
-                            url: "' . Url::to($this->actionUrl) . '",
+                            url: "' . Url::to(Yii::$app->request->url) . '",
                             type: "POST",
                             dataType: "json",
                             data: {items: items}
@@ -282,6 +310,71 @@ class GridNestable extends \yii\base\Widget
                 }).trigger("click");
 
             ');
+    }
+
+    public function ajax()
+    {
+        $id_parent = Yii::$app->getRequest()->post('id_parent');
+
+        if ($id_parent) {
+            if (!$this->parentCol) {
+                $json['r'] = 0;
+                return $json;
+            }
+            /* @var \yii\db\ActiveQuery $query */
+            $query = forward_static_call([$this->model, 'find']);
+            $models = $query->where([$this->parentCol => $id_parent])->orderBy([$this->weightCol => $this->order])->all();
+            $json['items'] = [];
+            foreach ($models as $model) {
+                $json['items'][] = [
+                    'id' => $model->{$this->idCol},
+                    'name' => $model->{$this->nameCol},
+                    'weight' => $model->{$this->weightCol}
+                ];
+            }
+            $json['r'] = 1;
+            return $json;
+        }
+
+        $items = Yii::$app->getRequest()->post('items');
+        if (!empty($items)) {
+            $weight = [];
+            $this->step($weight, $items);
+            return ['r' => 1, 'weight' => $weight];
+        }
+    }
+
+    /**
+     * @param $items
+     * @param null $id_parent
+     */
+    public function step(&$json, $items, $id_parent = null)
+    {
+        foreach ($items as $item) {
+            if(!empty($item['children'])) {
+                $this->step($json, $item['children'], $item['id']);
+            }
+        }
+
+        $ids = ArrayHelper::getColumn($items, 'id');
+
+        /* @var \yii\db\ActiveQuery $query */
+        $query = forward_static_call([$this->model, 'find']);
+        $models = $query->select(['id' => $this->idCol, 'weight' => $this->weightCol])->where([$this->idCol => $ids])->orderBy([$this->weightCol => $this->order])->indexBy($this->idCol)->all();
+
+        $weight = ArrayHelper::getColumn($models, $this->weightCol, false);
+
+
+        foreach ($ids as $i => $id) {
+            if (isset($weight[$i], $models[$id])) {
+                $json[$id] = $weight[$i];
+                $models[$id]->{$this->weightCol} = $weight[$i];
+                if ($this->parentCol) {
+                    $models[$id]->{$this->parentCol} = $id_parent;
+                }
+                $models[$id]->save(false);
+            }
+        }
     }
 
     /**
