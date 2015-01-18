@@ -6,16 +6,7 @@ Yii2: Adm CMS
 Удобнее всего установить это расширение через [composer](http://getcomposer.org/download/).
 
 ```
-"pavlinter/yii2-adm": "@dev",
-"pavlinter/yii2-dot-translation": "@dev",
-"pavlinter/yii2-url-manager": "@dev",
-"pavlinter/yii2-buttons": "@dev",
-"mihaildev/yii2-ckeditor": "1.*",
-"mihaildev/yii2-elfinder": "1.*",
-"kartik-v/yii2-grid": "2.*",
-"kartik-v/yii2-detail-view": "1.*",
-"kartik-v/yii2-widgets": "3.*",
-"kartik-v/yii2-checkbox-x": "1.*"
+"pavlinter/yii2-adm": "dev-master",
 ```
 
 Настройка
