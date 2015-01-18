@@ -1,6 +1,5 @@
 <?php
 
-use kartik\detail\DetailView;
 use yii\helpers\Html;
 use pavlinter\adm\Adm;
 
@@ -30,10 +29,10 @@ Yii::$app->i18n->resetDot();
         <?php }?>
     </p>
 
-    <?= DetailView::widget([
+    <?= Adm::widget('DetailView', [
         'model' => $model,
         'hover' => true,
-        'mode' => DetailView::MODE_VIEW,
+        'mode' => \kartik\detail\DetailView::MODE_VIEW,
         'attributes' => [
             'username',
             'email:email',

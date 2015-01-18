@@ -99,6 +99,7 @@ class Adm extends \yii\base\Module
             'FileManager' => '\pavlinter\adm\widgets\FileManager',
             'FileInput' => '\pavlinter\adm\widgets\FileInput',
             'GridView' => '\pavlinter\adm\widgets\GridView',
+            'DetailView' => '\pavlinter\adm\widgets\DetailView',
             'Redactor' => '\pavlinter\adm\widgets\Redactor',
             'ActiveForm' => '\pavlinter\adm\widgets\ActiveForm',
             'Alert' => '\pavlinter\adm\widgets\Alert',
