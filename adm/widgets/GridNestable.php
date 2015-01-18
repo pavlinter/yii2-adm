@@ -36,6 +36,8 @@ class GridNestable extends \yii\base\Widget
 
     public $weightCol = 'weight';
 
+    public $order = SORT_ASC;
+
     public $parentCol = 'id_parent'; //set false if parent field is not exist
 
     public $btn;
@@ -53,6 +55,13 @@ class GridNestable extends \yii\base\Widget
     public function init()
     {
         parent::init();
+        $view = $this->getView();
+        if(!$this->_models) {
+            $view->registerJs('
+                $(".btn-adm-nestable-view").hide();
+            ');
+            return null;
+        }
 
         if ($this->btn === null || $this->btn === false) {
             $this->btn = Html::tag('button', '', [
@@ -81,29 +90,30 @@ class GridNestable extends \yii\base\Widget
         $pagination->params = $params;
 
         $this->_models = $this->grid->dataProvider->getModels();
+
+
         //ajax
         if (isset($headers['adm-nestable-ajax'])) {
-            $output = $this->ajax();
+            $content = $this->ajax();
+            // only need the content enclosed within this widget
+            $response = Yii::$app->getResponse();
+            $response->clearOutputBuffers();
+            $response->setStatusCode(200);
 
-            if (is_array($output)) {
-                exit('dd');
-
+            if (is_array($content)) {
+                $response->format = Response::FORMAT_JSON;
+                $response->data = $content;
+            } else {
+                ob_start();
+                ob_implicit_flush(false);
+                echo 'dd';
+                $content = ob_get_clean();
+                $response->format = Response::FORMAT_HTML;
+                $response->content = $content;
             }
-
-            Yii::$app->on(Application::EVENT_AFTER_REQUEST, function ($event) {
-                $response = Yii::$app->getResponse();
-                if (is_array($event->data['output'])) {
-                    exit('dd');
-                    $response->data = Json::encode($event->data['output']);
-                } else {
-                    echo gettype($event->data['output']);
-                    $response->data = $event->data['output'];
-                }
-            },['output' => $output]);
-            return null;
-        }
-        $view = Yii::$app->getView();
-        if($this->_models) {
+            $response->send();
+            Yii::$app->end();
+        } else {
             $this->registerAssets($view);
             $output = strtr($this->template, [
                 '{btn}' => $this->renderBtn(),
@@ -112,13 +122,9 @@ class GridNestable extends \yii\base\Widget
                 '{pager}' => $this->renderPager()
             ]);
             echo $output;
-        } else {
-            $view->registerJs('
-                $(".btn-adm-nestable-view").hide();
-            ');
+            unset($params['nestable']);
+            $pagination->params = $params;
         }
-        unset($params['nestable']);
-        $pagination->params = $params;
     }
 
     /**
@@ -262,7 +268,10 @@ class GridNestable extends \yii\base\Widget
                             url: "' . Url::to(Yii::$app->request->url) . '",
                             type: "POST",
                             dataType: "json",
-                            data: {items: items}
+                            data: {items: items},
+                            beforeSend: function (request){
+                                request.setRequestHeader("adm-nestable-ajax", "1");
+                            },
                         }).done(function(d){
                             if(d.error){
                                alert(error);
@@ -314,7 +323,7 @@ class GridNestable extends \yii\base\Widget
 
     public function ajax()
     {
-        $id_parent = Yii::$app->getRequest()->post('id_parent');
+        $id_parent = Yii::$app->getRequest()->get('id_parent');
 
         if ($id_parent) {
             if (!$this->parentCol) {
@@ -322,7 +331,9 @@ class GridNestable extends \yii\base\Widget
                 return $json;
             }
             /* @var \yii\db\ActiveQuery $query */
-            $query = forward_static_call([$this->model, 'find']);
+            $model  = reset($this->_models);
+            $className = $model::className();
+            $query = forward_static_call([$className, 'find']);
             $models = $query->where([$this->parentCol => $id_parent])->orderBy([$this->weightCol => $this->order])->all();
             $json['items'] = [];
             foreach ($models as $model) {
@@ -359,7 +370,10 @@ class GridNestable extends \yii\base\Widget
         $ids = ArrayHelper::getColumn($items, 'id');
 
         /* @var \yii\db\ActiveQuery $query */
-        $query = forward_static_call([$this->model, 'find']);
+        /* @var \yii\db\ActiveQuery $query */
+        $model  = reset($this->_models);
+        $className = $model::className();
+        $query = forward_static_call([$className, 'find']);
         $models = $query->select(['id' => $this->idCol, 'weight' => $this->weightCol])->where([$this->idCol => $ids])->orderBy([$this->weightCol => $this->order])->indexBy($this->idCol)->all();
 
         $weight = ArrayHelper::getColumn($models, $this->weightCol, false);
