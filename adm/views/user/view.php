@@ -1,7 +1,7 @@
 <?php
 
+use kartik\detail\DetailView;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 use pavlinter\adm\Adm;
 
 /* @var $this yii\web\View */
@@ -32,23 +32,25 @@ Yii::$app->i18n->resetDot();
 
     <?= DetailView::widget([
         'model' => $model,
+        'hover' => true,
+        'mode' => DetailView::MODE_VIEW,
         'attributes' => [
             'username',
             'email:email',
             [
-                'label' => 'role',
+                'attribute' => 'role',
                 'value' => $model->roles($model->role),
             ],
             [
-                'label' => 'status',
+                'attribute' => 'status',
                 'value' => $model->status($model->status),
             ],
             [
-                'label' => 'updated_at',
+                'attribute' => 'updated_at',
                 'value' => Yii::$app->formatter->asDate($model->updated_at),
             ],
             [
-                'label' => 'created_at',
+                'attribute' => 'created_at',
                 'value' => Yii::$app->formatter->asDate($model->created_at),
             ],
         ],

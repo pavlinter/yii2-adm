@@ -12,7 +12,7 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 <?php
 if ($generator->enableI18N) {
     echo "use pavlinter\\adm\\Adm;";
@@ -46,6 +46,8 @@ Yii::$app->i18n->resetDot();
 
     <?= "<?= " ?>DetailView::widget([
         'model' => $model,
+        'hover' => true,
+        'mode' => DetailView::MODE_VIEW,
         'attributes' => [
 <?php
 if (($tableSchema = $generator->getTableSchema()) === false) {

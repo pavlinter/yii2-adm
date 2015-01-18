@@ -95,8 +95,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             'username' => Yii::t('modelAdm/user', 'Username'),
             'email' => Yii::t('modelAdm/user', 'Email'),
-            'role' => Yii::t('modelAdm/user', 'role'),
-            'status' => Yii::t('modelAdm/user', 'status'),
+            'role' => Yii::t('modelAdm/user', 'Role'),
+            'status' => Yii::t('modelAdm/user', 'Status'),
             'created_at' => Yii::t('modelAdm/user', 'Created'),
             'updated_at' => Yii::t('modelAdm/user', 'Updated'),
         ];

@@ -13,6 +13,7 @@ Yii2: Adm CMS
 "mihaildev/yii2-ckeditor": "1.*",
 "mihaildev/yii2-elfinder": "1.*",
 "kartik-v/yii2-grid": "2.*",
+"kartik-v/yii2-detail-view": "1.*",
 "kartik-v/yii2-widgets": "3.*",
 "kartik-v/yii2-checkbox-x": "1.*"
 ```
