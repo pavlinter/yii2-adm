@@ -34,6 +34,7 @@ Yii::$app->i18n->resetDot();
             'id' => 'pages-nestable-grid',
             'btn' => false, //hide btn
             'nameCol' => 'name',
+            'parentCol' => false,
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],

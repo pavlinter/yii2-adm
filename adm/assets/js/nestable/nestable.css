@@ -121,3 +121,10 @@
     font-weight: normal;
 }
 .dd3-handle:hover { background: #f7f7f7; }
+
+.btn-adm-nestable-view{
+    display: none;
+}
+.nestable-loading{
+    margin-right: 6px;
+}

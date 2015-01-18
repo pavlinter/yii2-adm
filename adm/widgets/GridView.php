@@ -24,6 +24,7 @@ class GridView extends \kartik\grid\GridView
 
     public function init()
     {
+
         parent::init();
         if ($this->nestable === true || is_array($this->nestable)) {
             echo $this->nestableGrid();

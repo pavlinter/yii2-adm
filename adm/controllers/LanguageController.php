@@ -46,20 +46,6 @@ class LanguageController extends Controller
     }
 
     /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'nestable' => [
-                'class' => 'pavlinter\adm\actions\GridNestableAction',
-                'parentCol' => false,
-                'nameCol' => 'name',
-                'model' => Adm::getInstance()->manager->createLanguageQuery('className'),
-            ]
-        ];
-    }
-    /**
      * Lists all Languages models.
      * @return mixed
      */
