@@ -47,6 +47,28 @@ Yii2: Adm CMS
         'modules' => [
 
         ],
+        /*
+        'components' => [
+            'manager' => [
+                'loginFormClass' => 'pavlinter\adm\models\LoginForm',
+                'userClass' => 'pavlinter\adm\models\User',
+                'userSearchClass' => 'pavlinter\adm\models\UserSearch',
+                'authItemClass' => 'pavlinter\adm\models\AuthItem',
+                'authItemSearchClass' => 'pavlinter\adm\models\AuthItemSearch',
+                'authRuleClass' => 'pavlinter\adm\models\AuthRule',
+                'authRuleSearchClass' => 'pavlinter\adm\models\AuthRuleSearch',
+                'authItemChildClass' => 'pavlinter\adm\models\AuthItemChild',
+                'authItemChildSearchClass' => 'pavlinter\adm\models\AuthItemChildSearch',
+                'authAssignmentClass' => 'pavlinter\adm\models\AuthAssignment',
+                'authAssignmentSearchClass' => 'pavlinter\adm\models\AuthAssignmentSearch',
+                'languageClass' => 'pavlinter\adm\models\Language',
+                'languageSearchClass' => 'pavlinter\adm\models\LanguageSearch',
+                'sourceMessageClass' => 'pavlinter\adm\models\SourceMessage',
+                'sourceMessageSearchClass' => 'pavlinter\adm\models\SourceMessageSearch',
+                'messageClass' => 'pavlinter\adm\models\Message',
+            ],
+        ],
+        */
     ],
     'gridview'=> [
         'class'=>'\kartik\grid\Module',
