@@ -1,6 +1,8 @@
 Yii2: Adm CMS
 ================
 
+![Screen Shot](https://github.com/pavlinter/yii2-adm/blob/master/preview.png?raw=true)
+
 Установка
 ------------
 Удобнее всего установить это расширение через [composer](http://getcomposer.org/download/).
