@@ -9,6 +9,18 @@ Yii2: Adm CMS
 "pavlinter/yii2-adm": "dev-master",
 ```
 
+Список включающих пакетов
+-------------------------
+"pavlinter/yii2-dot-translation"
+"pavlinter/yii2-url-manager"
+"pavlinter/yii2-buttons"
+"mihaildev/yii2-ckeditor"
+"mihaildev/yii2-elfinder"
+"kartik-v/yii2-grid"
+"kartik-v/yii2-detail-view"
+"kartik-v/yii2-widgets"
+"kartik-v/yii2-checkbox-x"
+
 Настройка
 ------------------
 ```php
@@ -112,5 +124,5 @@ password: 123456
 ```
 
 Дополнительный модуль
-------------------
+---------------------
 [yii2-adm-pages](https://github.com/pavlinter/yii2-adm-pages)
