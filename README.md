@@ -11,17 +11,16 @@ Yii2: Adm CMS
 
 Список включающих пакетов
 -------------------------
-```php
-"pavlinter/yii2-dot-translation"
-"pavlinter/yii2-url-manager"
-"pavlinter/yii2-buttons"
-"mihaildev/yii2-ckeditor"
-"mihaildev/yii2-elfinder"
-"kartik-v/yii2-grid"
-"kartik-v/yii2-detail-view"
-"kartik-v/yii2-widgets"
-"kartik-v/yii2-checkbox-x"
-```
+[pavlinter/yii2-dot-translation](https://github.com/pavlinter/yii2-dot-translation)
+[pavlinter/yii2-url-manager](https://github.com/pavlinter/yii2-url-manager)
+[pavlinter/yii2-buttons](https://github.com/pavlinter/yii2-buttons)\n
+[mihaildev/yii2-ckeditor](https://github.com/MihailDev/yii2-ckeditor)<br/>
+[mihaildev/yii2-elfinder](https://github.com/MihailDev/yii2-elfinder)
+[kartik-v/yii2-grid](https://github.com/kartik-v/yii2-grid)
+[kartik-v/yii2-detail-view](https://github.com/kartik-v/yii2-detail-view)
+[kartik-v/yii2-widgets](https://github.com/kartik-v/yii2-widgets)
+[kartik-v/yii2-checkbox-x](https://github.com/kartik-v/yii2-checkbox-x)
+
 
 Настройка
 ------------------
