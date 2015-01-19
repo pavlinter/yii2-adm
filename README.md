@@ -11,6 +11,7 @@ Yii2: Adm CMS
 
 Список включающих пакетов
 -------------------------
+```php
 "pavlinter/yii2-dot-translation"
 "pavlinter/yii2-url-manager"
 "pavlinter/yii2-buttons"
@@ -20,6 +21,7 @@ Yii2: Adm CMS
 "kartik-v/yii2-detail-view"
 "kartik-v/yii2-widgets"
 "kartik-v/yii2-checkbox-x"
+```
 
 Настройка
 ------------------
