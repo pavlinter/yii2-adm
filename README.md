@@ -149,3 +149,55 @@ password: 123456
 Дополнительный модуль
 ---------------------
 [yii2-adm-pages](https://github.com/pavlinter/yii2-adm-pages)
+
+Как дополнить adm?
+---------------------
+Генерируешь модуль через gii или создаешь сам.
+```php
+'modules' => [
+    ...
+    'adm' => [
+        ...
+        'modules' => [
+            'my_module' // вызываем метод pavlinter\my_module\Module::loading когда adm layout
+        ],
+        ...
+    ],
+    'my_module' => [
+        'class' => 'pavlinter\my_module\Module',
+    ],
+    ...
+],
+```
+- Добавить в adm в левое меню свой модуль
+```php
+public function loading($adm)
+{
+    if ($adm->user->can('AdmRoot')) {
+        $adm->params['left-menu']['my_module'] = [
+            'label' => '<i class="fa fa-file-text"></i><span>' . $adm::t('menu', 'My module') . '</span>',
+            'url' => ['/my_module/default/index']
+        ];
+    }
+}
+```
+
+- Полностью закрыть доступ к модулю.
+```php
+public function beforeAction($action)
+{
+    $adm = Adm::register();
+    if (!parent::beforeAction($action) || !$adm->user->can('AdmRoot')) {
+        return false;
+    }
+    return true;
+}
+```
+
+- Частично закрыть доступ к модулю
+[beforeAction](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/Module.php#L119)<br/>
+[Доступ к админке через controller](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/controllers/PageController.php#L25)<br/>
+
+- Если публичный модуль, то нужно создавать manager класов.
+[Пример](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/Module.php#L74)<br/>
+[Manager](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/ModelManager.php)<br/>
