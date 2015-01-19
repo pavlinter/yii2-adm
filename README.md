@@ -64,8 +64,10 @@ Yii2: Adm CMS
     'urlManager' => [
         'class'=>'\pavlinter\urlmanager\UrlManager', //https://github.com/pavlinter/yii2-url-manager
         'enableLang' => true,
+        'langBegin' => ['ru','en'],
         'enablePrettyUrl' => true,
         'showScriptName' => false,
+        'onlyFriendlyParams' => false,
         'ruleConfig' => [
             'class' => '\pavlinter\urlmanager\UrlRule',
         ],
@@ -96,9 +98,19 @@ Yii2: Adm CMS
 yii migrate --migrationPath=@vendor/pavlinter/yii2-adm/adm/migrations
 ```
 
+Вход в adm
+------------------
+```php
+http://domain.com/adm
+```
+
 Доступ
 ------------------
 ```php
 username: adm
 password: 123456
 ```
+
+Дополнительный модуль
+------------------
+[yii2-adm-pages](https://github.com/pavlinter/yii2-adm-pages)
