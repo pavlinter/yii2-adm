@@ -7,6 +7,13 @@ $items = [];
 
 /* @var $adm pavlinter\adm\Adm */
 $adm = Adm::getInstance();
+
+if (isset($adm->params['left-menu']['settings']['items'])) {
+    if (empty($adm->params['left-menu']['settings']['items'])) {
+        unset($adm->params['left-menu']['settings']);
+    }
+}
+
 foreach ($adm->params['left-menu'] as $name => $item) {
     $items[] = $item;
 }
