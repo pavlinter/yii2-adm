@@ -1,12 +1,9 @@
 <?php
 
 use kartik\checkbox\CheckboxX;
-use mihaildev\elfinder\InputFile;
 use pavlinter\adm\Adm;
 use pavlinter\buttons\InputButton;
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model pavlinter\adm\models\Language */
@@ -54,7 +51,6 @@ use yii\widgets\ActiveForm;
             'formSelector' => $form,
         ]);?>
 
-
         <?php if ($model->isNewRecord) {?>
             <?= InputButton::widget([
                 'label' => Adm::t('', 'Create and insert new', ['dot' => false]),
@@ -62,7 +58,7 @@ use yii\widgets\ActiveForm;
                 'input' => 'adm-redirect',
                 'name' => 'redirect',
                 'value' => Url::to(['create']),
-                'formSelector' => $form, //form object or form selector
+                'formSelector' => $form,
             ]);?>
         <?php }?>
 
@@ -72,7 +68,7 @@ use yii\widgets\ActiveForm;
             'input' => 'adm-redirect',
             'name' => 'redirect',
             'value' => Url::to(['index']),
-            'formSelector' => $form, //form object or form selector
+            'formSelector' => $form,
         ]);?>
 
     </div>

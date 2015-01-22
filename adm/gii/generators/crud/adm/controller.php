@@ -30,6 +30,7 @@ echo "<?php\n";
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
+use pavlinter\adm\Adm;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
@@ -109,12 +110,14 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 <?php if ($generator->enableLanguage) {?>
         if ($model->loadAll(Yii::$app->request->post()) && $model->validateAll()) {
             if ($model->save(false) && $model->saveTranslations(false)) {
-                return $this->redirect(['view', <?= $urlParams ?>]);
+                Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
+                return Adm::redirect(['update', <?= $urlParams ?>]);
             }
         }
 <?php } else {?>
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
+            return Adm::redirect(['update', <?= $urlParams ?>]);
         }
 <?php }?>
         return $this->render('create', [
@@ -134,12 +137,14 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 <?php if ($generator->enableLanguage) {?>
         if ($model->loadAll(Yii::$app->request->post()) && $model->validateAll()) {
             if ($model->save(false) && $model->saveTranslations(false)) {
-                return $this->redirect(['view', <?= $urlParams ?>]);
+                Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
+                return Adm::redirect(['update', <?= $urlParams ?>]);
             }
         }
 <?php } else {?>
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
+            Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully changed!'));
+            return Adm::redirect(['update', <?= $urlParams ?>]);
         }
 <?php }?>
         return $this->render('update', [
@@ -156,7 +161,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actionDelete(<?= $actionParams ?>)
     {
         $this->findModel(<?= $actionParams ?>)->delete();
-
+        Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         return $this->redirect(['index']);
     }
 
