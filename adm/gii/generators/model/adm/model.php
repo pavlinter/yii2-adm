@@ -63,7 +63,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         return new <?= $className ?>Query(get_called_class());
     }
 <?php endif; ?>
-<?php if ($generator->modelLangClass): ?>
+
     /**
      * @inheritdoc
      */
@@ -71,10 +71,12 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return [
 <?= $generator->timestampBehavior($tableSchema->columns) ?>
+<?php if ($generator->modelLangClass){ ?>
             'trans' => [
                 'class' => \pavlinter\translation\TranslationBehavior::className(),
                 'translationAttributes' => [
 <?php
+
 $modelLangClassObj  = new $generator->modelLangClass();
 foreach ($modelLangClassObj->attributes() as $attribute){
     if($attribute == 'id' || preg_match('#^id_#i', $attribute) || preg_match('#_id$#i', $attribute)){
@@ -85,10 +87,10 @@ foreach ($modelLangClassObj->attributes() as $attribute){
 <?php } ?>
                 ]
             ],
+<?php } ?>
         ];
     }
 
-<?php endif; ?>
     /**
      * @inheritdoc
      */

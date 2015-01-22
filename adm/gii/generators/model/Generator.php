@@ -668,6 +668,7 @@ class Generator extends \yii\gii\Generator
         $createName  = '';
         $updateName  = '';
         foreach ($columns as $column) {
+
             if ($column->comment == 'created_at') {
                 $createField = "\n\t\t\t\t'createdAtAttribute' => '" . $column->name . "',";
                 $createName = $column->name;
