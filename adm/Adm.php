@@ -167,6 +167,7 @@ class Adm extends \yii\base\Module
                 'class' => 'pavlinter\translation\DbMessageSource',
                 'forceTranslation' => true,
                 'autoInsert' => true,
+                'dotMode' => false,
             ];
         }
     }
@@ -268,6 +269,11 @@ class Adm extends \yii\base\Module
         return [
             'user.passwordResetTokenExpire' => 3600,
             'left-menu' => [
+                'settings' => [
+                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-wrench"></i><span>' . self::t("menu", "Settings") . '</span>',
+                    'url' => "#",
+                    'items' => [],
+                ],
                 'elfinder' => [
                     'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files") . '</span>',
                     'url' => ['/' . $this->id . '/file/index'],
