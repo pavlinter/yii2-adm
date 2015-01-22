@@ -87,16 +87,17 @@ class GridNestable extends \yii\base\Widget
             $params['nestable'] = 1;
             $pagination->params = $params;
 
-            $this->_models = $this->grid->dataProvider->getModels();
-            if(!$this->_models) {
+            $models = $this->grid->dataProvider->getModels();
+            if(!$models) {
                 $view->registerJs('$(".btn-adm-nestable-view").hide();');
                 return null;
             }
+            $keys = $this->grid->dataProvider->getKeys();
             $this->registerAssets($view);
             $output = strtr($this->template, [
                 '{btn}' => $this->renderBtn(),
                 '{nestableId}' => $this->id,
-                '{items}' => $this->renderItems(),
+                '{items}' => $this->renderItems($models, $keys),
                 '{pager}' => $this->renderPager()
             ]);
             echo $output;
@@ -152,9 +153,10 @@ class GridNestable extends \yii\base\Widget
                     ],
                 ]);
 
-                $this->_models = $dataProvider->getModels();
+                $models = $dataProvider->getModels();
+                $keys = $dataProvider->getKeys();
                 $json['r'] = 1;
-                $json['items'] = $this->renderItems();
+                $json['items'] = $this->renderItems($models, $keys);
             }
         } elseif (!empty($items)){
             $weight = [];
@@ -340,10 +342,13 @@ class GridNestable extends \yii\base\Widget
             ');
     }
 
+
     /**
-     * @return string
+     * @param $models array
+     * @param $keys array
+     * @return null|string
      */
-    public function renderItems()
+    public function renderItems($models, $keys)
     {
         $columns = $this->grid->columns;
         $actionColumn = null;
@@ -357,8 +362,7 @@ class GridNestable extends \yii\base\Widget
             return null;
         }
         $res = '';
-        $models = array_values($this->_models);
-        $keys = $this->grid->dataProvider->getKeys();
+        $models = array_values($models);
         foreach ($models as $index => $model) {
             $key = $keys[$index];
             $res .= strtr($this->itemTemplate, [
