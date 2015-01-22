@@ -19,7 +19,6 @@ $adm = Adm::getInstance();
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <script type="text/javascript">
-        var admId = '<?= Adm::getInstance()->id; ?>';
         var admController = '<?= $this->context->id ?>';
     </script>
     <?php $this->head() ?>
