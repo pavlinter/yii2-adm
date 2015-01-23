@@ -16,7 +16,6 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use pavlinter\buttons\InputButton;
 use pavlinter\adm\Adm;
 use yii\helpers\Url;
@@ -28,7 +27,7 @@ use yii\helpers\Url;
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
 
-    <?= "<?php " ?>$form = ActiveForm::begin(); ?>
+    <?= "<?php " ?>$form = Adm::begin('ActiveForm'); ?>
 <?php if ($generator->enableLanguage) { ?>
 
     <?= "<?=" ?> $form->errorSummary([$model] + $model->getLangModels(), ['class' => 'alert alert-danger']); ?>
@@ -122,6 +121,6 @@ use yii\helpers\Url;
         ]);?>
     </div>
 
-    <?= "<?php " ?>ActiveForm::end(); ?>
+    <?= "<?php " ?>Adm::end('ActiveForm'); ?>
 
 </div>
