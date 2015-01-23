@@ -24,7 +24,7 @@ class m140428_112450_languages extends \yii\db\Migration
             'name' => Schema::TYPE_STRING . '(20) NOT NULL',
             'image' => Schema::TYPE_STRING . '(250) NULL',
             'weight' => Schema::TYPE_INTEGER . ' NULL',
-            'active' => Schema::TYPE_SMALLINT . '(1) NOT NULL DEFAULT 1',
+            'active' => Schema::TYPE_BOOLEAN . '(1) NOT NULL DEFAULT 1',
             'updated_at' => Schema::TYPE_INTEGER,
         ], $tableOptions);
 
