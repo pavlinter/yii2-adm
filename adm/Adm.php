@@ -126,17 +126,21 @@ class Adm extends \yii\base\Module
      */
     public static function register()
     {
+        static $registered;
         $adm = Yii::$app->getModule('adm');
-        $view = Yii::$app->getView();
-        //override default error handler
-        $handler = Yii::$app->getErrorHandler();
-        $handler->errorAction = '/' . $adm->id . '/default/error';
+        if ($registered === null) {
+            $view = Yii::$app->getView();
+            //override default error handler
+            $handler = Yii::$app->getErrorHandler();
+            $handler->errorAction = '/' . $adm->id . '/default/error';
 
-        if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
-            Yii::$app->getUrlManager()->onlyFriendlyParams = false;
+            if (Yii::$app->getUrlManager() instanceof \pavlinter\urlmanager\UrlManager) {
+                Yii::$app->getUrlManager()->onlyFriendlyParams = false;
+            }
+            Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
+            ConflictAsset::register($view);
+            $registered = true;
         }
-        Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
-        ConflictAsset::register($view);
         return $adm;
     }
 
@@ -307,7 +311,7 @@ class Adm extends \yii\base\Module
                     ],
                 ],
                 'language' => [
-                    'label' => '<i class="fa fa-folder"></i><span>' . self::t("menu", "Languages") . '</span>',
+                    'label' => '<i class="glyphicon glyphicon-globe"></i><span>' . self::t("menu", "Languages") . '</span>',
                     'url' => ['/' . $this->id . '/language/index'],
                     'visible' => $this->user->can('Adm-Language'),
                 ],
