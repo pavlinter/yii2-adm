@@ -311,12 +311,12 @@ class Adm extends \yii\base\Module
                     ],
                 ],
                 'language' => [
-                    'label' => '<i class="glyphicon glyphicon-globe"></i><span>' . self::t("menu", "Languages") . '</span>',
+                    'label' => '<i class="fa fa-folder"></i><span>' . self::t("menu", "Languages") . '</span>',
                     'url' => ['/' . $this->id . '/language/index'],
                     'visible' => $this->user->can('Adm-Language'),
                 ],
                 'source-message' => [
-                    'label' => '<i class="fa fa-file-text-o"></i><span>' . self::t("menu", "Translations") . '</span>',
+                    'label' => '<i class="glyphicon glyphicon-globe"></i><span>' . self::t("menu", "Translations") . '</span>',
                     'url' => ['/' . $this->id . '/source-message/index'],
                     'visible' => $this->user->can('Adm-Transl'),
                 ],
