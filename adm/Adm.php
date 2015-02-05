@@ -358,6 +358,7 @@ class Adm extends \yii\base\Module
                 'name'  => 'Files',
                 'options' => [
                     'startPath' => $startPath,
+                    'uploadMaxSize' => '5M',
                 ],
             ];
         }
