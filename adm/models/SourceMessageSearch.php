@@ -49,8 +49,8 @@ class SourceMessageSearch extends SourceMessage
      */
     public function search($params)
     {
-        $sourceMessageTable = self::tableName();
-        $query = self::find()->from(['s' => $sourceMessageTable]);
+        $sourceMessageTable = static::tableName();
+        $query = static::find()->from(['s' => $sourceMessageTable]);
 
         $sort = isset($params['sort']) ? $params['sort'] : null;
         $isTranslationSearch = isset($params['SourceMessageSearch']['translation']) && $params['SourceMessageSearch']['translation'];

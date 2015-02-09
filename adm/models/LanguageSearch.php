@@ -47,7 +47,7 @@ class LanguageSearch extends Language
      */
     public function search($params)
     {
-        $query = self::find();
+        $query = static::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

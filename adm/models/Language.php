@@ -86,7 +86,7 @@ class Language extends ActiveRecord
     public function beforeSave($insert)
     {
         if (empty($this->weight) && $this->weight != 0) {
-            $query = self::find()->select(['MAX(weight)']);
+            $query = static::find()->select(['MAX(weight)']);
             if (!$insert) {
                 $query->where(['!=', 'id', $this->id]);
             }

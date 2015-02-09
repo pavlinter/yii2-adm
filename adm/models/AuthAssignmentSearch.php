@@ -47,7 +47,7 @@ class AuthAssignmentSearch extends AuthAssignment
     public function search($params)
     {
 
-        $query = self::find()->from(['a' => '{{%auth_assignment}}'])
+        $query = static::find()->from(['a' => '{{%auth_assignment}}'])
             ->select('*')
             ->innerJoin(['u'=>'{{%user}}'],'u.id=a.user_id')
             ->with(['user',]);
