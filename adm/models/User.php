@@ -66,10 +66,10 @@ class User extends ActiveRecord implements IdentityInterface
             [['email'], 'email'],
 
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => array_keys(self::status())],
+            ['status', 'in', 'range' => array_keys(static::status())],
 
             ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => array_keys(self::roles())],
+            ['role', 'in', 'range' => array_keys(static::roles())],
         ];
     }
 

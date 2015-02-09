@@ -50,7 +50,7 @@ use pavlinter\adm\Adm;
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <?php
                 echo $form->field($model, 'role')->widget(Select2::classname(), [
-                    'data' => User::roles(),
+                    'data' => $model::roles(),
                     'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
                     'pluginOptions' => [
 
@@ -61,7 +61,7 @@ use pavlinter\adm\Adm;
             <div class="col-xs-12 col-sm-4 col-md-4">
                 <?php
                 echo $form->field($model, 'status')->widget(Select2::classname(), [
-                    'data' => User::status(),
+                    'data' => $model::status(),
                     'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
                     'pluginOptions' => [
 

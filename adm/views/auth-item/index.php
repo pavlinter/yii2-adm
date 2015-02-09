@@ -34,13 +34,13 @@ Yii::$app->i18n->resetDot();
                 'attribute' => 'type',
                 'format'=>'raw',
                 'value'=>function ($model, $index, $widget) {
-                    return AuthItem::typeList($model->type);
+                    return $model::typeList($model->type);
                 },
                 'filterOptions' => [
                     'style' => 'padding:8px 1px;',
                 ],
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter'=> AuthItem::typeList(),
+                'filter'=> $searchModel::typeList(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => [
                         'allowClear' => true,

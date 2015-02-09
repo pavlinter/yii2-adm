@@ -52,9 +52,6 @@ class AuthAssignmentSearch extends AuthAssignment
             ->innerJoin(['u'=>'{{%user}}'],'u.id=a.user_id')
             ->with(['user',]);
 
-
-
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
