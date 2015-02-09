@@ -9,7 +9,6 @@
 
 namespace pavlinter\adm\models;
 
-use pavlinter\adm\Adm;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -76,13 +75,13 @@ class AuthAssignment extends \yii\db\ActiveRecord
      */
     public function getItemName()
     {
-        return $this->hasOne(Adm::getInstance()->manager->createAuthItem('className'), ['name' => 'item_name']);
+        return $this->hasOne(AuthItem::className(), ['name' => 'item_name']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
-        return $this->hasOne(Adm::getInstance()->manager->createUser('className'), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
