@@ -24,8 +24,22 @@ class Manager extends \yii\base\Component
      */
     public function __call($name, $params)
     {
-        $property = (false !== ($query = strpos($name, 'Query'))) ? mb_substr($name, 6, -5) : mb_substr($name, 6);
+        $query  = strpos($name, 'Query');
+        $static = strpos($name, 'static');
+        if ($static === 0) {
+            $property = mb_substr($name, 6);
+        }else if ($query !== false) {
+            $property = mb_substr($name, 6, -5);
+        } else {
+            $property = mb_substr($name, 6);
+        }
+
         $property = lcfirst($property) . 'Class';
+
+        if ($static === 0) {
+            $method = ArrayHelper::remove($params, '0', 'className');
+            return forward_static_call_array([$this->$property, $method], $params);
+        }
         if ($query) {
             $method = ArrayHelper::remove($params, '0', 'find');
             return forward_static_call_array([$this->$property, $method], $params);

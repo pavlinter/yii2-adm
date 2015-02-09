@@ -18,6 +18,7 @@ namespace <?= $ns ?>;
 use pavlinter\adm\Manager;
 
 /**
+ * @method \<?= $ns ?>\models\Page staticPage
  * @method \<?= $ns ?>\models\Page createPage
  * @method \<?= $ns ?>\models\Page createPageQuery
  */
