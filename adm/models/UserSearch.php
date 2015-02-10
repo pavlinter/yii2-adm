@@ -14,7 +14,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * UserSearch represents the model behind the search form about `common\models\User`.
+ * UserSearch
  */
 class UserSearch extends User
 {
@@ -47,7 +47,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = static::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
