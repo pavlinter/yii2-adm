@@ -31,10 +31,10 @@ Yii::$app->i18n->resetDot();
                 'attribute' => 'role',
                 'vAlign' => 'middle',
                 'value' => function ($model, $key, $index, $widget) {
-                    return $model->roles($model->role);
+                    return $model::roles($model->role);
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter'=> $searchModel->roles(),
+                'filter'=> $searchModel::roles(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' =>true ],
                 ],
@@ -45,10 +45,10 @@ Yii::$app->i18n->resetDot();
                 'attribute' => 'status',
                 'vAlign' => 'middle',
                 'value' => function ($model, $key, $index, $widget) {
-                    return $model->status($model->status);
+                    return $model::status($model->status);
                 },
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter'=> $searchModel->status(),
+                'filter'=> $searchModel::status(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => ['allowClear' =>true ],
                 ],
