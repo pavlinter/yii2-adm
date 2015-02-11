@@ -173,7 +173,7 @@ password: 123456
 ```
 - Добавить в adm в левое меню свой модуль
 ```php
-//pavlinter\my_module\Module
+//app\my_module\Module
 
 class Module extends \yii\base\Module implements \pavlinter\adm\AdmBootstrapInterface
 {
@@ -193,7 +193,7 @@ class Module extends \yii\base\Module implements \pavlinter\adm\AdmBootstrapInte
 
 - Полностью закрыть доступ к модулю.
 ```php
-//pavlinter\my_module\Module
+//app\my_module\Module
 public function beforeAction($action)
 {
     $adm = Adm::register();
@@ -205,9 +205,35 @@ public function beforeAction($action)
 ```
 
 - Частично закрыть доступ к модулю<br/>
-[beforeAction](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/Module.php#L119)<br/>
-[Доступ к админке через controller](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/controllers/PageController.php#L25)<br/>
+```php
+//app\my_module\Module
+public function beforeAction($action)
+{
+    if ($action->controller->id !== 'default') {
+        $adm = Adm::register();
+    }
+    return parent::beforeAction($action);
+}
+```
+
+```php
+//app\my_module\controllers\MyController
+public function behaviors()
+{
+    return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['MyRole'],
+                ],
+            ],
+        ],
+    ];
+}
+```
 
 - Если публичный модуль, то нужно создавать manager класов.<br/>
-[Пример](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/Module.php#L74)<br/>
+[Пример](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/Module.php#L72)<br/>
 [Manager](https://github.com/pavlinter/yii2-adm-pages/blob/master/admpages/ModelManager.php)<br/>
