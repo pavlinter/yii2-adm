@@ -71,7 +71,7 @@ class AuthItemController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully inserted!'));
-            return Adm::redirect(['update', 'id' => $model->id]);
+            return Adm::redirect(['update', 'id' => $model->name]);
         } else {
             return $this->render('create', [
                 'model' => $model,
