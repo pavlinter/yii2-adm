@@ -166,14 +166,7 @@ Date.now = Date.now || function() { return +new Date; };
   	
   	// carousel
   	$('.carousel.auto').carousel();
-  	
-  	// button loading
-  	$(document).on('click.button.data-api', '[data-loading-text]', function (e) {
-  	    var $this = $(e.target);
-  	    $this.is('i') && ($this = $this.parent());
-  	    $this.button('loading');
-  	});
-
+      
     var scrollToTop = function(){
   		!location.hash && setTimeout(function () {
   		    if (!pageYOffset) window.scrollTo(0, 0);
