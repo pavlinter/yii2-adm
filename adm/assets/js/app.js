@@ -166,7 +166,7 @@ Date.now = Date.now || function() { return +new Date; };
   	
   	// carousel
   	$('.carousel.auto').carousel();
-      
+
     var scrollToTop = function(){
   		!location.hash && setTimeout(function () {
   		    if (!pageYOffset) window.scrollTo(0, 0);
