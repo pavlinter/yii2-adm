@@ -22,7 +22,7 @@ Yii::$app->i18n->resetDot();
             <?= Html::a(Adm::t('user', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => Adm::t('user', 'Are you sure you want to delete this item?'),
+                    'confirm' => Adm::t('user', 'Are you sure you want to delete this item?', ['dot' => false]),
                     'method' => 'post',
                 ],
             ]) ?>
