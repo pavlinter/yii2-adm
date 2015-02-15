@@ -309,11 +309,12 @@ class Generator extends \yii\gii\Generator
             $t3 = "\t\t";
         }
 
+        $column->comment = strtolower($column->comment);
 
-        if ($column->comment == 'Redactor'){
+        if ($column->comment == 'redactor'){
             return "\\pavlinter\\adm\\Adm::widget('Redactor',[\n$t3'form' => \$form,\n$t3'model'      => " . $modelStr . ",\n$t3'attribute'  => " . $attributeStr . "\n$t2])";
         }
-        if ($column->comment == 'FileInput'){
+        if ($column->comment == 'fileinput'){
             return "\\pavlinter\\adm\\Adm::widget('FileInput',[\n$t3'form'        => \$form,\n$t3'model'       => " . $modelStr . ",\n$t3'attribute'   => " . $attributeStr . "\n$t2])";
         }
 
