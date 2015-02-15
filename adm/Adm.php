@@ -129,7 +129,6 @@ class Adm extends \yii\base\Module
         static $registered;
         $adm = Yii::$app->getModule('adm');
         if ($registered === null) {
-            $view = Yii::$app->getView();
             //override default error handler
             $handler = Yii::$app->getErrorHandler();
             $handler->errorAction = '/' . $adm->id . '/default/error';
@@ -138,7 +137,6 @@ class Adm extends \yii\base\Module
                 Yii::$app->getUrlManager()->onlyFriendlyParams = false;
             }
             Yii::$app->getI18n()->dialog = I18N::DIALOG_BS;
-            ConflictAsset::register($view);
             $registered = true;
         }
         return $adm;
@@ -331,6 +329,9 @@ class Adm extends \yii\base\Module
     {
         $config = [
             'class' => 'mihaildev\elfinder\Controller',
+            'on beforeAction' => function ($event) {
+                Yii::$app->getView()->off('endBody'); //for pavlinter\translation\I18N
+            },
             'access' => ['Adm-FilesRoot', 'Adm-FilesAdmin'],
             'disabledCommands' => ['netmount'], // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options#commands
         ];
