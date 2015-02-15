@@ -149,7 +149,7 @@ class Adm extends \yii\base\Module
      */
     public function beforeAction($action)
     {
-        self::register();
+        static::register();
         return parent::beforeAction($action);
     }
 
@@ -184,7 +184,7 @@ class Adm extends \yii\base\Module
      */
     public static function widget($class, $config = [])
     {
-        $adm = self::getInstance();
+        $adm = static::getInstance();
         if ($adm === null) {
             $adm = Yii::$app->getModule('adm');
         }
@@ -205,7 +205,7 @@ class Adm extends \yii\base\Module
      */
     public static function begin($class, $config = [])
     {
-        $adm = self::getInstance();
+        $adm = static::getInstance();
         if ($adm === null) {
             $adm = Yii::$app->getModule('adm');
         }
@@ -237,7 +237,7 @@ class Adm extends \yii\base\Module
      */
     public static function end($class)
     {
-        $adm = self::getInstance();
+        $adm = static::getInstance();
         if ($adm === null) {
             $adm = Yii::$app->getModule('adm');
         }
@@ -273,50 +273,50 @@ class Adm extends \yii\base\Module
         return [
             'left-menu' => [
                 'settings' => [
-                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-wrench"></i><span>' . self::t("menu", "Settings") . '</span>',
+                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-wrench"></i><span>' . static::t("menu", "Settings") . '</span>',
                     'url' => "#",
                     'items' => [],
                 ],
                 'elfinder' => [
-                    'label' => '<i class="fa fa-picture-o"></i><span>' . self::t("menu", "Media Files") . '</span>',
+                    'label' => '<i class="fa fa-picture-o"></i><span>' . static::t("menu", "Media Files") . '</span>',
                     'url' => ['/' . $this->id . '/file/index'],
                     'visible' => $this->user->can('Adm-FilesRoot') || $this->user->can('Adm-FilesAdmin'),
                 ],
                 'user' => [
-                    'label' => '<i class="fa fa-users"></i><span>' . self::t("menu", "Users") . '</span>',
+                    'label' => '<i class="fa fa-users"></i><span>' . static::t("menu", "Users") . '</span>',
                     'url' => ['/' . $this->id . '/user/index'],
                     'visible' => $this->user->can('AdmRoot'),
                 ],
                 'authItem' => [
-                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . self::t("menu", "Rules") . '</span>',
+                    'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-lock"></i><span>' . static::t("menu", "Rules") . '</span>',
                     'url' => "#",
                     'visible' => $this->user->can('AdmRoot'),
                     'items' => [
                         [
-                            'label' => '<span>' . self::t("menu", "Auth Assignment") . '</span>',
+                            'label' => '<span>' . static::t("menu", "Auth Assignment") . '</span>',
                             'url' => ['/' . $this->id . '/auth-assignment/index']
                         ],
                         [
-                            'label' => '<span>' . self::t("menu", "Auth Item") . '</span>',
+                            'label' => '<span>' . static::t("menu", "Auth Item") . '</span>',
                             'url' => ['/' . $this->id . '/auth-item/index']
                         ],
                         [
-                            'label' => '' . self::t("menu", "Auth Item Child") . '</span>',
+                            'label' => '' . static::t("menu", "Auth Item Child") . '</span>',
                             'url' => ['/' . $this->id . '/auth-item-child/index']
                         ],
                         [
-                            'label' => '<span>' . self::t("menu", "Auth Rule") . '</span>',
+                            'label' => '<span>' . static::t("menu", "Auth Rule") . '</span>',
                             'url' => ['/' . $this->id . '/auth-rule/index']
                         ]
                     ],
                 ],
                 'language' => [
-                    'label' => '<i class="fa fa-folder"></i><span>' . self::t("menu", "Languages") . '</span>',
+                    'label' => '<i class="fa fa-folder"></i><span>' . static::t("menu", "Languages") . '</span>',
                     'url' => ['/' . $this->id . '/language/index'],
                     'visible' => $this->user->can('Adm-Language'),
                 ],
                 'source-message' => [
-                    'label' => '<i class="glyphicon glyphicon-globe"></i><span>' . self::t("menu", "Translations") . '</span>',
+                    'label' => '<i class="glyphicon glyphicon-globe"></i><span>' . static::t("menu", "Translations") . '</span>',
                     'url' => ['/' . $this->id . '/source-message/index'],
                     'visible' => $this->user->can('Adm-Transl'),
                 ],
