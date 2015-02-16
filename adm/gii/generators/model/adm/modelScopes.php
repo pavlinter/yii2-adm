@@ -20,6 +20,9 @@ namespace <?= $generator->ns ?>;
 
 use yii\db\ActiveQuery;
 
+/**
+ * Class <?= $className ?>Query
+ */
 class <?= $className ?>Query extends ActiveQuery
 {
     /**
