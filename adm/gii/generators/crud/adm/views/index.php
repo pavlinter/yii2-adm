@@ -73,7 +73,10 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => '\kartik\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+            ],
         ],
     ]); ?>
 <?php } elseif($generator->indexWidgetType === 'admGrid') { ?>
@@ -104,7 +107,10 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
 
-            ['class' => '\kartik\grid\ActionColumn'],
+            [
+                'class' => '\kartik\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+            ],
         ],
     ]); ?>
 <?php } else { ?>
