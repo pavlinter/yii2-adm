@@ -422,6 +422,7 @@ class Adm extends \yii\base\Module
             'post' => 'redirect',
             'statusCode' => 302,
             'params' => [],
+            'return' => false,
         ], $options);
         $redirect = Yii::$app->request->post($options['post']);
         if ($redirect && $options['post'] !== false) {
@@ -436,9 +437,19 @@ class Adm extends \yii\base\Module
                 $template['{' . $k . '}'] = $v;
             }
             $url = strtr($redirect, $template);
-        }
-        if ($options['onlyRedirect'] === false) {
+
+            if ($options['return']) {
+                return Url::to($url);
+            }
             return $response->redirect(Url::to($url), $options['statusCode']);
         }
+
+        if ($options['onlyRedirect'] === false) {
+            if ($options['return']) {
+                return Url::to($url);
+            }
+            return $response->redirect(Url::to($url), $options['statusCode']);
+        }
+        return null;
     }
 }
