@@ -24,7 +24,7 @@ Yii::$app->i18n->resetDot();
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
             'username',
             'email:email',
             [
@@ -57,7 +57,7 @@ Yii::$app->i18n->resetDot();
             ],
 
             [
-                'class' => '\kartik\grid\ActionColumn',
+                'class' => 'kartik\grid\ActionColumn',
                 'buttons' => [
                     'delete' => function ($url, $model) {
                         if ($model->id == Adm::getInstance()->user->getId()) {

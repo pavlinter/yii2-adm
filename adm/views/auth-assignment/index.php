@@ -25,7 +25,7 @@ Yii::$app->i18n->resetDot();
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
 
             'item_name',
             [
@@ -37,11 +37,9 @@ Yii::$app->i18n->resetDot();
                 },
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'options' => [
-                    'style' => 'width:70px;',
-                ],
+                'width' => '70px',
             ],
         ],
     ]);?>

@@ -49,7 +49,7 @@ Yii::$app->i18n->resetDot();
     <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
 
 <?php
 $count = 0;
@@ -74,7 +74,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
 
             [
-                'class' => '\kartik\grid\ActionColumn',
+                'class' => 'kartik\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
             ],
         ],
