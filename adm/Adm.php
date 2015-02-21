@@ -73,7 +73,7 @@ class Adm extends \yii\base\Module
                 'manager' => [
                     'class' => 'pavlinter\adm\ModelManager'
                 ],
-                'user' => Yii::$app->user,
+                'user' => Yii::$app->getUser(),
             ],
         ], $config);
 
