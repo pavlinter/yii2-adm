@@ -41,7 +41,7 @@ class GridNestable extends \yii\base\Widget
 
     public $parentCol = 'id_parent'; //set false if parent field is not exist
 
-    public $orderBy = SORT_ASC;
+    public $orderBy = SORT_DESC;
 
     public $btn;
 

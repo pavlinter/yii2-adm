@@ -35,9 +35,10 @@ Yii::$app->i18n->resetDot();
             'btn' => false, //hide btn
             'nameCol' => 'name',
             'parentCol' => false,
+            'orderBy' => SORT_ASC,
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
             [
                 'attribute' => 'image',
                 'format' => 'raw',
@@ -46,14 +47,12 @@ Yii::$app->i18n->resetDot();
                         return Html::img($model->image,['style' => 'max-width: 100px;max-height:100px;']);
                     }
                 },
-                'options' => [
-                    'style' => 'width:100px;',
-                ],
+                'width' => '100px',
             ],
             'name',
             'code',
             [
-                'class' => '\kartik\grid\BooleanColumn',
+                'class' => 'kartik\grid\BooleanColumn',
                 'attribute' => 'active',
                 'filterType' => GridView::FILTER_SELECT2,
                 'filterWidgetOptions' => [
@@ -64,11 +63,9 @@ Yii::$app->i18n->resetDot();
                 ],
             ],
             [
-                'class' => '\kartik\grid\ActionColumn',
+                'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'options' => [
-                    'style' => 'width:70px;',
-                ],
+                'width' => '70px',
             ],
 
         ],
