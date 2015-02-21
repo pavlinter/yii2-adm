@@ -51,21 +51,23 @@ Yii::$app->i18n->resetDot();
 <?php
 if (($tableSchema = $generator->getTableSchema()) === false) {
     foreach ($generator->getColumnNames() as $name) {
-        echo "            '" . $name . "',\n";
+        echo $generator->generateColumnDetailView($column);
+
     }
 } else {
     foreach ($generator->getTableSchema()->columns as $column) {
+        echo $generator->generateColumnDetailView($column);
         $format = $generator->generateColumnFormat($column);
-        echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+
     }
 }
 
 $modelClass = new $generator->modelClass();
 $behaviors = $modelClass->behaviors();
 if (isset($behaviors['trans'],$behaviors['trans']['translationAttributes'])) {
-    echo "            //translations\n";
+    echo "\t\t\t//translations\n";
     foreach ($behaviors['trans']['translationAttributes'] as $translateField) {
-        echo "            '" . $translateField . "',\n";
+        echo $generator->generateColumnTrans($translateField);
     }
 }
 ?>

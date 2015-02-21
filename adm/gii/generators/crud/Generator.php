@@ -670,4 +670,63 @@ class Generator extends \yii\gii\Generator
         }
         return $str;
     }
+
+    /**
+     * @param $column
+     * @return string
+     */
+    public function generateColumn($column)
+    {
+        $return = "";
+        if (is_object($column)) {
+            $format = $this->generateColumnFormat($column);
+            $return .= "\t\t\t[\n";
+            $return .= "\t\t\t\t'attribute' => '". $column->name ."',\n";
+            $return .= "\t\t\t\t'format' => '". $format ."',\n";
+            $return .= "\t\t\t],\n";
+        } else {
+            $return .= "\t\t\t[\n";
+            $return .= "\t\t\t\t'attribute' => '". $column ."',\n";
+            $return .= "\t\t\t\t'format' => 'text',\n";
+            $return .= "\t\t\t],\n";
+        }
+        return $return;
+    }
+
+
+    /**
+     * @param $column
+     * @return string
+     */
+    public function generateColumnDetailView($column)
+    {
+        $return = "";
+        if (is_object($column)) {
+            $format = $this->generateColumnFormat($column);
+            $return .= "\t\t\t[\n";
+            $return .= "\t\t\t\t'attribute' => '". $column->name ."',\n";
+            $return .= "\t\t\t\t'format' => '". $format ."',\n";
+            $return .= "\t\t\t],\n";
+        } else {
+            $return .= "\t\t\t[\n";
+            $return .= "\t\t\t\t'attribute' => '". $column ."',\n";
+            $return .= "\t\t\t\t'format' => 'text',\n";
+            $return .= "\t\t\t],\n";
+        }
+        return $return;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    public function generateColumnTrans($name)
+    {
+        $return = "";
+        $return .= "\t\t\t[\n";
+        $return .= "\t\t\t\t'attribute' => '". $name ."',\n";
+        $return .= "\t\t\t\t'format' => 'text',\n";
+        $return .= "\t\t\t],\n";
+        return $return;
+    }
 }

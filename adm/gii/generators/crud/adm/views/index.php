@@ -18,9 +18,9 @@ use yii\helpers\Html;
         echo "use pavlinter\\adm\\Adm;";
     }
     if($generator->indexWidgetType === 'grid'){
-        echo "use yii\\grid\\GridView;";
+        echo "\nuse yii\\grid\\GridView;";
     } elseif($generator->indexWidgetType === 'list') {
-        echo "use yii\\widgets\\ListView;";
+        echo "\nuse yii\\widgets\\ListView;";
     }
 ?>
 
@@ -50,7 +50,6 @@ Yii::$app->i18n->resetDot();
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
             ['class' => 'kartik\grid\SerialColumn'],
-
 <?php
 $count = 0;
 if (($tableSchema = $generator->getTableSchema()) === false) {
@@ -72,7 +71,6 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 }
 ?>
-
             [
                 'class' => 'kartik\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
@@ -83,30 +81,31 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     <?= "<?= " ?>Adm::widget('GridView',[
         'dataProvider' => $dataProvider,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
-            ['class' => 'yii\grid\SerialColumn'],
-
+            ['class' => 'kartik\grid\SerialColumn'],
 <?php
 $count = 0;
 if (($tableSchema = $generator->getTableSchema()) === false) {
     foreach ($generator->getColumnNames() as $name) {
         if (++$count < 6) {
-            echo "            '" . $name . "',\n";
+            echo $generator->generateColumn($column);
         } else {
-            echo "            // '" . $name . "',\n";
+            echo "\t\t\t/*\n";
+            echo $generator->generateColumn($column);
+            echo "\t\t\t*/\n";
         }
     }
 } else {
     foreach ($tableSchema->columns as $column) {
-        $format = $generator->generateColumnFormat($column);
         if (++$count < 6) {
-            echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+            echo $generator->generateColumn($column);
         } else {
-            echo "            // '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+            echo "\t\t\t/*\n";
+            echo $generator->generateColumn($column);
+            echo "\t\t\t*/\n";
         }
     }
 }
 ?>
-
             [
                 'class' => '\kartik\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
