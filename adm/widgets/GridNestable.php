@@ -17,7 +17,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\web\Application;
 use yii\web\Request;
 use yii\web\Response;
 
@@ -48,9 +47,6 @@ class GridNestable extends \yii\base\Widget
     public $template = '{btn}<div class="dd hide" id="{nestableId}"><ol class="dd-list">{items}</ol>{pager}</div>';
 
     public $itemTemplate = '<li class="dd-item dd3-item dd-collapsed" data-id="{id}"><div class="fa-arrows dd-handle dd3-handle"></div><div class="dd3-content"><span class="nestable-loading nestable-loading-{id} fa fa-spinner fa-spin hide"></span>{name} <span class="badge nestable-weight-{id}">{weight}</span><div class="pull-right">{links}</div></div><ol class="dd-list"></ol></li>';
-
-    private $_models = [];
-
     /**
      * Initializes the object.
      * This method is invoked at the end of the constructor after the object is initialized with the
