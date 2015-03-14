@@ -14,7 +14,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * AuthItemSearch represents the model behind the search form about `frontend\models\AuthItem`.
+ * AuthItemSearch represents the model behind the search form about `pavlinter\adm\models\AuthItem`.
  */
 class AuthItemSearch extends AuthItem
 {

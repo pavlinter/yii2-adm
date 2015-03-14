@@ -14,7 +14,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * AuthRuleSearch represents the model behind the search form about `frontend\models\AuthRule`.
+ * AuthRuleSearch represents the model behind the search form about `pavlinter\adm\models\AuthRule`.
  */
 class AuthRuleSearch extends AuthRule
 {

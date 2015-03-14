@@ -14,7 +14,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * AuthAssignmentSearch represents the model behind the search form about `frontend\models\AuthAssignment`.
+ * AuthAssignmentSearch represents the model behind the search form about `pavlinter\adm\models\AuthAssignment`.
  */
 class AuthAssignmentSearch extends AuthAssignment
 {
