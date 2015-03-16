@@ -144,7 +144,7 @@ foreach ($modelLangClassObj->attributes() as $attribute){
      */
     public function beforeSave($insert)
     {
-        if (empty($this-><?= $haveWeight ?>) && $this-><?= $haveWeight ?> != 0) {
+        if (empty($this-><?= $haveWeight ?>)) {
             $query = static::find()->select(['MAX(<?= $haveWeight ?>)']);
             if (!$insert) {
                 $query->where(['!=', 'id', $this->id]);
