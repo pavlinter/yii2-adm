@@ -99,7 +99,7 @@ class DefaultController extends Controller
      */
     public function actionLogout()
     {
-        Adm::getInstance()->user->logout();
+        Adm::getInstance()->user->logout(false);
         return Adm::redirect(['login']);
     }
 }
