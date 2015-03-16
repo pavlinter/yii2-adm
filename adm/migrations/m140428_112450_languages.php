@@ -32,14 +32,14 @@ class m140428_112450_languages extends \yii\db\Migration
         $this->insert('{{%language}}', [
             'code' => 'en',
             'name' => 'English',
-            'weight'=> 1,
+            'weight'=> 50,
             'updated_at' => time(),
         ]);
 
         $this->insert('{{%language}}', [
             'code' => 'ru',
             'name' => 'Russian',
-            'weight'=> 2,
+            'weight'=> 100,
             'updated_at' => time(),
         ]);
     }
