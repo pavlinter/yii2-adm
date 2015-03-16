@@ -5,7 +5,7 @@ namespace pavlinter\adm\models;
  * @package yii2-adm
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 use pavlinter\adm\Adm;
