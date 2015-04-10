@@ -4,7 +4,7 @@
  * @package yii2-adm
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.0.2
+ * @version 1.0.1
  */
 
 namespace pavlinter\adm\widgets;
@@ -39,6 +39,8 @@ class GridNestable extends \yii\base\Widget
     public $weightCol = 'weight';
 
     public $parentCol = 'id_parent'; //set false if parent field is not exist
+
+    public $parentParam = 'id_parent'; //$_GET
 
     public $orderBy = SORT_DESC;
 
@@ -175,6 +177,11 @@ class GridNestable extends \yii\base\Widget
      */
     public function step(&$json, $items, $id_parent = null)
     {
+        $parentParam = (int)Yii::$app->request->get($this->parentParam);
+        if (!$id_parent && $parentParam) {
+            $id_parent = $parentParam;
+        }
+
         foreach ($items as $item) {
             if(!empty($item['children'])) {
                 $this->step($json, $item['children'], $item['id']);
@@ -191,6 +198,7 @@ class GridNestable extends \yii\base\Widget
             ->all();
 
         $weight = ArrayHelper::getColumn($models, $this->weightCol, false);
+
         foreach ($ids as $i => $id) {
             if (isset($weight[$i], $models[$id])) {
                 $json[$id] = $weight[$i];
