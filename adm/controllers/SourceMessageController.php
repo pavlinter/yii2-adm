@@ -167,7 +167,7 @@ class SourceMessageController extends Controller
     {
         $this->findModel($id)->delete();
         Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
-        return Adm::redirect(['index']);
+        return Adm::redirect(['index'], ['goBack' => true]);
     }
 
     /**

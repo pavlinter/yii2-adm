@@ -423,6 +423,7 @@ class Adm extends \yii\base\Module
             'statusCode' => 302,
             'params' => [],
             'return' => false,
+            'goBack' => false,
         ], $options);
         $redirect = Yii::$app->request->post($options['post']);
         if ($redirect && $options['post'] !== false) {
@@ -444,6 +445,10 @@ class Adm extends \yii\base\Module
             return $response->redirect(Url::to($url), $options['statusCode']);
         }
 
+        if ($options['goBack'] === true) {
+            return static::goBack($url, $options);
+        }
+
         if ($options['onlyRedirect'] === false) {
             if ($options['return']) {
                 return Url::to($url);
@@ -451,5 +456,26 @@ class Adm extends \yii\base\Module
             return $response->redirect(Url::to($url), $options['statusCode']);
         }
         return null;
+    }
+
+
+    /**
+     * @param $defaultUrl
+     * @param array $options
+     * @return static
+     */
+    public static function goBack($defaultUrl, $options = [])
+    {
+        $options = ArrayHelper::merge([
+            'statusCode' => 302,
+        ], $options);
+
+        $response = Yii::$app->getResponse();
+        $referrer = Yii::$app->getRequest()->getReferrer();
+        if($referrer){
+            return $response->redirect($referrer, $options['statusCode']);
+        }else{
+            return $response->redirect($defaultUrl, $options['statusCode']);
+        }
     }
 }
