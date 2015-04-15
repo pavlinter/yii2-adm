@@ -246,8 +246,7 @@ class GridNestable extends \yii\base\Widget
                     if(action == "expand"){
                         var id = $item.attr("data-id");
                         var $this = $(this);
-
-                        $collapse = $item.children("[data-action=\"collapse\"]").hide();
+                        var $collapse = $item.children("[data-action=\"collapse\"]").hide();
                         nestableLoadingItem(id,true);
 
                         $.ajax({
@@ -267,11 +266,6 @@ class GridNestable extends \yii\base\Widget
                         }).always(function(jqXHR, textStatus){
                             nestableLoadingItem(id, false);
                             $collapse.show();
-                            if (textStatus !== "success") {
-
-                            }
-                        }).fail(function(jqXHR, textStatus, message){
-                            alert(message);
                         });
                     } else {
                         $("." + that.options.listClass, $item).empty();
