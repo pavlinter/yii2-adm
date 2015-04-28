@@ -352,7 +352,7 @@ class Adm extends \yii\base\Module
                     'uploadMaxSize' => '1G',
                 ],
             ];
-        } else if($this->user->can('AdmAdmin')) {
+        } else if($this->user->can('Adm-FilesAdmin')) {
             $config['roots'][] = [
                 'class' => 'mihaildev\elfinder\UserPath',
                 'path'  => 'files/adm_users/user_{id}',
