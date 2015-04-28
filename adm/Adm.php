@@ -436,6 +436,7 @@ class Adm extends \yii\base\Module
             }
             foreach ($params as $k => $v) {
                 $template['{' . $k . '}'] = $v;
+                $template['%7B' . $k . '%7D'] = $v;
             }
             $url = strtr($redirect, $template);
 
