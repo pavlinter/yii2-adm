@@ -2,7 +2,7 @@
  * @package yii2-adm
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.0.2
+ * @version 1.0.3
  *
  * Nestable only for adm module
  * Nestable jQuery Plugin - http://dbushell.com
