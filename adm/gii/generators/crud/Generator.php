@@ -651,10 +651,14 @@ class Generator extends \yii\gii\Generator
             } else {
                 $ph = '';
             }
-            if(strpos($this->messageCategory,'adm/') === 0){
-                $this->messageCategory = substr($this->messageCategory, 4, strlen($this->messageCategory));
+            if ($this->template === 'adm') {
+                if(strpos($this->messageCategory,'adm/') === 0){
+                    $this->messageCategory = substr($this->messageCategory, 4, strlen($this->messageCategory));
+                }
+                $str = "Adm::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+            } else {
+                $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
             }
-            $str = "Adm::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
         } else {
             // No I18N, replace placeholders by real words, if any
             if (!empty($placeholders)) {
