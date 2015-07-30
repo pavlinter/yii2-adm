@@ -153,3 +153,30 @@ section.pleft-col{
     top: -2px;
   }
 }
+.adm-langs-panel{
+  .panel-heading{
+    .nav{
+      li{
+        position: relative;
+        .adm-copy-lang{
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          display: none;
+          z-index: 1;
+          border: 0;
+          cursor: pointer;
+          padding: 8px;
+          &:focus{
+            i{
+              color: @brand-warning;
+            }
+          }
+          &.active{
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
