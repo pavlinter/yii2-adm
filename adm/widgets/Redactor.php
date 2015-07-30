@@ -47,12 +47,14 @@ class Redactor extends InputWidget
         }
         $ckeditorOptions = ArrayHelper::merge($ckeditorOptions, $this->clientOptions);
 
-        return $this->form->field($this->model, $this->attribute)->widget(CKEditor::className(), [
+        $options = ArrayHelper::merge([
             'initOnEvent' => 'focus',
             'options' => [
                 'class' => 'form-control form-redactor',
             ],
-            'editorOptions' => ElFinder::ckeditorOptions(Adm::getInstance()->id.'/elfinder', $ckeditorOptions),
-        ]);
+        ], $this->options);
+        $options['editorOptions'] = ElFinder::ckeditorOptions(Adm::getInstance()->id.'/elfinder', $ckeditorOptions);
+
+        return $this->form->field($this->model, $this->attribute)->widget(CKEditor::className(), $options);
     }
 }
