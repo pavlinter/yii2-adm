@@ -133,15 +133,18 @@ class AuthAssignmentController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
+    
     /**
-     * @param null $search
+     * @param null $id
      * @return string
      */
-    public function actionFindUser($search = null, $id = null) {
+    public function actionFindUser($id = null) {
+
+        $search = Yii::$app->request->get('search');
+
         $out = ['more' => false];
         if (!is_null($search)) {
-            $data = Adm::getInstance()->manager->createUserQuery()->select(['id', 'text' => 'username'])->where(['like', 'username', $search])->limit(20)->asArray()->all();
+            $data = Adm::getInstance()->manager->createUserQuery()->select(['id', 'text' => 'username'])->where(['like', 'username', $search['term']])->limit(20)->asArray()->all();
             $out['results'] = array_values($data);
         } else if ($id > 0) {
             $user = Adm::getInstance()->manager->createUserQuery()->where(['id' => $id])->one();
