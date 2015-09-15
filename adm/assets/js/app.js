@@ -15,7 +15,7 @@ Modernizr.addTest('ie11',function(){return!!navigator.userAgent.match(/Trident.*
 Modernizr.addTest('ios',function(){return!!navigator.userAgent.match(/iPhone|iPad|iPod/i)});
 /*!
 * screenfull
-* v1.0.4 - 2013-05-26
+* v1.0.5 - 2013-05-26
 * https://github.com/sindresorhus/screenfull.js
 * (c) Sindre Sorhus; MIT License
 */
