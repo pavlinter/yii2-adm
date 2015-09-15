@@ -58,7 +58,8 @@ Yii::$app->i18n->resetDot();
                 'filterWidgetOptions' => [
                     'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
                     'pluginOptions' => [
-                        'allowClear' => true
+                        'width' => '100px',
+                        'allowClear' => true,
                     ],
                 ],
             ],
