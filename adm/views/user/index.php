@@ -36,7 +36,10 @@ Yii::$app->i18n->resetDot();
                 'filterType' => GridView::FILTER_SELECT2,
                 'filter'=> $searchModel::roles(),
                 'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' =>true ],
+                    'pluginOptions' => [
+                        'width' => '150px',
+                        'allowClear' => true,
+                    ],
                 ],
                 'filterInputOptions' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
                 'format' => 'raw'
@@ -50,7 +53,10 @@ Yii::$app->i18n->resetDot();
                 'filterType' => GridView::FILTER_SELECT2,
                 'filter'=> $searchModel::status(),
                 'filterWidgetOptions' => [
-                    'pluginOptions' => ['allowClear' =>true ],
+                    'pluginOptions' => [
+                        'width' => '150px',
+                        'allowClear' => true,
+                    ],
                 ],
                 'filterInputOptions' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
                 'format' => 'raw'

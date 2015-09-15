@@ -43,10 +43,10 @@ Yii::$app->i18n->resetDot();
                 'filter'=> $searchModel::typeList(),
                 'filterWidgetOptions' => [
                     'pluginOptions' => [
+                        'width' => '120px',
                         'allowClear' => true,
                     ],
                 ],
-                'width' => '120px',
             ],
             'description:ntext',
             'rule_name',
