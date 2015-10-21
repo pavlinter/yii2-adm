@@ -4,7 +4,7 @@
  * @package yii2-adm
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.0.5
+ * @version 1.0.6
  */
 
 namespace pavlinter\adm\gii\generators\model;
