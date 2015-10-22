@@ -23,10 +23,10 @@ $adm = Adm::getInstance();
     </script>
     <?php $this->head() ?>
 </head>
-<body>
+<?= Html::beginTag('body', $adm->params['html.bodyOptions']) ?>
     <?php $adm->beginBody($this) ?>
     <?= $content ?>
     <?php $adm->endBody($this) ?>
-</body>
+<?= Html::endTag('body') ?>
 </html>
 <?php $adm->endPage($this) ?>

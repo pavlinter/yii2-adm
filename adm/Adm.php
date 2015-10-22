@@ -269,6 +269,7 @@ class Adm extends \yii\base\Module
     public function params()
     {
         return [
+            'html.bodyOptions' => [],
             'left-menu' => [
                 'settings' => [
                     'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-wrench"></i><span>' . static::t("menu", "Settings") . '</span>',

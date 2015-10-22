@@ -74,21 +74,29 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         return $this->redirect(['user/update']);
-        //return $this->render('index');
     }
     /**
      * @inheritdoc
      */
     public function actionLogin()
     {
-        if (!Adm::getInstance()->user->isGuest) {
+        $adm = Adm::getInstance();
+        if (!$adm->user->isGuest) {
             return $this->redirect(['index']);
         }
-        $this->layout = 'base';
-        $model = Adm::getInstance()->manager->createLoginForm();
+
+        $model = $adm->manager->createLoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return Adm::redirect(['index']);
         } else {
+
+            $this->layout = 'base';
+            if (isset($adm->params['html.bodyOptions']['class'])) {
+                $adm->params['html.bodyOptions']['class'] .= 'body-login';
+            } else {
+                $adm->params['html.bodyOptions']['class'] = 'body-login';
+            }
+
             return $this->render('login', [
                 'model' => $model,
             ]);
