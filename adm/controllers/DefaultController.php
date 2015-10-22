@@ -92,7 +92,7 @@ class DefaultController extends Controller
 
             $this->layout = 'base';
             if (isset($adm->params['html.bodyOptions']['class'])) {
-                $adm->params['html.bodyOptions']['class'] .= 'body-login';
+                $adm->params['html.bodyOptions']['class'] .= ' body-login';
             } else {
                 $adm->params['html.bodyOptions']['class'] = 'body-login';
             }
