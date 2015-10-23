@@ -207,19 +207,16 @@ Date.now = Date.now || function() { return +new Date; };
 
     // collapse nav
     $(document).on('click', '[data-ride^="collapse"] a', function (e) {
-      var $this = $(e.target), $active;
+      var $this = $(e.target);
 
       $this.is('a') || ($this = $this.closest('a'));
       if( $('.nav-vertical').length ){
         return;
       }
-      
-      $active = $this.parent().siblings( ".active" );
-      $active && $active.find('> a').toggleClass('active') && $active.toggleClass('active').find('> ul:visible').slideUp(200);
-      
+
       ($this.hasClass('active') && $this.next().slideUp(200)) || $this.next().slideDown(200);
-      $this.toggleClass('active').parent().toggleClass('active');
-      
+      $this.toggleClass('active');
+
       $this.next().is('ul') && e.preventDefault();
     });
 

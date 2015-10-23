@@ -1,14 +1,33 @@
 (function($){
     $('[data-toggle="tooltip"]').tooltip()
 
-    $(".adm-nav li ul a[href*='" + admController + "']").filter(':first').closest('.nav.none').prev('a').trigger('click');
+    setTimeout(function(){
+        $(".adm-nav > .nav .nav").each(function(){
+            var $this = $(this);
+            var $li = $this.find("li.active:first");
+            if($li.length){
+                //sub li
+                $li = $li.parent().parent();
+                var $a = $li.children("a");
+                if($a.length && !$a.is(".is-inited")){
+                    $a.addClass("is-inited").trigger("click");
+                    $li.addClass("active");
+                }
+            }
+        });
+
+        $(".adm-nav > .nav > li.active > a").not(".is-inited").each(function(){
+            var $this = $(this);
+            $this.addClass("is-inited").trigger("click");
+        });
+    }, 1000);
+
     $('.nav-tabs').each(function(){
         var $th = $(this);
         if (!$th.find('li.active').length){
             $th.find('a:first').trigger('click');
         }
     });
-
 
     //copy lang
     $langsPanel = $(".adm-langs-panel");

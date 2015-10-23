@@ -270,6 +270,7 @@ class Adm extends \yii\base\Module
     {
         return [
             'html.bodyOptions' => [],
+            'left-menu-active' => [],
             'left-menu' => [
                 'settings' => [
                     'label' => '<span class="pull-right auto"><i class="fa fa-angle-down text"></i><i class="fa fa-angle-up text-active"></i></span><i class="fa fa-wrench"></i><span>' . static::t("menu", "Settings") . '</span>',
@@ -292,18 +293,22 @@ class Adm extends \yii\base\Module
                     'visible' => $this->user->can('AdmRoot'),
                     'items' => [
                         [
+                            'key' => 'auth-assignment',
                             'label' => '<span>' . static::t("menu", "Auth Assignment") . '</span>',
                             'url' => ['/' . $this->id . '/auth-assignment/index']
                         ],
                         [
+                            'key' => 'auth-item',
                             'label' => '<span>' . static::t("menu", "Auth Item") . '</span>',
                             'url' => ['/' . $this->id . '/auth-item/index']
                         ],
                         [
+                            'key' => 'auth-item-child',
                             'label' => '' . static::t("menu", "Auth Item Child") . '</span>',
                             'url' => ['/' . $this->id . '/auth-item-child/index']
                         ],
                         [
+                            'key' => 'auth-rule',
                             'label' => '<span>' . static::t("menu", "Auth Rule") . '</span>',
                             'url' => ['/' . $this->id . '/auth-rule/index']
                         ]

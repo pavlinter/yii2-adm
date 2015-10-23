@@ -13,8 +13,22 @@ if (isset($adm->params['left-menu']['settings']['items'])) {
         unset($adm->params['left-menu']['settings']);
     }
 }
-
+$active = $adm->params['left-menu-active'];
+if (!is_array($active)) {
+    $active = explode(',', $adm->params['left-menu-active']);
+}
 foreach ($adm->params['left-menu'] as $name => $item) {
+    if (in_array($name, $active)) {
+        $item['active'] = true;
+    }
+    if (isset($item['items'])) {
+        foreach ($item['items'] as $i => $child) {
+            $key = \yii\helpers\ArrayHelper::remove($child, 'key');
+            if ($key && in_array($key, $active)) {
+                $item['items'][$i]['active'] = true;
+            }
+        }
+    }
     $items[] = $item;
 }
 ?>
@@ -31,9 +45,6 @@ foreach ($adm->params['left-menu'] as $name => $item) {
                         'linkTemplate' => '<a href="{url}">{label}</a>',
                         'options' => [
                             'class' => 'nav',
-                        ],
-                        'itemOptions' => [
-
                         ],
                         'items' => $items,
                     ]);
