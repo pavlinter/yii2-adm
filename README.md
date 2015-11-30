@@ -21,8 +21,8 @@ Yii2: Adm CMS
 [kartik-v/yii2-grid](https://github.com/kartik-v/yii2-grid)<br/>
 [kartik-v/yii2-detail-view](https://github.com/kartik-v/yii2-detail-view)<br/>
 [kartik-v/yii2-widgets](https://github.com/kartik-v/yii2-widgets)<br/>
-[kartik-v/yii2-checkbox-x](https://github.com/kartik-v/yii2-checkbox-x)
-
+[kartik-v/yii2-checkbox-x](https://github.com/kartik-v/yii2-checkbox-x)<br/>
+[kartik-v/yii2-icons](https://github.com/kartik-v/yii2-icons)<br/>
 
 Настройка
 ------------------

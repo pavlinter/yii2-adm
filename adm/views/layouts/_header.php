@@ -29,7 +29,7 @@ $languages = $i18n->getLanguages(true);
                 <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
                         <?= $adm->user->identity->username ?> <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu animated fadeInLeft">
+                <ul class="dropdown-menu">
                     <li>
                         <a href="<?= Url::to(['/' . $adm->id . '/user/update']) ?>"><?= Adm::t("header", "Profile", ['dot' => false]) ?></a>
                     </li>
@@ -49,7 +49,7 @@ $languages = $i18n->getLanguages(true);
                         <?= Adm::t("header", "Languages", ['dot' => false]) ?> <b class="caret"></b>
                     </a>
 
-                    <ul class="dropdown-menu animated fadeInLeft">
+                    <ul class="dropdown-menu">
                         <?php foreach ($languages as $language) {
                             $text = $language['name'];
                             if ($language['image']) {

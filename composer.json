@@ -24,7 +24,9 @@
         "kartik-v/yii2-grid": "3.*",
         "kartik-v/yii2-detail-view": "1.*",
         "kartik-v/yii2-widgets": "3.*",
-        "kartik-v/yii2-checkbox-x": "1.*"
+        "kartik-v/yii2-checkbox-x": "1.*",
+        "kartik-v/yii2-icons": "1.*",
+        "bower-asset/animate.css": "3.*"
     },
     "autoload": {
         "psr-4": {
