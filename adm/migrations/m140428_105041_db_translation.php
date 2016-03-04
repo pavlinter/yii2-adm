@@ -21,7 +21,7 @@ class m140428_105041_db_translation extends \yii\db\Migration
 
         $this->createTable('{{%source_message}}', [
             'id' => Schema::TYPE_PK,
-            'category' => Schema::TYPE_STRING . '(32) NOT NULL',
+            'category' => Schema::TYPE_STRING . '(50) NOT NULL',
             'message' => Schema::TYPE_TEXT,
         ], $tableOptions);
 
