@@ -344,7 +344,7 @@ class Adm extends \yii\base\Module
 
         $startPath = Yii::$app->request->get('startPath');
         if ($startPath) {
-            $startPath = Yii::getAlias('@webroot') . '/files' . DIRECTORY_SEPARATOR . strtr($startPath, '::', '/');
+            $startPath = Yii::getAlias('@webroot') . '/files' . DIRECTORY_SEPARATOR . str_replace('::', '/', $startPath);
         }
 
         if ($this->user->can('Adm-FilesRoot')) {
