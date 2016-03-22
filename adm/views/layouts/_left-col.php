@@ -7,7 +7,7 @@ $items = [];
 
 /* @var $adm pavlinter\adm\Adm */
 $adm = Adm::getInstance();
-
+$adm->trigger(Adm::EVENT_INIT_LEFT_MENU);
 if (isset($adm->params['left-menu']['settings']['items'])) {
     if (empty($adm->params['left-menu']['settings']['items'])) {
         unset($adm->params['left-menu']['settings']);

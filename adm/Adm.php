@@ -44,6 +44,8 @@ class Adm extends \yii\base\Module
 
     const EVENT_TOP_MENU  = 'topMenu';
 
+    const EVENT_INIT_LEFT_MENU  = 'initLeftMenu';
+
     const EVENT_BEFORE_LEFT_MENU  = 'beforeLeftMenu';
 
     const EVENT_AFTER_LEFT_MENU  = 'afterLeftMenu';
