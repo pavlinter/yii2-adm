@@ -9,7 +9,6 @@
 
 namespace pavlinter\adm\widgets;
 
-use kartik\grid\GridView;
 use pavlinter\urlmanager\Url;
 use Yii;
 use yii\base\InvalidConfigException;
