@@ -11,12 +11,12 @@ namespace pavlinter\adm\widgets;
 
 use pavlinter\adm\Adm;
 use pavlinter\adm\NestableAsset;
+use pavlinter\urlmanager\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\helpers\Url;
 use yii\web\Request;
 use yii\web\Response;
 
@@ -63,7 +63,7 @@ class GridNestable extends \yii\base\Widget
 
         //ajax
         if (isset($headers['adm-nestable-ajax'])) {
-            $this->ajax();
+            $this->ajax($headers);
         } else {
             $view = $this->getView();
 
@@ -104,12 +104,14 @@ class GridNestable extends \yii\base\Widget
         }
     }
 
+
     /**
-     * @return array|string
+     * @param $headers
+     * @throws \yii\base\ExitException
      */
-    public function ajax()
+    public function ajax($headers)
     {
-        $id_parent = Yii::$app->getRequest()->get('nestable_id_parent');
+        $id_parent = $headers['adm-nestable_id_parent'];
         $items = Yii::$app->getRequest()->post('nestable_items');
         $json['r'] = 0;
 
@@ -250,12 +252,12 @@ class GridNestable extends \yii\base\Widget
                         nestableLoadingItem(id,true);
 
                         $.ajax({
-                            url: "' . Url::to(Yii::$app->request->url) . '",
+                            url: "' . Url::current() . '",
                             type: "get",
                             dataType: "json",
-                            data: {nestable_id_parent: id},
                             beforeSend: function (request){
                                 request.setRequestHeader("adm-nestable-ajax", "1");
+                                request.setRequestHeader("adm-nestable_id_parent", id);
                             },
                         }).done(function(d){
                             if(d.r){
@@ -284,33 +286,31 @@ class GridNestable extends \yii\base\Widget
 
                     nestableSerialize = items;
                     $.ajax({
-                            url: "' . Url::to(Yii::$app->request->url) . '",
-                            type: "POST",
-                            dataType: "json",
-                            data: {nestable_items: items, "' . Yii::$app->request->csrfParam . '": "' . Yii::$app->request->getCsrfToken() . '"},
-                            beforeSend: function (request){
-                                request.setRequestHeader("adm-nestable-ajax", "1");
-                            },
-                        }).done(function(d){
-                            if(d.error){
-                               alert(error);
+                        url: "' . Url::current() . '",
+                        type: "POST",
+                        dataType: "json",
+                        data: {nestable_items: items, "' . Yii::$app->request->csrfParam . '": "' . Yii::$app->request->getCsrfToken() . '"},
+                        beforeSend: function (request){
+                            request.setRequestHeader("adm-nestable-ajax", "1");
+                        },
+                    }).done(function(d){
+                        if(d.error){
+                           alert(error);
+                        }
+                        if (d.weight){
+                            for (var i in d.weight) {
+                                $(".nestable-weight-" + i, $this).text(d.weight[i]);
                             }
-                            if (d.weight){
-                                for (var i in d.weight) {
-                                    $(".nestable-weight-" + i, $this).text(d.weight[i]);
-                                }
-                            }
-                        }).always(function(jqXHR, textStatus){
-                            nestableLoadingItem(id, false);
-                            if (textStatus !== "success") {
+                        }
+                    }).always(function(jqXHR, textStatus){
+                        nestableLoadingItem(id, false);
+                        if (textStatus !== "success") {
 
-                            }
-                        }).fail(function(jqXHR, textStatus, message){
-                            alert(message);
-                        });
-
+                        }
+                    }).fail(function(jqXHR, textStatus, message){
+                        alert(message);
+                    });
                 });
-
 
                 $("#' . $this->grid->id . ',#' . $this->id . '").addClass("hide");
                 $(".btn-adm-nestable-view").on("click", function(e){
@@ -336,7 +336,6 @@ class GridNestable extends \yii\base\Widget
                     $(".btn-adm-nestable-view").text(text);
                     return false;
                 }).trigger("click");
-
             ');
     }
 
