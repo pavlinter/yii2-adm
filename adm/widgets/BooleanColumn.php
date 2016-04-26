@@ -4,7 +4,7 @@
  * @package yii2-adm
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.1.1
+ * @version 1.1.2
  */
 
 namespace pavlinter\adm\widgets;
@@ -43,11 +43,11 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
 
     public $loading = '<i class=\"fa fa-spinner fa-spin\"></i>';
 
-    public $filterType = GridView::FILTER_SELECT2;
-
     public $vAlign = 'middle';
 
     public $width = '50px';
+
+    public $filterType = GridView::FILTER_SELECT2;
 
     public $filterWidgetOptions = [
         'options' => ['placeholder' => 'Select ...'],
