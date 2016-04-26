@@ -52,16 +52,10 @@ Yii::$app->i18n->resetDot();
             'name',
             'code',
             [
-                'class' => 'kartik\grid\BooleanColumn',
+                'class' => 'pavlinter\adm\widgets\BooleanColumn',
                 'attribute' => 'active',
-                'filterType' => GridView::FILTER_SELECT2,
-                'filterWidgetOptions' => [
-                    'options' => ['placeholder' => Adm::t('','Select ...', ['dot' => false])],
-                    'pluginOptions' => [
-                        'width' => '100px',
-                        'allowClear' => true,
-                    ],
-                ],
+                'update' => ['updated_at' => time()],
+                'tableName' => $searchModel::tableName(),
             ],
             [
                 'class' => 'kartik\grid\ActionColumn',
