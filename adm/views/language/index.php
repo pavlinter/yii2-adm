@@ -1,6 +1,5 @@
 <?php
 
-use kartik\grid\GridView;
 use pavlinter\adm\Adm;
 use yii\helpers\Html;
 
