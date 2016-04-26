@@ -12,6 +12,7 @@ namespace pavlinter\adm\widgets;
 use pavlinter\urlmanager\Url;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -30,6 +31,8 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
 
     public $tableColumn;
 
+    public $update = ['updated_at'];
+
     public $db = 'db';
 
     public $buttonOptions = [
@@ -41,7 +44,9 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
     public $loading = '<i class=\"fa fa-spinner fa-spin\"></i>';
 
     public $filterType = GridView::FILTER_SELECT2;
+
     public $vAlign = 'middle';
+
     public $width = '50px';
 
     public $filterWidgetOptions = [
@@ -90,8 +95,23 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
                     $active = true;
                     $result = $this->trueIcon;
                 }
+                $update = [$this->tableColumn => $active];
 
-                $db->createCommand()->update($this->tableName, [$this->tableColumn => $active], 'id=:id', [':id' => $id])->execute();
+                if (is_array($this->update)) {
+                    foreach ($this->update as $column => $value) {
+                        if (is_integer($column)) {
+                            $update[$value] = new Expression('NOW()');
+                        } else {
+                            if ($value instanceof \Closure) {
+                                $update[$column] = $value($column, $this);
+                            } else {
+                                $update[$column] = $value;
+                            }
+                        }
+                    }
+                }
+
+                $db->createCommand()->update($this->tableName, $update, 'id=:id', [':id' => $id])->execute();
                 $json['r'] = true;
                 $json['res'] = $result;
             }
