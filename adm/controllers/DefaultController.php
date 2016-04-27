@@ -11,6 +11,7 @@ namespace pavlinter\adm\controllers;
 
 use pavlinter\adm\Adm;
 use Yii;
+use yii\helpers\Html;
 use yii\web\Controller;
 
 /**
@@ -40,23 +41,13 @@ class DefaultController extends Controller
                 'class' => \pavlinter\adm\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['error'],
+                        'actions' => ['error', 'login'],
                         'allow' => true,
-                    ],
-                    [
-                        'actions' => ['login'],
-                        'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
                         'actions' => ['index', 'logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['files'],
-                        'allow' => true,
-                        'roles' => ['AdmRoot'],
                     ],
                 ],
             ],
@@ -81,20 +72,15 @@ class DefaultController extends Controller
     public function actionLogin()
     {
         $adm = Adm::getInstance();
-        if (!$adm->user->isGuest) {
-            return $this->redirect(['index']);
-        }
-
         $model = $adm->manager->createLoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return Adm::redirect(['index']);
         } else {
-
-            $this->layout = 'base';
-            if (isset($adm->params['html.bodyOptions']['class'])) {
-                $adm->params['html.bodyOptions']['class'] .= ' body-login';
+            if ($adm->user->isGuest) {
+                $this->layout = 'base';
+                Html::addCssClass($adm->params['html.bodyOptions'], 'body-login');
             } else {
-                $adm->params['html.bodyOptions']['class'] = 'body-login';
+                $this->layout = 'main';
             }
 
             return $this->render('login', [
