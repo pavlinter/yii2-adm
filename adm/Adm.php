@@ -4,7 +4,7 @@
  * @package yii2-adm
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 1.1.2
+ * @version 1.1.3
  */
 
 namespace pavlinter\adm;
@@ -20,7 +20,7 @@ use yii\helpers\Url;
  */
 class Adm extends \yii\base\Module
 {
-    const VERSION = '1.1.2';
+    const VERSION = '1.1.3';
     /**
      * @event Event an event that is triggered by [[beginPage()]].
      */
