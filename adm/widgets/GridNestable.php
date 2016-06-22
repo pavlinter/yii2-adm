@@ -111,7 +111,7 @@ class GridNestable extends \yii\base\Widget
      */
     public function ajax($headers)
     {
-        $id_parent = $headers['adm-nestable_id_parent'];
+        $id_parent = $headers['adm-nestable-id-parent'];
         $items = Yii::$app->getRequest()->post('nestable_items');
         $json['r'] = 0;
 
@@ -257,7 +257,7 @@ class GridNestable extends \yii\base\Widget
                             dataType: "json",
                             beforeSend: function (request){
                                 request.setRequestHeader("adm-nestable-ajax", "1");
-                                request.setRequestHeader("adm-nestable_id_parent", id);
+                                request.setRequestHeader("adm-nestable-id-parent", id);
                             },
                         }).done(function(d){
                             if(d.r){
