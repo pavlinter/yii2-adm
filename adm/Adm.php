@@ -145,6 +145,14 @@ class Adm extends \yii\base\Module
     }
 
     /**
+     * @return self
+     */
+    public static function getInst()
+    {
+        return Yii::$app->getModule('adm');
+    }
+
+    /**
      * @inheritdoc
      */
     public function beforeAction($action)
