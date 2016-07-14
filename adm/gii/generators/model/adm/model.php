@@ -37,7 +37,8 @@ use Yii;
  * @method \pavlinter\translation\TranslationBehavior loadAll
  * @method \pavlinter\translation\TranslationBehavior loadLang
  * @method \pavlinter\translation\TranslationBehavior loadLangs
- * @method \pavlinter\translation\TranslationBehavior getTranslation
+ * @method \pavlinter\translation\TranslationBehavior loadTranslations
+ * @method \pavlinter\translation\TranslationBehavior getOneTranslation
  * @method \pavlinter\translation\TranslationBehavior hasTranslation
  *
 <?php endif; ?>
