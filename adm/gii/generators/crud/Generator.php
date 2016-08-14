@@ -263,16 +263,14 @@ class Generator extends \yii\gii\Generator
     public function generateActiveFieldLang($attribute)
     {
         $class = new $this->modelClass();
-        $langClass = $class->getTranslation(Yii::$app->getI18n()->getId());
+        $langClass = $class->getOneTranslation(Yii::$app->getI18n()->getId());
         return $this->getFieldType([
             'attribute' => $attribute,
             'model' => $langClass,
-            'modelStr' => "\$model->getTranslation(\$id_language)",
+            'modelStr' => "\$model->getOneTranslation(\$id_language)",
             'attributeStr' => "'['.\$id_language.']$attribute'",
             'lang' => true
         ]);
-
-
     }
 
     public function getFieldType($params)
