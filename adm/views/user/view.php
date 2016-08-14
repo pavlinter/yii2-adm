@@ -38,11 +38,11 @@ Yii::$app->i18n->resetDot();
             'email:email',
             [
                 'attribute' => 'role',
-                'value' => $model->roles($model->role),
+                'value' => $model->roles_list($model->role),
             ],
             [
                 'attribute' => 'status',
-                'value' => $model->status($model->status),
+                'value' => $model->status_list($model->status),
             ],
             [
                 'attribute' => 'updated_at',
