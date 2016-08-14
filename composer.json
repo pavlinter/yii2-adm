@@ -16,7 +16,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
-        "pavlinter/yii2-dot-translation": "@dev",
+        "pavlinter/yii2-dot-translation": "v2.0.0beta",
         "pavlinter/yii2-url-manager": "1.*",
         "pavlinter/yii2-buttons": "1.*",
         "mihaildev/yii2-ckeditor": "1.*",
