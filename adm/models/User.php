@@ -33,6 +33,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
+    const STATUS_NOT_APPROVED = 1;
     const STATUS_ACTIVE = 10;
     const ROLE_USER = 10;
     const ROLE_ADM = 5;
@@ -65,11 +66,11 @@ class User extends ActiveRecord implements IdentityInterface
             [['username'], 'unique'],
             [['email'], 'email'],
 
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => array_keys(static::status())],
+            ['status', 'default', 'value' => static::STATUS_ACTIVE],
+            ['status', 'in', 'range' => array_keys(static::status_list())],
 
-            ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => array_keys(static::roles())],
+            ['role', 'default', 'value' => static::ROLE_USER],
+            ['role', 'in', 'range' => array_keys(static::roles_list())],
         ];
     }
 
@@ -100,53 +101,54 @@ class User extends ActiveRecord implements IdentityInterface
             'updated_at' => Yii::t('modelAdm/user', 'Updated'),
         ];
     }
+
     /**
-     * @param null $key
+     * @param mixed $key
      * @param null $default
      * @return array|null
      */
-    public static function roles($key = null, $default = null)
+    public static function roles_list($key = false, $default = null)
     {
-        $roles = [
-            self::ROLE_USER => Yii::t('adm/user', 'User Role', ['dot' => false]),
-            self::ROLE_ADM  => Yii::t('adm/user', 'Adm Role', ['dot' => false]),
+        $list = [
+            static::ROLE_USER => Yii::t('adm/user', 'User Role', ['dot' => false]),
+            static::ROLE_ADM  => Yii::t('adm/user', 'Adm Role', ['dot' => false]),
         ];
-        if ($key !== null) {
-            if (isset($roles[$key])) {
-                return $roles[$key];
+        if ($key !== false) {
+            if (isset($list[$key])) {
+                return $list[$key];
             }
             return $default;
         }
-
-        return $roles;
+        return $list;
     }
 
     /**
-     * @param null $key
+     * @param mixed $key
      * @param null $default
      * @return array|null
      */
-    public static function status($key = null, $default = null)
+    public static function status_list($key = false, $default = null)
     {
-        $status = [
-            self::STATUS_ACTIVE     => Yii::t('adm/user', 'Active Status', ['dot' => false]),
-            self::STATUS_DELETED    => Yii::t('adm/user', 'Deleted Status', ['dot' => false]),
+        $list = [
+            static::STATUS_ACTIVE     => Yii::t('adm/user', 'Active Status', ['dot' => false]),
+            static::STATUS_NOT_APPROVED => Yii::t('adm/user', 'Not Approved Status', ['dot' => false]),
+            static::STATUS_DELETED    => Yii::t('adm/user', 'Deleted Status', ['dot' => false]),
         ];
-        if ($key !== null) {
-            if (isset($status[$key])) {
-                return $status[$key];
+        if ($key !== false) {
+            if (isset($list[$key])) {
+                return $list[$key];
             }
             return $default;
         }
-
-        return $status;
+        return $list;
     }
+
     /**
      * @inheritdoc
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => static::STATUS_ACTIVE]);
     }
 
     /**
@@ -165,7 +167,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => static::STATUS_ACTIVE]);
     }
 
     /**
@@ -182,7 +184,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status' => static::STATUS_ACTIVE,
         ]);
     }
 
