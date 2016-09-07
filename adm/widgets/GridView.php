@@ -22,6 +22,8 @@ class GridView extends \kartik\grid\GridView
 
     public $nestable = false;
 
+    public $nestableClass = 'pavlinter\adm\widgets\GridNestable';
+
     public function init()
     {
 
@@ -40,7 +42,7 @@ class GridView extends \kartik\grid\GridView
             $this->nestable = [];
         }
         $nestable = ArrayHelper::merge([
-            'class' => '\pavlinter\adm\widgets\GridNestable',
+            'class' => $this->nestableClass,
             'grid' => $this,
         ], $this->nestable);
         return forward_static_call([$nestable['class'], 'widget'], $nestable);
