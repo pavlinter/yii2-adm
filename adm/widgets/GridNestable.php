@@ -79,11 +79,13 @@ class GridNestable extends \yii\base\Widget
             }
             $pagination = $this->grid->dataProvider->getPagination();
 
-            if (($params = $pagination->params) === null) {
-                $params = $request instanceof Request ? $request->getQueryParams() : [];
+            if ($pagination) {
+                if (($params = $pagination->params) === null) {
+                    $params = $request instanceof Request ? $request->getQueryParams() : [];
+                }
+                $params['nestable'] = 1;
+                $pagination->params = $params;
             }
-            $params['nestable'] = 1;
-            $pagination->params = $params;
 
             $models = $this->grid->dataProvider->getModels();
             if(!$models) {
@@ -99,8 +101,11 @@ class GridNestable extends \yii\base\Widget
                 '{pager}' => $this->renderPager()
             ]);
             echo $output;
-            unset($params['nestable']);
-            $pagination->params = $params;
+            if ($pagination) {
+                unset($params['nestable']);
+                $pagination->params = $params;
+            }
+
         }
     }
 
