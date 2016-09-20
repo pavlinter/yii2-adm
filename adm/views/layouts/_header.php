@@ -1,20 +1,22 @@
 <?php
 
 use pavlinter\adm\Adm;
+use pavlinter\urlmanager\Url;
 use yii\helpers\Html;
-use yii\helpers\Url;
+
 
 $adm = Adm::getInstance();
 /* @var $i18n \pavlinter\translation\I18N */
 $i18n = Yii::$app->getI18n();
 $languages = $i18n->getLanguages(true);
+$baseUrl = Url::getLangUrl();
 ?>
 <header class="main-header header bg-black navbar navbar-inverse pull-in">
     <div class="navbar-header nav-bar aside dk">
         <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-primary">
             <i class="fa fa-bars"></i>
         </a>
-        <a href="<?= Url::base(true) ?>" class="nav-brand" target="_blank">ADM<sup>cms</sup></a>
+        <a href="<?= $baseUrl ?>" class="nav-brand" target="_blank">ADM<sup>cms</sup></a>
         <a class="btn btn-link visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
             <i class="fa fa-comment-o"></i>
         </a>
