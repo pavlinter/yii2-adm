@@ -26,7 +26,9 @@ use Yii;
  * @method \pavlinter\translation\TranslationBehavior loadAll
  * @method \pavlinter\translation\TranslationBehavior loadLang
  * @method \pavlinter\translation\TranslationBehavior loadLangs
- * @method \pavlinter\translation\TranslationBehavior getTranslation
+ * @method \pavlinter\translation\TranslationBehavior loadTranslations
+ * @method \pavlinter\translation\TranslationBehavior getOneTranslation
+ * @method \pavlinter\translation\TranslationBehavior hasTranslation
  *
  * @property integer $id
  * @property string $category
@@ -89,6 +91,15 @@ class SourceMessage extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Message::className(), ['id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslation()
+    {
+        return $this->hasOne(Message::className(), ['id' => 'id'])->andWhere(['language_id' => Yii::$app->i18n->getId()]);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -38,7 +38,7 @@ Yii::$app->i18n->resetDot();
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <?= Adm::widget('Redactor',[
                                     'form' => $form,
-                                    'model'      => $model->getTranslation($id_language),
+                                    'model'      => $model->getOneTranslation($id_language),
                                     'attribute'  => '['.$id_language.']translation',
                                     'removeFirstTag' => true,
                                 ]);?>
