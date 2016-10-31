@@ -53,19 +53,29 @@ class SourceMessageSearch extends SourceMessage
         $query = static::find()->from(['s' => $sourceMessageTable]);
 
         $sort = isset($params['sort']) ? $params['sort'] : null;
-        $isTranslationSearch = isset($params['SourceMessageSearch']['translation']) && $params['SourceMessageSearch']['translation'];
+        $emptyTranslation = Yii::$app->request->get('is-empty');
+        $isTranslationSearch = $emptyTranslation || (isset($params['SourceMessageSearch']['translation']) && $params['SourceMessageSearch']['translation']);
         $isTranslationSort   = in_array($sort, ['-translation', 'translation']) ? $sort : null;
 
         if ($isTranslationSearch || $isTranslationSort) {
             $messageTable = Adm::getInstance()->manager->createMessageQuery('tableName');
             $query->innerJoin(['m'=> $messageTable],'m.id=s.id')->with(['messages']);
+            if ($emptyTranslation) {
+                $query->andWhere([
+                    'm.translation' => '',
+                    'm.language_id' => Yii::$app->i18n->getId(),
+                ]);
+            }
         }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=> [
                 'defaultOrder' => ['id'=> SORT_DESC ]
-            ]
+            ],
+            'pagination' => [
+                'pageSize' => 100,
+            ],
         ]);
 
         $dataProvider->sort->attributes['translation']['asc'] = ['m.translation' => SORT_ASC];

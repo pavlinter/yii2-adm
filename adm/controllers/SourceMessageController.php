@@ -12,6 +12,7 @@ namespace pavlinter\adm\controllers;
 use pavlinter\adm\Adm;
 use pavlinter\adm\filters\AccessControl;
 use Yii;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,7 +34,7 @@ class SourceMessageController extends Controller
                     [
                         'allow' => true,
                         'roles' => ['Adm-Transl'],
-                        'actions' => ['index', 'create', 'fulledit', 'delete' , 'dot-translation'],
+                        'actions' => ['index', 'create', 'fulledit', 'delete' , 'dot-translation', 'load-translations'],
                     ],
                     [
                         'allow' => true,
@@ -46,6 +47,7 @@ class SourceMessageController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'load-translations' =>  ['post'],
                 ],
             ],
         ];
@@ -62,6 +64,48 @@ class SourceMessageController extends Controller
                 'htmlEncode' => !Adm::getInstance()->user->can('Adm-Transl:Html'),
             ],
         ];
+    }
+
+    /**
+     * @return \yii\web\Response
+     */
+    public function actionLoadTranslations()
+    {
+        $sourceMessageTable = Adm::getInstance()->manager->createSourceMessageQuery('tableName');
+        $messageTable = Adm::getInstance()->manager->createMessageQuery('tableName');
+
+
+        /* @var $i18n \pavlinter\translation\I18N */
+        $i18n = Yii::$app->i18n;
+        $languages = $i18n->getLanguages();
+
+        $query = new Query();
+        $query->from($sourceMessageTable)
+            ->select(['id']);
+
+        /* @var $reader \yii\db\DataReader */
+        $reader = $query->createCommand()->query();
+        $count = 0;
+        while (($row = $reader->read())) {
+            $id = $row['id'];
+            foreach ($languages as $language_id => $language) {
+                $query = new Query();
+                $exists = $query->from($messageTable)->where([
+                    'id' => $id,
+                    'language_id' => $language_id,
+                ])->exists();
+                if (!$exists) {
+                    Yii::$app->db->createCommand()->insert($messageTable,[
+                        'id' => $id,
+                        'language_id' => $language_id,
+                        'translation'  => '',
+                    ])->execute();
+                    $count++;
+                }
+            }
+        }
+        Yii::$app->getSession()->setFlash('success', Adm::t('source-message','Loaded {count} translations.', ['count' => $count]));
+        return $this->redirect(['index']);
     }
 
     /**
