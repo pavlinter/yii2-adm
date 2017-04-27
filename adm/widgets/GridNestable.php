@@ -198,7 +198,7 @@ class GridNestable extends \yii\base\Widget
         $ids = ArrayHelper::getColumn($items, 'id');
 
         $query = $this->getQuery();
-        $models = $query->select(['id' => $this->tableAlias . $this->idCol, 'weight' => $this->tableAlias . $this->weightCol])
+        $models = $query->select(['id' => $this->tableAlias . $this->idCol, $this->weightCol => $this->tableAlias . $this->weightCol])
             ->where([$this->tableAlias . $this->idCol => $ids])
             ->orderBy([$this->tableAlias . $this->weightCol => $this->orderBy])
             ->indexBy($this->idCol)
