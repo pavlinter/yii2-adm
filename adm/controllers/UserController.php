@@ -102,6 +102,7 @@ class UserController extends Controller
         if ($model->load($post) && $dynamicModel->load($post)) {
             if ($model->validate() && $dynamicModel->validate()) {
                 $model->setPassword($dynamicModel->password);
+                $model->generateAuthKey();
                 if ($model->save(false)) {
                     if (!empty($dynamicModel->assignment)) {
                         $modelAssignment = Adm::getInstance()->manager->createAuthAssignment();
