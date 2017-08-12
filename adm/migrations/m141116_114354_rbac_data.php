@@ -164,7 +164,6 @@ class m141116_114354_rbac_data extends Migration
 
         $this->insert('{{%user}}',[
             'username' => 'adm',
-            'auth_key' => '',
             'password_hash' => '$2y$13$ou51/VBEdXAQcLqwPYOFduppKv2EyE/KSGJkDrJZhPQyf3drRmKpu',
             'email' => 'adm@adm.com',
             'role' => 5,

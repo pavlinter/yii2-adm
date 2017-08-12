@@ -45,7 +45,7 @@ class LoginForm extends Model
     {
         return [
             'username' => Yii::t('modelAdm/login-form', 'Username'),
-            'Password' => Yii::t('modelAdm/login-form', 'Password'),
+            'password' => Yii::t('modelAdm/login-form', 'Password'),
             'rememberMe' => Yii::t('modelAdm/login-form', 'Remember Me'),
         ];
     }

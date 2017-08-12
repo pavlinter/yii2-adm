@@ -97,6 +97,7 @@ class UserController extends Controller
             ['password2', 'compare', 'compareAttribute' => 'password'],
             ['assignment', 'exist', 'targetClass' => Adm::getInstance()->manager->authItemClass , 'targetAttribute' => 'name', 'filter' => ['type' => Item::TYPE_ROLE]],
         ]);
+        $dynamicModel->clearErrors();
 
         $post = Yii::$app->request->post();
         if ($model->load($post) && $dynamicModel->load($post)) {

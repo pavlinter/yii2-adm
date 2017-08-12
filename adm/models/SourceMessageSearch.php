@@ -41,6 +41,17 @@ class SourceMessageSearch extends SourceMessage
     }
 
     /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+        return array_merge([
+            'translation' => Yii::t('modelAdm/source-message', 'Translation'),
+        ], $labels);
+    }
+
+    /**
      * Creates data provider instance with search query applied
      *
      * @param array $params

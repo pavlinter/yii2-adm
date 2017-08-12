@@ -21,7 +21,7 @@ use yii\helpers\Url;
             <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
-            <?= $form->field($dynamicModel, 'ruleNamespace')->textInput() ?>
+            <?= $form->field($dynamicModel, 'ruleNamespace')->textInput()->label(Yii::t('modelAdm/authrule', 'Rule Namespace')) ?>
         </div>
     </div>
 

@@ -18,16 +18,12 @@ use yii\widgets\ActiveForm;
     <div class="row m-n">
         <div class="col-md-4 col-md-offset-4 m-t-lg">
             <section class="panel">
-                <header class="panel-heading text-center">
-                    Login
-                </header>
                 <?php $form = ActiveForm::begin(['id' => 'login-form','options' => ['class' => 'panel-body']]); ?>
                     <?= $form->field($model, 'username') ?>
                     <?= $form->field($model, 'password')->passwordInput() ?>
                     <?= $form->field($model, 'rememberMe')->checkbox() ?>
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                    <div class="line line-dashed"></div>
-                    <?php ActiveForm::end(); ?>
+                    <?= Html::submitButton(Yii::t("adm/login", "Login", ['dot' => false]), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?php ActiveForm::end(); ?>
             </section>
         </div>
     </div>
