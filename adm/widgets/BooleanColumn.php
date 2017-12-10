@@ -23,6 +23,9 @@ use yii\web\Response;
  *      'class' => 'pavlinter\adm\widgets\BooleanColumn',
  *      'attribute' => 'active',
  *      'tableName' => $searchModel::tableName(),
+ *      'query' => function($query, $owner, $id){
+ *          $query->andWhere(['user_id' => Yii::$app->user->getId()]);
+ *      },
  *  ],
  */
 class BooleanColumn extends \kartik\grid\BooleanColumn
@@ -30,6 +33,8 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
     public $tableName;
 
     public $tableColumn;
+
+    public $query; //function($query, $owner, $id){$query->andWhere(['user_id' => 1]);}
 
     public $update = ['updated_at'];
 
@@ -82,10 +87,17 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
 
             $json['r'] = false;
             $query = new Query();
-            $row = $query->from($this->tableName)
+            $query->from($this->tableName)
                 ->select(['a' => $this->tableColumn])
                 ->where(['id' => $id])
-                ->limit(1)->one($db);
+                ->limit(1);
+
+            if ($this->query instanceof \Closure) {
+                $func = $this->query;
+                $func($query, $this, $id);
+            }
+
+            $row = $query->one($db);
 
             if ($row) {
                 if ($row['a']) {
@@ -189,6 +201,4 @@ class BooleanColumn extends \kartik\grid\BooleanColumn
         }
         return $this->renderButton($result, $model, $key, $index);
     }
-
-
 }
